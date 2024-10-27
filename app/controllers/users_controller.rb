@@ -122,8 +122,12 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find_by(id: session[:user_id])
-    @tmp_user = @user
+    if session[:user_id].nil?
+      redirect_to root_path
+    else
+      @user = User.find_by(id: session[:user_id])
+      @tmp_user = @user
+    end
   end
 
   def set_pending_users
