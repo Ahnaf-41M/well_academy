@@ -8,7 +8,7 @@ class Ability
       can :manage, :all
     elsif user.teacher?
 
-      can :read, User
+      can :read, User, id: user.id
       can :create, User
       can :update, User, id: user.id
       can :destroy, User, id: user.id
@@ -23,15 +23,16 @@ class Ability
     elsif user.student?
       can :become_teacher, User
       can :read, Course
-      can :read, User
+      can :read, User, id: user.id
       can :create, User
-      can :edit, User
+      can :edit, User, id: user.id
       can :update, User, id: user.id
       can :destroy, User, id: user.id
       can :confirm, User
       can :remove_profile_picture, User
     else
       can :read, :all
+      cannot :read, User
       can :create, User
       can :confirm, User
     end
