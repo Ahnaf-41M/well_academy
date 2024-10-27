@@ -1,2 +1,83 @@
-<h1>Courses#new</h1>
-<p>Find me in app/views/courses/new.html.erb</p>
+<section class="vh-200" style="background-color: #eee;">
+    <div class="container h-75">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+                        <div class="row justify-content-center">
+                            <h1 class="text-center mb-3 fw-bold">Create Course</h1>
+                            <%= form_with(model: @course, class: "mx-1 mx-md-4", method: :post) do |f| %>
+                                <h6>Title <span style="color: red;">*</span></h6>
+                                <div class="d-flex flex-row align-items-center mb-2">
+                                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                                        <%= f.text_field :title, class: "form-control", placeholder: "Course title", required: true %>
+                                    </div>
+                                </div>
+
+                                <h6>Description <span style="color: red;">*</span></h6>
+                                <div class="d-flex flex-row align-items-center mb-2">
+                                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                                        <%= f.text_area :description, class: "form-control", placeholder: "Course description", required: true %>
+                                    </div>
+                                </div>
+
+                                <h6>Category <span style="color: red;">*</span></h6>
+                                <%= f.select :category_id, @categories.pluck(:name, :id), { prompt: "Select a category" }, class: "form-select mb-2", required: true %>
+
+                                <h6>Level <span style="color: red;">*</span></h6>
+                                <select class="form-select mb-2">
+                                    <option selected disabled>Select level</option>
+                                    <% Course.levels.keys.each do |level| %>
+                                        <option value="<%= level %>"><%= level.capitalize %></option>
+                                    <% end %>
+                                </select>
+
+                                <h6>Language <span style="color: red;">*</span></h6>
+                                <div class="d-flex flex-row align-items-center mb-2">
+                                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                                        <%= f.text_field :language, class: "form-control", placeholder: "Course language", required: true %>
+                                    </div>
+                                </div>
+
+                                <h6>Duration <span style="color: red;">*</span></h6>
+                                <div class="d-flex flex-row align-items-center mb-2">
+                                    <div data-mdb-input-init class="form-outline flex-fill mb-0 me-3">
+                                        <%= f.number_field :duration_hours,value: params[:duration_hours], class: "form-control", placeholder: "Hours",min: "0", required: true %>
+                                    </div>
+                                    <div data-mdb-input-init class="form-outline flex-fill mb-0 ms-3">
+                                        <%= f.number_field :duration_minutes, value: params[:duration_hours], class: "form-control", placeholder: "Minutes",min: "0", required: true %>
+                                    </div>
+                                </div>
+
+                                <h6>Price ($) <span style="color: red;">*</span></h6>
+                                <div class="d-flex flex-row align-items-center mb-2">
+                                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                                        <%= f.number_field :price, class: "form-control", placeholder: "Course price", step: "1",min: "0", required: true %>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <h6>Upload Completion Certificate (PDF) <span style="color: red;">*</span></h6>
+                                    <%= f.file_field :completion_certificate, class: "form-control", accept: "application/pdf", required: true %>
+                                </div>
+
+                                <div class="mb-3">
+                                    <h6>Upload Achievement Certificate (PDF) <span style="color: red;">*</span></h6>
+                                    <%= f.file_field :achievement_certificate, class: "form-control", accept: "application/pdf", required: true %>
+                                </div>
+
+                                <%= f.hidden_field :teacher_id, value: @user.id %>
+
+                                <div class="d-grid mb-3 mb-lg-4">
+                                    <%= f.submit "Create", class: "btn btn-primary btn-lg", disable_with: 'Submiting...' %>
+                                </div>
+                                
+                            <% end %>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
