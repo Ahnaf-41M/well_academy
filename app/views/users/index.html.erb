@@ -18,7 +18,8 @@
                             <p class="card"></p>
                             <p class="card-text">
                                 <b>Email:</b> <%= tmp_user.email %><br>
-                                <b>Joined on:</b> <%= tmp_user.date_joined.strftime("%B %d, %Y") if tmp_user.date_joined.present? %>
+                                <b>Joined on:</b> <%= tmp_user.date_joined.strftime("%B %d, %Y") if tmp_user.date_joined.present? %> <br>
+                                <b>Role:</b> <%= tmp_user.role.capitalize %>
                             </p>
                             <div class="d-flex">
                                 <%= link_to 'Edit Profile', edit_user_path(tmp_user), class: "btn btn-primary" %> &nbsp;
