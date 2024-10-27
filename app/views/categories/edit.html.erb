@@ -1,2 +1,37 @@
-<h1>Categories#edit</h1>
-<p>Find me in app/views/categories/edit.html.erb</p>
+<section class="vh-100" style="background-color: #eee;">
+    <div class="container h-75">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+
+                        <div class="row justify-content-center">
+                            <h1 class="text-center mb-5 fw-bold">Edit Category</h1>
+                            <%= form_with(model: @category, class: "mx-1 mx-md-4", method: :patch) do |f| %>
+                                <h6>Name <span style="color: red;">*</span></h6>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    
+                                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                                        <%= f.text_field :name, class: "form-control", placeholder: "Course category name", required: true %>
+                                    </div>
+                                </div>
+
+                                <h6>Description <span style="color: red;">*</span></h6>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                                        <%= f.text_area :description, class: "form-control", placeholder: "Course category description", required: true %>
+                                    </div>
+                                </div>
+
+                                <div class="d-grid mb-3 mb-lg-4">
+                                    <%= f.submit "Update", class: "btn btn-primary btn-lg", disable_with: 'Submiting...' %>
+                                </div>
+                            <% end %>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
