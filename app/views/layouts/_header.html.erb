@@ -29,22 +29,25 @@
                 <% end %>
 
                 <% if @user.admin? %>
-                    <ul>
-                        <div class="d-grid gap-2 col-12 mx-auto">
-                            <%= link_to "Create a new category", new_category_path, class: "btn btn-outline-dark" %>
-                        </div>
-                    </ul>
-                    <ul>
-                        <div class="d-grid gap-2 col-12 mx-auto">
-                            <%= link_to "Manage Users", users_path, class: "btn btn-outline-dark" %>
-                        </div>
-                    </ul>
-                    <ul>
-                        <div class="d-grid gap-2 col-12 mx-auto">
-                            <%= link_to "Pending Teachers", pending_users_path, class: "btn btn-outline-dark" %>
-                        </div>
-                    </ul>
-                    
+                    <div class="dropdown me-3">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Course Categories
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li> <%= link_to "Manage Categories", categories_path, class: "dropdown-item" %> </li>
+                            <li> <%= link_to "Create a new category", new_category_path, class: "dropdown-item" %> </li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Users
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li> <%= link_to "Manage Users", users_path, class: "dropdown-item" %> </li>
+                            <li> <%= link_to "Pending Teachers", pending_users_path, class: "dropdown-item" %> </li>
+                        </ul>
+                    </div>   
                 <% end %>
                 
                 <ul class="d-flex me-5" role="search">
