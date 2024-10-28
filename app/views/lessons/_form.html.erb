@@ -6,10 +6,10 @@
         <h6>Order <span class="text-danger">*</span></h6>
         <%= f.number_field :order, class: "form-control mb-3", placeholder: "Order", required: true %>
 
-        <h6>Video <span class="text-danger">*</span></h6>
-        <%= f.file_field :video, class: "form-control mb-3", accept: "video/*", required: true %>
+        <h6>Video <span class="text-danger"> <%= "*" if lesson.new_record? %></span> </h6>
+        <%= f.file_field :video, class: "form-control mb-3", accept: "video/*", required: lesson.new_record? %>
 
         <h6>Contents</h6>
-        <%= f.file_field :contents, class: "form-control mb-3",multiple: true, placeholder: "Lesson contents" %>
+        <%= f.file_field :contents, class: "form-control mb-3",accept: "application/pdf", multiple: true, placeholder: "Lesson contents" %>
     </div>
 </div>
