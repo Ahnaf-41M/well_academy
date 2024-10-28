@@ -1,2 +1,40 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<section class="vh-100" style="background-color: #eee;">
+    <div class="container h-100">
+        <div class="justify-content-center mt-2">
+        </div>
+
+        <% @categories.each do |tmp_category| %>
+            <% @tmp_courses = Course.where(category_id: tmp_category.id).limit(4) %>
+            
+            <% if @tmp_courses.exists? %>
+                <h3 class="mt-4 mb-2"><%= tmp_category.name %></h3>
+
+                <div class="row mb-4">
+                    <% @tmp_courses.each do |tmp_course| %>
+                        <div class="col col-lg-4">
+                            <div class="card">
+                                <h5 class="card-header"><%= tmp_course.title %></h5>
+                                <div class="card-body">
+                                    <p><strong>Teacher:</strong> </span> <span><%= User.find(tmp_course.teacher_id).name %> </p>
+                                    <p><strong>Level: </strong></span> <span><%= tmp_course.level.titleize %> </p>
+                                    <p><strong>Duration:</strong> </span> <span><%= tmp_course.duration_hours %> hours <span><%= tmp_course.duration_minutes %> minutes </p>
+                                    <p class="card-text fw-bold text-success"></p>
+                                    <p><strong>Price: </strong> <span class="fw-bold text-success">$<%= tmp_course.price %></span> </p>
+                                    
+                                    <%= link_to  "View Course", course_path(tmp_course), class: "btn btn-primary btn-sm" %>
+                                    <%= link_to  "Enroll Course", course_path(tmp_course), class: "btn btn-success btn-sm" %>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+                
+                
+            <% end %>
+            
+        <% end %>
+        
+        
+    </div>
+</section>
