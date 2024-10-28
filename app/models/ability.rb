@@ -20,6 +20,11 @@ class Ability
       can :update, Course
       can :destroy, Course
 
+      can :read, Lesson
+      can :create, Lesson
+      can :update, Lesson
+      can :destroy, Lesson
+
     elsif user.student?
       can :become_teacher, User
       can :read, Course
