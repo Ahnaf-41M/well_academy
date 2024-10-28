@@ -3,8 +3,6 @@ Rails.application.routes.draw do
   get "home/index"
 
   resources :categories
-  resources :courses
-  resources :lessons
   resources :enrollments
   resources :quizzes
   resources :questions
@@ -12,6 +10,10 @@ Rails.application.routes.draw do
   resources :quiz_participations
   resources :reviews
   resources :payments
+
+  resources :courses do
+    resources :lessons
+  end
 
   resources :users do
     collection do
