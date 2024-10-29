@@ -2,8 +2,20 @@ class Lesson < ApplicationRecord
   belongs_to :course
 
   has_one_attached :video
-  has_many_attached :contents
+  has_one_attached :content
 
   validates :title, presence: true
   validates :order, presence: true
+
+  def video_duration
+    return unless video.attached?
+    video_path = ActiveStorage::Blob.service.send(:path_for, video.key)
+    movie = FFMPEG::Movie.new(video_path)
+    total_seconds = movie.duration
+
+    minutes = (total_seconds / 60).to_i
+    seconds = (total_seconds % 60).to_i
+    "#{minutes}m #{seconds}s"
+  end
+
 end
