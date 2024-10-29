@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get "pending"
     end
     member do
+      get 'confirmation/:token', to: 'users#confirm', as: 'confirmation'
       get "become_teacher"
       post "approve_teacher"
       post "reject_teacher"
