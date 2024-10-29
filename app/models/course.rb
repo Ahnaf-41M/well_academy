@@ -1,9 +1,10 @@
 class Course < ApplicationRecord
-  belongs_to :teacher, class_name: "User"  # Association to the User model
+  belongs_to :teacher, class_name: "User" # Association to the User model
   belongs_to :category
   has_many :lessons, dependent: :destroy
 
   has_one_attached :display_picture
+  has_one_attached :syllabus
   has_one_attached :completion_certificate
   has_one_attached :achievement_certificate
 
