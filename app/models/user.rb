@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  before_create :generate_confirmation_token
   has_secure_password
 
   has_one_attached :profile_picture
@@ -11,4 +12,8 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :role, inclusion: { in: roles.keys }
+
+  def generate_confirmation_token
+    self.confirmation_token = SecureRandom.hex(10)
+  end
 end
