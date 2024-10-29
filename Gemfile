@@ -10,16 +10,21 @@ gem "pg", "~> 1.1"
 gem "pry"
 gem "puma", ">= 5.0"
 gem "rails", "~> 7.2.1"
+gem 'sidekiq'
+gem 'sidekiq-cron' # Optional for scheduling jobs
 gem "sprockets-rails"
 gem "stimulus-rails"
+gem "streamio-ffmpeg"
 gem "turbo-rails"
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+# gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "tzinfo-data", platforms: %i[ mswin mingw x64_mingw jruby ]
 
 group :development, :test do
   gem "brakeman", require: false
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "dotenv-rails"
   gem "factory_bot_rails"
+  gem 'letter_opener'
   gem "rspec-rails", "~> 6.0"
   gem "rubocop-rails-omakase", require: false
 end
