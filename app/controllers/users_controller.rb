@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      # UserMailer.welcome_email(@user).deliver_now
+      UserMailerJob.perform_async(@user.id)
       flash[:notice] = "User created successfully."
       redirect_to root_path
     else
@@ -35,12 +35,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    # puts "**debug:  #{action_name}"
-    referer = request.referer
-    puts "**debug:  #{referer}"
-
     @tmp_user = User.find(params[:id])
-    # puts "**debug** This is update and tmp_user: #{@tmp_user.name}"
     if @tmp_user.update(user_params)
       flash[:notice] = "User updated successfully."
       if @tmp_user == @user
@@ -69,7 +64,7 @@ class UsersController < ApplicationController
     @user = User.find_by(confirmation_token: params[:token])
     if @user && @user.confirmed_at.nil?
       @user.update(confirmed_at: Time.now, confirmation_token: nil)
-      redirect_to @user, notice: "Your email has been confirmed successfully!"
+      redirect_to root_path, notice: "Your email has been confirmed successfully!"
     else
       flash.now[:alert] = "Invalid confirmation token or email already confirmed."
       redirect_to root_path, status: :unprocessable_entity
@@ -115,6 +110,7 @@ class UsersController < ApplicationController
     flash.now[:alert] = "Profile picture removed successfully!"
     render :show, status: :unprocessable_entity
   end
+
   private
 
   def user_params
@@ -122,12 +118,14 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    if session[:user_id].nil?
-      redirect_to root_path
-    else
-      @user = User.find_by(id: session[:user_id])
-      @tmp_user = @user
-    end
+    @user = User.find(params[:id])
+    @tmp_user = @user # Keep this if you need it in other actions
+    # if session[:user_id].nil?
+    #   redirect_to root_path
+    # else
+    #   @user = User.find_by(id: session[:user_id])
+    #   @tmp_user = @user
+    # end
   end
 
   def set_pending_users
