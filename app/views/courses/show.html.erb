@@ -1,2 +1,125 @@
-<h1>Courses#show</h1>
-<p>Find me in app/views/courses/show.html.erb</p>
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+
+    <div class="col">
+      <div class="card">
+        <h5 class="card-header"><%= @course.title.titleize %></h5>
+        <img src="<%= url_for(@course.display_picture) %>" class="card-img-top" alt="..." width="300" height="500">
+
+        <div class="card-body">
+          <p><strong>Teacher:</strong> </span> <span><%= User.find(@course.teacher_id).name %></p>
+          <p><strong>Level: </strong></span> <span><%= @course.level.titleize %></p>
+          <p><strong>Language: </strong></span> <span><%= @course.language %></p>
+          <p><strong>Duration:</strong> </span> <span><%= @course.total_duration %> </span></p>
+          <p class="card-text fw-bold text-success"></p>
+          <p><strong>Price: </strong> <span class="fw-bold text-success">$<%= @course.price %></span></p>
+          <p><strong>Total Lessons: </strong> <span class=""><%= @course.lessons.count %></span></p>
+          <p>
+            <% if @course.syllabus.attached? %>
+              <a href="#" class="btn btn-outline-success btn-sm" onclick="showPdfModal('<%= url_for(@course.syllabus) %>'); return false;">Preview
+                Syllabus</a>
+            <% end %>
+          </p>
+          <%#= link_to  "View Course", course_path(@course), class: "btn btn-primary btn-sm" %>
+          <%#= link_to  "Enroll Course", course_path(@course), class: "btn btn-success btn-sm" %>
+        </div>
+
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+              <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Course Contents
+              </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="row">
+                  <div class="col h6 fw-bold">Lesson</div>
+                  <div class="col h6 fw-bold">Video</div>
+                  <div class="col h6 fw-bold">Content</div>
+                  <div class="col h6 fw-bold">Duration</div>
+                </div>
+                <% @course.lessons.each do |lesson| %>
+                  <hr>
+                  <div class="row">
+                    <div class="col"><%= lesson.title %></div>
+                    <div class="col">
+                      <a href="#" onclick="showVideoModal('<%= url_for(lesson.video) %>', '<%= lesson.video.content_type %>'); return false;">Watch
+                      </a>
+                    </div>
+                    <div class="col">
+                      <% if lesson.content.attached? %>
+                        <a href="#" onclick="showPdfModal('<%= url_for(lesson.content) %>'); return false;">Preview
+                          PDF</a>
+                      <% else %>
+                        <%= "None" %>
+                      <% end %>
+                    </div>
+                    <div class="col"><%= lesson.video_duration %></div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+
+<!-- Modal structure (hidden by default) -->
+<div id="videoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); align-items: center; justify-content: center;">
+  <div style="background: white; padding: 20px; border-radius: 8px; max-width: 90%; max-height: 90%; position: relative;">
+    <!-- Close button -->
+    <span onclick="closeVideoModal()" style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 24px; color: black;">&times;</span>
+    <!-- Video player -->
+    <video id="modalVideo" width="800" controls>
+      <source id="videoSource" src="" type="">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+
+<div id="pdfModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); align-items: center; justify-content: center;">
+  <div style="background: white; padding: 20px; border-radius: 8px; max-width: 90%; max-height: 90%; position: relative;">
+    <!-- Close button -->
+    <span onclick="closePdfModal()" style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 24px; color: black;">&times;</span>
+    <!-- PDF preview iframe -->
+    <iframe id="modalPdf" src="" width="1000px" height="700px" style="border: none;"></iframe>
+  </div>
+</div>
+
+<!-- JavaScript to handle the modal display -->
+<script>
+    function showVideoModal(videoUrl, contentType) {
+        // Set the video source
+        document.getElementById('videoSource').src = videoUrl;
+        document.getElementById('videoSource').type = contentType;
+        document.getElementById('modalVideo').load();
+
+        // Show the modal
+        document.getElementById('videoModal').style.display = 'flex';
+    }
+
+    function closeVideoModal() {
+        // Hide the modal and stop the video
+        document.getElementById('videoModal').style.display = 'none';
+        document.getElementById('modalVideo').pause();
+    }
+
+    function showPdfModal(pdfUrl) {
+        // Set the PDF source
+        document.getElementById('modalPdf').src = pdfUrl;
+        // Show the modal
+        document.getElementById('pdfModal').style.display = 'flex';
+    }
+
+    function closePdfModal() {
+        // Hide the modal and clear the iframe source
+        document.getElementById('pdfModal').style.display = 'none';
+        document.getElementById('modalPdf').src = '';
+    }
+</script>
