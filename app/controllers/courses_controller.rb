@@ -4,7 +4,11 @@ class CoursesController < ApplicationController
   before_action :set_categories, only: %i[new show edit update destroy]
 
   def index
-    @courses = Course.order(:title)
+    if @user.admin?
+      @courses = Course.order(:title)
+    else
+      @courses = Course.where(teacher_id: @user.id).order(:title)
+    end
   end
 
   def show
@@ -16,9 +20,6 @@ class CoursesController < ApplicationController
 
   def create
     @course = Course.new(course_params)
-    hours = params[:course][:duration_hours].to_i
-    minutes = params[:course][:duration_minutes].to_i
-    @course.duration = (hours.hours + minutes.minutes)
 
     if @course.save
       redirect_to courses_path, notice: "Course was successfully created."
@@ -32,13 +33,9 @@ class CoursesController < ApplicationController
   end
 
   def update
-    hours = params[:course][:duration_hours].to_i
-    minutes = params[:course][:duration_minutes].to_i
-    @course.duration = (hours.hours + minutes.minutes)
     if @course.update(course_params)
       redirect_to courses_path, notice: "Course was successfully updated."
     else
-      puts "** debug : #{@course.errors.full_messages.join(", ")}"
       flash.now[:alert] = @course.errors.full_messages.join(", ")
       render :edit, status: :unprocessable_entity
     end
@@ -62,7 +59,8 @@ class CoursesController < ApplicationController
   def set_categories
     @categories = Category.order(name: :asc)
   end
+
   def course_params
-    params.require(:course).permit(:title, :description, :teacher_id, :category_id, :price, :level, :language, :duration, :completion_certificate, :achievement_certificate)
+    params.require(:course).permit(:title, :description, :teacher_id, :category_id, :price, :level, :language, :duration, :syllabus, :completion_certificate, :achievement_certificate, :display_picture)
   end
 end
