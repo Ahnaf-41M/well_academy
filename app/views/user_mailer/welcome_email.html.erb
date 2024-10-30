@@ -1,6 +1,9 @@
 <div class="d-flex justify-content-center mb-4">
   <h1>Welcome to WellAcademy, <%= @user.name %>!</h1>
 </div>
+<div class="d-flex justify-content-center mb-4">
+  <h5 class="text-danger">Please confirm your account by clicking the link below</h5>
+</div>
 <div class="d-flex justify-content-center">
   <p>
     <%= link_to "Confirm My Account", @confirmation_url, class: "btn btn-success btn-lg" %>
