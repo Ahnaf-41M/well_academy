@@ -13,8 +13,8 @@ class SessionsController < ApplicationController
   def attempt_login
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
-      if user.confirmed_at.nil?
-        UserMailerJob.perform_async(user.id)
+      if user.confirmed_at.nil? && !user.confirmation_token.nil?
+        UserMailerJob.new.perform(user.id)
         redirect_to root_path
       else
         session[:user_id] = user.id
