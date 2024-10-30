@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      UserMailerJob.perform_async(@user.id)
+      UserMailerJob.new.perform(@user.id)
       flash[:notice] = "User created successfully."
       redirect_to root_path
     else
@@ -62,7 +62,6 @@ class UsersController < ApplicationController
   end
 
   def confirm
-    # print "## token: #{params[:token]}"
     @user = User.find_by(confirmation_token: params[:token])
     if @user && @user.confirmed_at.nil?
       @user.update(confirmed_at: Time.now, confirmation_token: nil)
@@ -116,7 +115,21 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :phone, :date_joined, :bio, :role, :profile_picture, :grad_certificate, :postgrad_certificate, student_certificates: [])
+    params.require(:user).permit(:name,
+                                 :email,
+                                 :password,
+                                 :password_confirmation,
+                                 :phone, :date_joined,
+                                 :bio,
+                                 :role,
+                                 :confirmation_token,
+                                 :confirmed_at,
+                                 :reset_password_token,
+                                 :reset_password_sent_at,
+                                 :profile_picture,
+                                 :grad_certificate,
+                                 :postgrad_certificate,
+                                 student_certificates: [])
   end
 
   def set_user
