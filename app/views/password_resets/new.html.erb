@@ -1,0 +1,10 @@
+<h1 class="d-flex justify-content-center fw-bold mt-2">Password Reset</h1>
+<div class="d-flex justify-content-center mt-5">
+  <%= form_with url: password_resets_path, class: "form-control w-25", local: true do |form| %>
+    <p class="fw-bold"> Enter your email <span class="text-danger">*</span></p>
+    <%= form.text_field :email, class: "form-control", required: true %>
+    <div class="d-grid gap-2">
+      <%= form.submit "Continue", class: "btn btn-lg btn-success mt-2 h-5" %>
+    </div>
+  <% end %>
+</div>
