@@ -21,7 +21,9 @@
                   <p><strong>Price: </strong> <span class="fw-bold text-success">$<%= tmp_course.price %></span></p>
 
                   <%= link_to "View Course", course_path(tmp_course), class: "btn btn-primary btn-sm" %>
-                  <%= link_to "Enroll Course", course_path(tmp_course), class: "btn btn-success btn-sm" %>
+                  <% if !@user.nil? %>
+                    <%= link_to "Enroll Course", course_path(tmp_course), class: "btn btn-success btn-sm" %>
+                  <% end %>
 
                 </div>
               </div>
