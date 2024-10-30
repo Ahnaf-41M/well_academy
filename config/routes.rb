@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       get "attempt_logout"
     end
   end
+  resources :password_resets, only: [:new, :create, :edit, :update]
 
   get "up" => "rails/health#show", as: :rails_health_check
 
