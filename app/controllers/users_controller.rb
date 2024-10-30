@@ -25,7 +25,9 @@ class UsersController < ApplicationController
       flash[:notice] = "User created successfully."
       redirect_to root_path
     else
-      flash.now[:alert] = "Email already exists!"
+      # flash.now[:alert] = "Email already exists!"
+      flash.now[:alert] = @user.errors.full_messages.to_sentence
+
       render :new, status: :unprocessable_entity
     end
   end
@@ -119,13 +121,7 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
-    @tmp_user = @user # Keep this if you need it in other actions
-    # if session[:user_id].nil?
-    #   redirect_to root_path
-    # else
-    #   @user = User.find_by(id: session[:user_id])
-    #   @tmp_user = @user
-    # end
+    @tmp_user = @user
   end
 
   def set_pending_users
