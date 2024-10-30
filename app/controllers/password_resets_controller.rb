@@ -6,8 +6,8 @@ class PasswordResetsController < ApplicationController
 
     if user
       user.generate_password_reset_token!
-      # PasswordResetEmailJob.perform_async(user.id)
-      UserMailer.password_reset(user).deliver_now if user.reset_password_token.present?
+      PasswordResetEmailJob.new.perform(user.id)
+      # UserMailer.password_reset(user).deliver_now if user.reset_password_token.present?
       flash[:notice] = "Password reset instructions have been sent to your email."
       redirect_to root_path
     else
