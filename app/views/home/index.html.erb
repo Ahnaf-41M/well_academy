@@ -22,7 +22,12 @@
 
                   <%= link_to "View Course", course_path(tmp_course), class: "btn btn-primary btn-sm" %>
                   <% if !@user.nil? %>
-                    <%= link_to "Enroll Course", course_path(tmp_course), class: "btn btn-success btn-sm" %>
+                    <% if Payment.exists?(user_id: @user.id, course_id: tmp_course.id) %>
+                      <%= link_to "Continue Course", course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
+                    <% else %>
+                      <%= link_to "Enroll Course", new_course_payment_path(tmp_course), class: "btn btn-success btn-sm" %>
+                    <% end %>
+
                   <% end %>
 
                 </div>
@@ -30,8 +35,6 @@
             </div>
           <% end %>
         </div>
-
-
       <% end %>
 
     <% end %>
