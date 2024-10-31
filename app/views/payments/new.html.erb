@@ -1,2 +1,47 @@
-<h1>Payments#new</h1>
-<p>Find me in app/views/payments/new.html.erb</p>
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+    <h1 class="d-flex justify-content-center"> To enroll this course, you have to pay first</h1>
+    <h5 class="d-flex justify-content-center mt-4 mb-4">Price:&nbsp;&nbsp;<span class="fw-bold">$<%= @course.price %></span>
+    </h5>
+
+    <%= form_with model: [@course, @payment], local: true do |f| %>
+      <% f.hidden_field :payment_method, value: "bank" %>
+
+
+      <div id="bankDetails">
+        <h6 class="mt-4"><span class="text-danger">*&nbsp;</span> Enter Bank Account Number</h6>
+        <div class="d-flex justify-content-center mb-3">
+          <%= f.number_field :bank_account_number, class: 'form-control form-control-lg', required: true %>
+        </div>
+
+        <h6 class="mt-4"><span class="text-danger">*&nbsp;</span> Enter Routing Number</h6>
+        <div class="d-flex justify-content-center mb-3">
+          <%= f.number_field :routing_number, class: 'form-control form-control-lg', required: true %>
+        </div>
+      </div>
+
+      <div class="d-grid">
+        <%= f.submit "Proceed to pay", class: "btn btn-outline-success btn-round btn-h-xl", onclick: "return confirm('Are you sure you want to proceed?');" %>
+      </div>
+    <% end %>
+
+  </div>
+</section>
+
+<script>
+    function togglePaymentTypeDetails(selectedType) {
+        const mobileDetails = document.getElementById('mobileDetails');
+        const bankDetails = document.getElementById('bankDetails');
+
+        if (selectedType === 'mobile') {
+            mobileDetails.style.display = 'block';
+            bankDetails.style.display = 'none';
+        } else if (selectedType === 'bank') {
+            bankDetails.style.display = 'block';
+            mobileDetails.style.display = 'none';
+        } else {
+            mobileDetails.style.display = 'none';
+            bankDetails.style.display = 'none';
+        }
+    }
+</script>
