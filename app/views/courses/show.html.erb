@@ -20,8 +20,6 @@
                 Syllabus</a>
             <% end %>
           </p>
-          <%#= link_to  "View Course", course_path(@course), class: "btn btn-primary btn-sm" %>
-          <%#= link_to  "Enroll Course", course_path(@course), class: "btn btn-success btn-sm" %>
         </div>
 
         <div class="accordion" id="accordionExample">
@@ -44,8 +42,13 @@
                   <div class="row">
                     <div class="col"><%= lesson.title %></div>
                     <div class="col">
-                      <a href="#" onclick="showVideoModal('<%= url_for(lesson.video) %>', '<%= lesson.video.content_type %>'); return false;">Watch
-                      </a>
+
+                      <% if @user && Payment.exists?(user_id: @user.id, course_id: @course.id) %>
+                        <a href="#" onclick="showVideoModal('<%= url_for(lesson.video) %>', '<%= lesson.video.content_type %>'); return false;">Watch
+                        </a>
+                      <% else %>
+                        <p>Watch</p>
+                      <% end %>
                     </div>
                     <div class="col">
                       <% if lesson.content.attached? %>
@@ -85,40 +88,30 @@
 
 <div id="pdfModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); align-items: center; justify-content: center;">
   <div style="background: white; padding: 20px; border-radius: 8px; max-width: 90%; max-height: 90%; position: relative;">
-    <!-- Close button -->
     <span onclick="closePdfModal()" style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 24px; color: black;">&times;</span>
-    <!-- PDF preview iframe -->
     <iframe id="modalPdf" src="" width="1000px" height="700px" style="border: none;"></iframe>
   </div>
 </div>
 
-<!-- JavaScript to handle the modal display -->
 <script>
     function showVideoModal(videoUrl, contentType) {
-        // Set the video source
         document.getElementById('videoSource').src = videoUrl;
         document.getElementById('videoSource').type = contentType;
         document.getElementById('modalVideo').load();
-
-        // Show the modal
         document.getElementById('videoModal').style.display = 'flex';
     }
 
     function closeVideoModal() {
-        // Hide the modal and stop the video
         document.getElementById('videoModal').style.display = 'none';
         document.getElementById('modalVideo').pause();
     }
 
     function showPdfModal(pdfUrl) {
-        // Set the PDF source
         document.getElementById('modalPdf').src = pdfUrl;
-        // Show the modal
         document.getElementById('pdfModal').style.display = 'flex';
     }
 
     function closePdfModal() {
-        // Hide the modal and clear the iframe source
         document.getElementById('pdfModal').style.display = 'none';
         document.getElementById('modalPdf').src = '';
     }
