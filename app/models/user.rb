@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   before_create :generate_confirmation_token
   has_secure_password
-
+  has_many :video_watches
+  has_many :watched_lessons, through: :video_watches, source: :lesson
   has_one_attached :profile_picture
   has_many_attached :student_certificates
   has_one_attached :grad_certificate
