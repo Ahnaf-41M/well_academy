@@ -1,0 +1,19 @@
+.btn-xl {
+    padding: 40px 20px;
+    font-size: 30px;
+    border-radius: 30px;
+    width: 70%;
+    height: 150px;
+}
+
+.btn-round {
+    border-radius: 30px;
+}
+
+.btn-h-xl {
+    height: 60px;
+}
+
+.btn-w-xl {
+    width: 100%;
+}
