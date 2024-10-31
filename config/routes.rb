@@ -9,10 +9,15 @@ Rails.application.routes.draw do
   resources :options
   resources :quiz_participations
   resources :reviews
-  resources :payments
 
   resources :courses do
     resources :lessons
+    resources :payments do
+      member do
+        get "payment_form"
+        get "payment_method"
+      end
+    end
   end
 
   resources :users do
