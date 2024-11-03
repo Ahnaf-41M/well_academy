@@ -1,7 +1,9 @@
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
     <h1 class="d-flex justify-content-center"> To enroll this course, you have to pay first</h1>
-    <h5 class="d-flex justify-content-center mt-4 mb-4">Price:&nbsp;&nbsp;<span class="fw-bold">$<%= @course.price %></span>
+    <h5 class="d-flex justify-content-center mt-4 mb-4">Price:&nbsp;
+      <span class="badge rounded-pill text-bg-success">$<%= @course.price %></span>
+
     </h5>
 
     <%= form_with model: [@course, @payment], local: true do |f| %>
