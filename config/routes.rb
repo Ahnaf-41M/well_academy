@@ -4,15 +4,21 @@ Rails.application.routes.draw do
 
   resources :categories
   resources :enrollments
-  resources :quizzes
-  resources :questions
+  # resources :questions
   resources :options
   resources :quiz_participations
   resources :reviews
-  resources :payments
 
   resources :courses do
-    resources :lessons
+    resources :lessons do
+      member do
+        post :mark_as_watched
+      end
+    end
+    resources :payments
+    resources :quizzes do
+      resources :questions, shallow: true
+    end
   end
 
   resources :users do
@@ -21,6 +27,7 @@ Rails.application.routes.draw do
       get "pending"
     end
     member do
+      get 'confirmation/:token', to: 'users#confirm', as: 'confirmation'
       get "become_teacher"
       post "approve_teacher"
       post "reject_teacher"
@@ -36,6 +43,7 @@ Rails.application.routes.draw do
       get "attempt_logout"
     end
   end
+  resources :password_resets, only: [:new, :create, :edit, :update]
 
   get "up" => "rails/health#show", as: :rails_health_check
 
