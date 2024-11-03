@@ -4,8 +4,7 @@ Rails.application.routes.draw do
 
   resources :categories
   resources :enrollments
-  resources :quizzes
-  resources :questions
+  # resources :questions
   resources :options
   resources :quiz_participations
   resources :reviews
@@ -17,6 +16,9 @@ Rails.application.routes.draw do
       end
     end
     resources :payments
+    resources :quizzes do
+      resources :questions, shallow: true
+    end
   end
 
   resources :users do
