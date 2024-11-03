@@ -45,6 +45,13 @@ class LessonsController < ApplicationController
     redirect_to course_lessons_path(@course), notice: "Lesson was successfully deleted."
   end
 
+  def mark_as_watched
+    @lesson = Lesson.find(params[:id])
+    current_user.video_watches.create(lesson: @lesson, watched_at: Time.current) unless current_user.video_watches.exists?(lesson: @lesson)
+
+    head :ok
+  end
+
   private
 
   def set_user
