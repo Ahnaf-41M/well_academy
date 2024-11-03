@@ -16,12 +16,7 @@ Rails.application.routes.draw do
         post :mark_as_watched
       end
     end
-    resources :payments do
-      member do
-        get "payment_form"
-        get "payment_method"
-      end
-    end
+    resources :payments
   end
 
   resources :users do
