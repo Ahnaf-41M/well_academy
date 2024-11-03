@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   resources :reviews
 
   resources :courses do
-    resources :lessons
+    resources :lessons do
+      member do
+        post :mark_as_watched
+      end
+    end
     resources :payments do
       member do
         get "payment_form"
