@@ -4,19 +4,20 @@ Rails.application.routes.draw do
 
   resources :categories
   resources :enrollments
-  resources :quizzes
-  resources :questions
+  # resources :questions
   resources :options
   resources :quiz_participations
   resources :reviews
 
   resources :courses do
-    resources :lessons
-    resources :payments do
+    resources :lessons do
       member do
-        get "payment_form"
-        get "payment_method"
+        post :mark_as_watched
       end
+    end
+    resources :payments
+    resources :quizzes do
+      resources :questions, shallow: true
     end
   end
 
