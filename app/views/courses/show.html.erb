@@ -12,11 +12,36 @@
           <p><strong>Language: </strong></span> <span><%= @course.language %></p>
           <p><strong>Duration:</strong> </span> <span><%= @course.total_duration %> </span></p>
           <p class="card-text fw-bold text-success"></p>
-          <p><strong>Price: </strong> <span class="fw-bold text-success">$<%= @course.price %></span></p>
-          <p><strong>Total Lessons: </strong> <span class=""><%= @course.lessons.count %></span></p>
+          <p><strong>Price: </strong> <span class="badge text-bg-success">$<%= @course.price %></span></p>
+          <% @lesson_count = @course.lessons.count %>
+          <p><strong>Total lessons: </strong> <span class=""><%= @lesson_count %></span></p>
+          <% if @user %>
+            <% @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count %>
+            <p><strong>Lesson
+              completed:</strong> <%= @lesson_completed %>
+            </p>
+          <% end %>
+          <% if @user && @lesson_completed == @lesson_count && @lesson_count > 0 %>
+            <p>
+              <a href="#" class="btn btn-primary btn-sm" onclick="showPdfModal('<%= url_for(@course.completion_certificate) %>'); return false;">
+                Download Course Completion Certificate
+              </a>
+            </p>
+          <% end %>
+
+          <% if @lesson_count > 0 %>
+            <% @progress = ((@lesson_completed / @lesson_count.to_f) * 100).round %>
+          <% else %>
+            <% @progress = 0 %>
+          <% end %>
+
+          <p class="fw-bold">Progress: </p>
+          <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 40px;">
+            <div class="progress-bar" style="width: <%= @progress %>%;"><%= @progress %>%</div>
+          </div>
           <p>
             <% if @course.syllabus.attached? %>
-              <a href="#" class="btn btn-outline-success btn-sm" onclick="showPdfModal('<%= url_for(@course.syllabus) %>'); return false;">Preview
+              <a href="#" class="btn btn-outline-success btn-sm mt-3" onclick="showPdfModal('<%= url_for(@course.syllabus) %>'); return false;">Preview
                 Syllabus</a>
             <% end %>
           </p>
@@ -36,6 +61,7 @@
                   <div class="col h6 fw-bold">Video</div>
                   <div class="col h6 fw-bold">Content</div>
                   <div class="col h6 fw-bold">Duration</div>
+                  <div class="col h6 fw-bold">Watched</div>
                 </div>
                 <% @course.lessons.each do |lesson| %>
                   <hr>
@@ -44,8 +70,7 @@
                     <div class="col">
 
                       <% if @user && Payment.exists?(user_id: @user.id, course_id: @course.id) %>
-                        <a href="#" onclick="showVideoModal('<%= url_for(lesson.video) %>', '<%= lesson.video.content_type %>'); return false;">Watch
-                        </a>
+                        <a href="#" onclick="markAsWatched(<%= @course.id %>, <%= lesson.id %>, '<%= url_for(lesson.video) %>', '<%= lesson.video.content_type %>'); return false;">Watch</a>
                       <% else %>
                         <p>Watch</p>
                       <% end %>
@@ -59,6 +84,13 @@
                       <% end %>
                     </div>
                     <div class="col"><%= lesson.video_duration %></div>
+                    <div class="col">
+                      <% if @user.video_watches.exists?(lesson: lesson) %>
+                        <span class="badge text-bg-success">Yes</span>
+                      <% else %>
+                        <span class="badge text-bg-danger">No</span>
+                      <% end %>
+                    </div>
                   </div>
                 <% end %>
               </div>
@@ -73,9 +105,7 @@
 <!-- Modal structure (hidden by default) -->
 <div id="videoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); align-items: center; justify-content: center;">
   <div style="background: white; padding: 20px; border-radius: 8px; max-width: 90%; max-height: 90%; position: relative;">
-    <!-- Close button -->
     <span onclick="closeVideoModal()" style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 24px; color: black;">&times;</span>
-    <!-- Video player -->
     <video id="modalVideo" width="800" controls>
       <source id="videoSource" src="" type="">
       Your browser does not support the video tag.
@@ -112,4 +142,25 @@
         document.getElementById('pdfModal').style.display = 'none';
         document.getElementById('modalPdf').src = '';
     }
+
+    function markAsWatched(courseId, lessonId, videoUrl, contentType) {
+        // Set the video source and show the modal
+        showVideoModal(videoUrl, contentType);
+
+        // Make an AJAX call to mark the lesson as watched
+        fetch(`/courses/${courseId}/lessons/${lessonId}/mark_as_watched`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        }).then(response => {
+            if (response.ok) {
+                console.log("Marked as watched");
+            } else {
+                console.error("Failed to mark as watched");
+            }
+        });
+    }
+
+
 </script>
