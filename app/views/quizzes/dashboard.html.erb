@@ -1,0 +1,56 @@
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+
+    <div class="row justify-content-center">
+      <h1 class="text-center mb-3 fw-bold mt-4">Quiz</h1>
+      <h4 class="text-center mb-4">Course Title: <strong class="text-danger"><%= @course.title %></strong></h4>
+
+      <div class="container text-center">
+
+        <% if @course.quiz.present? %>
+          <div class="row mb-3">
+            <%= link_to "Add Questions",
+                        new_course_quiz_question_path(@course, @course.quiz),
+                        class: "btn btn-success btn-sm mb-1 fs-3 fw-bold btn-round",
+                        style: "height: 100px; padding: 25px"
+            %>
+          </div>
+          <div class="row mb-3">
+            <%= link_to "View Quiz",
+                        course_quiz_path(@course, @course.quiz),
+                        class: "btn btn-success btn-sm mb-1 fs-3 fw-bold btn-round",
+                        style: "height: 100px; padding: 25px"
+            %>
+          </div>
+          <div class="row mb-3">
+            <%= link_to "Edit Quiz",
+                        edit_course_quiz_path(@course, @course.quiz),
+                        class: "btn btn-warning btn-sm mb-1 fs-3 fw-bold btn-round",
+                        style: "height: 100px; padding: 25px"
+            %>
+          </div>
+          <div class="row mb-3">
+            <%= button_to "Delete Quiz",
+                          course_quiz_path(@course, @course.quiz),
+                          method: :delete,
+                          class: "btn btn-outline-danger btn-sm mb-1 w-100 fs-3 fw-bold btn-round",
+                          style: "height: 100px; padding: 25px",
+                          onclick: "return confirm('Are you sure?')"
+            %>
+          </div>
+        <% else %>
+          <div class="row mb-3">
+            <%= link_to "Create a Quiz",
+                        new_course_quiz_path(@course),
+                        class: "btn btn-outline-success btn-sm mb-1 fs-3 fw-bold btn-round",
+                        style: "height: 100px; padding: 25px"
+            %>
+          </div>
+        <% end %>
+
+
+      </div>
+    </div>
+  </div>
+
+</section>
