@@ -17,6 +17,9 @@ Rails.application.routes.draw do
     end
     resources :payments
     resources :quizzes do
+      collection do
+        get "dashboard"
+      end
       resources :questions, shallow: true
     end
   end
