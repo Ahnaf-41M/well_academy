@@ -1,2 +1,52 @@
-<h1>Questions#new</h1>
-<p>Find me in app/views/questions/new.html.erb</p>
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+    <h1 class="row d-flex justify-content-center">New Question</h1>
+    <%= form_with model: @question, url: course_quiz_questions_path, local: true do |form| %>
+      <div class="row d-flex justify-content-center">
+        <div>
+          <h3>Question</h3>
+          <%= form.text_field :content, class: "form-control", required: true %>
+        </div>
+
+        <div>
+          <h3>Marks</h3>
+          <%= form.number_field :marks, class: "form-control", required: true %>
+        </div>
+
+        <h3>Options</h3>
+        <div id="options-fields">
+          <%= form.fields_for :options do |options_form| %>
+            <div class="option-set">
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Option</span>
+                <%= options_form.text_field :option_text, name: "question[options][][option_text]", class: "form-control me-2", required: true %>
+                <span class="me-2">Correct?</span>
+                <%= options_form.check_box :is_correct, name: "question[options][][is_correct]", class: "form-check-input" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <button class="btn btn-primary mb-3" type="button" id="add-option">Add Option</button>
+
+        <%= form.submit "Create Question", class: "btn btn-success" %>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<script>
+    document.getElementById("add-option").addEventListener("click", function () {
+        const optionsFields = document.getElementById("options-fields");
+        const newOption = document.createElement("div");
+        newOption.className = "option-set";
+        newOption.innerHTML = `
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">Option</span>
+            <input type="text" name="question[options][][option_text]" class="form-control me-2">
+            <span class="me-2">Correct?</span>
+            <input type="checkbox" name="question[options][][is_correct]" class="form-check-input">
+        </div>
+    `;
+        optionsFields.appendChild(newOption);
+    });
+</script>
