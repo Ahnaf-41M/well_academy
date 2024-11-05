@@ -2,73 +2,16 @@
   <div class="container h-100">
 
     <h1 class="row d-flex justify-content-center">Edit Question</h1>
-    
+
     <%= form_with model: @question, url: question_path, local: true do |form| %>
       <div class="row d-flex justify-content-center">
-        <div>
-          <h3>Question</h3>
-          <%= form.text_field :content, class: "form-control", required: true %>
-        </div>
-
-        <div>
-          <h3>Marks</h3>
-          <%= form.number_field :marks, class: "form-control", required: true %>
-        </div>
-
-        <h3>Options</h3>
-        <div id="options-fields">
-          <% @question.options.each_with_index do |option, index| %>
-            <%= form.fields_for :options, option do |options_form| %>
-              <div class="option-set">
-                <div class="input-group mb-3">
-                  <span class="input-group-text">Option</span>
-                  <%= options_form.text_field :option_text,
-                                              name: "question[options][#{index}][option_text]",
-                                              class: "form-control me-2",
-                                              value: option["option_text"],
-                                              required: true %>
-                  <span class="me-2">Correct?</span>
-                  <%= options_form.check_box :is_correct,
-                                             name: "question[options][#{index}][is_correct]",
-                                             class: "form-check-input",
-                                             checked: option["is_correct"] %>
-                  <button type="button" class="btn btn-danger btn-sm ms-3 remove-option">Remove</button>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-
-        <button class="btn btn-primary mb-3" type="button" id="add-option">Add Option</button>
-
+        <%= render "form", question: @question, form: form %>
         <%= form.submit "Update Question", class: "btn btn-success" %>
       </div>
+
+
     <% end %>
   </div>
 </section>
 
-<script>
-    document.getElementById("add-option").addEventListener("click", function () {
-        const optionsFields = document.getElementById("options-fields");
-        const optionIndex = optionsFields.children.length; // Track the index based on current count
-
-        const newOption = document.createElement("div");
-        newOption.className = "option-set";
-        newOption.innerHTML = `
-    <div class="input-group mb-3">
-      <span class="input-group-text">Option</span>
-      <input type="text" name="question[options][${optionIndex}][option_text]" class="form-control me-2" required>
-      <span class="me-2">Correct?</span>
-      <input type="checkbox" name="question[options][${optionIndex}][is_correct]" class="form-check-input">
-      <button type="button" class="btn btn-danger btn-sm ms-3 remove-option">Remove</button>
-    </div>
-  `;
-        optionsFields.appendChild(newOption);
-    });
-
-    document.addEventListener("click", function (event) {
-        if (event.target.classList.contains("remove-option")) {
-            event.target.closest(".option-set").remove();
-        }
-    });
-</script>
+<%= javascript_include_tag "question_form" %>
