@@ -16,8 +16,8 @@ gem "sprockets-rails"
 gem "stimulus-rails"
 gem "streamio-ffmpeg"
 gem "turbo-rails"
-# gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "tzinfo-data", platforms: %i[ mswin mingw x64_mingw jruby ]
+gem "webpacker"
 
 group :development, :test do
   gem "brakeman", require: false

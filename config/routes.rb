@@ -4,8 +4,6 @@ Rails.application.routes.draw do
 
   resources :categories
   resources :enrollments
-  # resources :questions
-  resources :options
   resources :quiz_participations
   resources :reviews
 
@@ -15,13 +13,13 @@ Rails.application.routes.draw do
         post :mark_as_watched
       end
     end
-    resources :payments
     resources :quizzes do
       collection do
         get "dashboard"
       end
       resources :questions, shallow: true
     end
+    resources :payments
   end
 
   resources :users do
