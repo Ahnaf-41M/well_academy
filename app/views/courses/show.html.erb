@@ -1,8 +1,8 @@
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
-
     <div class="col">
       <div class="card">
+
         <h5 class="card-header"><%= @course.title.titleize %></h5>
         <img src="<%= url_for(@course.display_picture) %>" class="card-img-top" alt="..." width="300" height="500">
 
@@ -37,7 +37,9 @@
 
           <p class="fw-bold">Progress: </p>
           <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 40px;">
-            <div class="progress-bar" style="width: <%= @progress %>%;"><%= @progress %>%</div>
+            <div class="progress-bar progress-bar-striped bg-success" style="width: <%= @progress %>%;">
+              <strong class="fs-5"><%= @progress %>%</strong>
+            </div>
           </div>
           <p>
             <% if @course.syllabus.attached? %>
@@ -144,10 +146,8 @@
     }
 
     function markAsWatched(courseId, lessonId, videoUrl, contentType) {
-        // Set the video source and show the modal
         showVideoModal(videoUrl, contentType);
 
-        // Make an AJAX call to mark the lesson as watched
         fetch(`/courses/${courseId}/lessons/${lessonId}/mark_as_watched`, {
             method: 'POST',
             headers: {
@@ -161,6 +161,4 @@
             }
         });
     }
-
-
 </script>
