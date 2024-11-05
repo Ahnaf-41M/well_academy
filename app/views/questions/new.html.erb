@@ -1,6 +1,8 @@
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
-    <h1 class="row d-flex justify-content-center">New Question</h1>
+    
+    <h1 class="row d-flex justify-content-center">Create Question</h1>
+
     <%= form_with model: @question, url: course_quiz_questions_path, local: true do |form| %>
       <div class="row d-flex justify-content-center">
         <div>
@@ -15,17 +17,28 @@
 
         <h3>Options</h3>
         <div id="options-fields">
-          <%= form.fields_for :options do |options_form| %>
-            <div class="option-set">
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">Option</span>
-                <%= options_form.text_field :option_text, name: "question[options][][option_text]", class: "form-control me-2", required: true %>
-                <span class="me-2">Correct?</span>
-                <%= options_form.check_box :is_correct, name: "question[options][][is_correct]", class: "form-check-input" %>
+          <% @question.options.each_with_index do |option, index| %>
+            <%= form.fields_for :options, option do |options_form| %>
+              <div class="option-set">
+                <div class="input-group mb-3">
+                  <span class="input-group-text">Option</span>
+                  <%= options_form.text_field :option_text,
+                                              name: "question[options][#{index}][option_text]",
+                                              class: "form-control me-2",
+                                              value: option["option_text"],
+                                              required: true %>
+                  <span class="me-2">Correct?</span>
+                  <%= options_form.check_box :is_correct,
+                                             name: "question[options][#{index}][is_correct]",
+                                             class: "form-check-input",
+                                             checked: option["is_correct"] %>
+                  <button type="button" class="btn btn-danger btn-sm ms-3 remove-option">Remove</button>
+                </div>
               </div>
-            </div>
+            <% end %>
           <% end %>
         </div>
+
         <button class="btn btn-primary mb-3" type="button" id="add-option">Add Option</button>
 
         <%= form.submit "Create Question", class: "btn btn-success" %>
@@ -37,16 +50,25 @@
 <script>
     document.getElementById("add-option").addEventListener("click", function () {
         const optionsFields = document.getElementById("options-fields");
+        const optionIndex = optionsFields.children.length; // Track the index based on current count
+
         const newOption = document.createElement("div");
         newOption.className = "option-set";
         newOption.innerHTML = `
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-default">Option</span>
-            <input type="text" name="question[options][][option_text]" class="form-control me-2">
-            <span class="me-2">Correct?</span>
-            <input type="checkbox" name="question[options][][is_correct]" class="form-check-input">
-        </div>
-    `;
+    <div class="input-group mb-3">
+      <span class="input-group-text">Option</span>
+      <input type="text" name="question[options][${optionIndex}][option_text]" class="form-control me-2" required>
+      <span class="me-2">Correct?</span>
+      <input type="checkbox" name="question[options][${optionIndex}][is_correct]" class="form-check-input">
+      <button type="button" class="btn btn-danger btn-sm ms-3 remove-option">Remove</button>
+    </div>
+  `;
         optionsFields.appendChild(newOption);
+    });
+
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("remove-option")) {
+            event.target.closest(".option-set").remove();
+        }
     });
 </script>
