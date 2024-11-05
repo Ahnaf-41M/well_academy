@@ -1,2 +1,20 @@
-<h1>Quizzes#new</h1>
-<p>Find me in app/views/quizzes/new.html.erb</p>
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+
+    <div class="row justify-content-center">
+      <h1 class="text-center mb-3 fw-bold mt-2">Create Quiz</h1>
+      <h5 class="text-center mb-3 fw-bold text-danger"> <%= @course.title %></h5>
+
+      <%= form_with model: [@course, @quiz], local: true do |f| %>
+        <div class="fw-bold h5">Title <span class="text-danger">*</span></div>
+        <div class="bd-highlight"><%= f.text_field :title, class: "form-control mb-3", placeholder: "Quiz title", required: true %></div>
+        <div class="d-grid">
+          <%= f.submit "Submit", class: "btn btn-primary btn-lg", disable_with: 'Submitting...' %>
+        </div>
+      <% end %>
+
+
+    </div>
+  </div>
+
+</section>
