@@ -1,8 +1,8 @@
 class QuestionsController < ApplicationController
   before_action :set_user
-  before_action :set_course
-  before_action :set_quiz
   before_action :set_question, only: %i[show edit update destroy]
+  before_action :set_quiz, except: %i[edit update destroy]
+  before_action :set_course, except: %i[edit update destroy]
 
   def index
     @questions = @quiz.questions
@@ -18,9 +18,15 @@ class QuestionsController < ApplicationController
 
   def create
     @question = @quiz.questions.build(question_params)
-    
-    @question.options = question_params[:options].map do |option|
-      { "option_text" => option["option_text"], "is_correct" => option["is_correct"] == "on" }
+
+    if question_params[:options].present?
+      options_array = question_params[:options].to_h.values # Convert to array of option hashes
+      @question.options = options_array.map do |option|
+        {
+          "option_text" => option["option_text"],
+          "is_correct" => option["is_correct"] == "on" ? "1" : "0"
+        }
+      end
     end
 
     if @question.save
@@ -32,20 +38,33 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    @course = @question.quiz.course
+    @quiz = @question.quiz
   end
 
   def update
-    if @question.update(question_params)
-      redirect_to dashboard_course_quizzes_path(@course, @quiz), notice: 'Question was successfully updated.'
+    @question = Question.find(params[:id])
+
+    if question_params[:options].present?
+      options_array = question_params[:options].to_h.values # Convert to array of option hashes
+      @question.options = options_array.map do |option|
+        {
+          "option_text" => option["option_text"],
+          "is_correct" => option["is_correct"] == "on" || option["is_correct"]
+        }
+      end
+    end
+
+    if @question.update(question_params.except(:options))
+      redirect_to course_quiz_path(@question.quiz.course, @question.quiz), notice: 'Question was successfully updated.'
     else
-      flash.now[:alert] = @question.errors.full_messages.join(", ")
-      render :edit, status: :unprocessable_entity
+      render :edit
     end
   end
 
   def destroy
     if @question.destroy
-      redirect_to course_quiz_questions_path(@quiz.course, @quiz), notice: 'Question was successfully deleted.'
+      redirect_to course_quiz_path(@question.quiz.course, @question.quiz), notice: 'Question was successfully deleted.'
     else
       flash.now[:alert] = @question.errors.full_messages.join(", ")
       render :edit, status: :unprocessable_entity
@@ -59,7 +78,7 @@ class QuestionsController < ApplicationController
   end
 
   def set_course
-    @course = Course.find(params[:course_id])
+    @course = @quiz.course
   end
 
   def set_quiz
@@ -67,7 +86,7 @@ class QuestionsController < ApplicationController
   end
 
   def set_question
-    @question = @quiz.questions.find(params[:id])
+    @question = Question.find(params[:id])
   end
 
   def question_params
