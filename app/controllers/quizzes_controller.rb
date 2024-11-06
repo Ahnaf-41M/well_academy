@@ -1,10 +1,63 @@
 class QuizzesController < ApplicationController
   before_action :set_user
-  before_action :set_course, only: %i[index new create show edit update destroy dashboard]
-  before_action :set_quiz, only: %i[show edit update destroy]
-  before_action :set_question, only: %i[show]
+  before_action :set_course
+  before_action :set_quiz, except: %i[dashboard index]
+  before_action :set_question, only: %i[show submit]
+  before_action :set_exam_quiz, only: %i[start]
+  before_action :update_quiz_marks, only: %i[show create update destroy]
 
   def dashboard
+  end
+
+  def start
+  end
+
+  def submit
+    @quiz_submission = params[:exam_quiz_questions]
+    @marks = Hash.new
+    @selected_answers = Hash.new
+    @correct_answers = Hash.new
+    @obtained_marks = 0
+
+    @quiz_submission.each do |key, val|
+      # puts "#{key}: #{val}"
+      @selected_answers[val["id"]] = val["options"].values
+                                                   .select { |option| option["is_correct"] == "1" }
+                                                   .map { |option| option["option_text"] }
+    end
+
+    @questions.each do |question|
+      @marks[question.id.to_s] = question.marks
+      question.options.each do |hash|
+        if hash["is_correct"] == "1"
+          @correct_answers[question.id.to_s] ||= []
+          @correct_answers[question.id.to_s] << hash["option_text"]
+        end
+      end
+    end
+
+    @selected_answers.each do |id, answers|
+      if @correct_answers[id] == answers
+        @obtained_marks += @marks[id].to_i
+      end
+    end
+
+    puts "obtained #{@obtained_marks}"
+
+    puts QuizParticipation.column_names
+
+    @quiz_participation = QuizParticipation.new(
+      student_id: @user.id,
+      quiz_id: @quiz.id,
+      marks_obtained: @obtained_marks,
+      total_marks: @quiz.total_marks,
+      submitted_at: Time.now
+    )
+
+    if @quiz_participation.save
+      redirect_to start_course_quiz_path(@course, @quiz)
+    end
+
   end
 
   def index
@@ -33,11 +86,6 @@ class QuizzesController < ApplicationController
   end
 
   def update
-    total_marks = 0
-    @quiz.questions.each do |question|
-      total_marks += question.marks
-    end
-    @quiz.total_marks = total_marks
     if @quiz.update(quiz_params)
       redirect_to course_quiz_path(@course), notice: 'Quiz was successfully updated.'
     else
@@ -67,6 +115,27 @@ class QuizzesController < ApplicationController
 
   def set_question
     @questions = @quiz.questions
+  end
+
+  def set_exam_quiz
+    @exam_quiz_questions = nil
+    if @course.quiz.present?
+      @exam_quiz_questions = @course.quiz.questions
+      @exam_quiz_questions.each do |question|
+        question.options.each do |option|
+          option["is_correct"] = "0"
+        end
+      end
+
+    end
+  end
+
+  def update_quiz_marks
+    total_marks = 0
+    @quiz.questions.each do |question|
+      total_marks += question.marks
+    end
+    @quiz.total_marks = total_marks
   end
 
   def quiz_params
