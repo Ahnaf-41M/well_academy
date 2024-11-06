@@ -20,7 +20,7 @@ class QuizzesController < ApplicationController
 
   def create
     @quiz = @course.build_quiz(quiz_params)
-    @quiz.total_marks ||= 100
+    @quiz.total_marks ||= 0
     if @quiz.save
       redirect_to dashboard_course_quizzes_path(@course), notice: 'Quiz was successfully created.'
     else
@@ -33,6 +33,11 @@ class QuizzesController < ApplicationController
   end
 
   def update
+    total_marks = 0
+    @quiz.questions.each do |question|
+      total_marks += question.marks
+    end
+    @quiz.total_marks = total_marks
     if @quiz.update(quiz_params)
       redirect_to course_quiz_path(@course), notice: 'Quiz was successfully updated.'
     else
