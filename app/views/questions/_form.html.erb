@@ -11,20 +11,20 @@
 <h3>Options</h3>
 <div id="options-fields">
   <% @question.options.each_with_index do |option, index| %>
-    <%= form.fields_for :options, option do |options_form| %>
+    <%= form.fields_for :options, option do |option_form| %>
       <div class="option-set">
         <div class="input-group mb-3">
           <span class="input-group-text">Option</span>
-          <%= options_form.text_field :option_text,
-                                      name: "question[options][#{index}][option_text]",
-                                      class: "form-control me-2",
-                                      value: option["option_text"],
-                                      required: true %>
+          <%= option_form.text_field :option_text,
+                                     name: "question[options][#{index}][option_text]",
+                                     class: "form-control me-2",
+                                     value: option["option_text"],
+                                     required: true %>
           <span class="me-2">Correct?</span>
-          <%= options_form.check_box :is_correct,
-                                     name: "question[options][#{index}][is_correct]",
-                                     class: "form-check-input",
-                                     checked: option["is_correct"] == "1" %>
+          <%= option_form.check_box :is_correct,
+                                    name: "question[options][#{index}][is_correct]",
+                                    class: "form-check-input",
+                                    checked: option["is_correct"] == "1" %>
           <button type="button" class="btn btn-danger btn-sm ms-3 remove-option">Remove</button>
         </div>
       </div>
