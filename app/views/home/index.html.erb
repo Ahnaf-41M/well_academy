@@ -23,9 +23,24 @@
                     <!--                    <span class="badge text-bg-success">$<%#= @course.price %></span>-->
                   </p>
 
-                  <% if !@user.nil? %>
+                  <% if @user %>
                     <% if Payment.exists?(user_id: @user.id, course_id: tmp_course.id) %>
-                      <%= link_to "Continue Course", course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
+                      <% @lesson_count = tmp_course.lessons.count %>
+                      <% @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: tmp_course.id }).count %>
+
+                      <% if @lesson_count == @lesson_completed %>
+                        <div class="d-flex gap-2">
+                          <%= link_to "Course Completed",
+                                      course_path(tmp_course),
+                                      class: "badge text-bg-success p-2 link-offset-2 link-underline link-underline-opacity-0" %>
+                          <a href="#" class="btn btn-primary btn-sm" onclick="showPdfModal('<%= url_for(tmp_course.completion_certificate) %>'); return false;">
+                            Completion Certificate
+                          </a>
+                        </div>
+                      <% else %>
+                        <%= link_to "Continue Course", course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
+                      <% end %>
+
                     <% else %>
                       <%= link_to "View Course", course_path(tmp_course), class: "btn btn-primary btn-sm" %>
                       <%= link_to "Enroll Course", new_course_payment_path(tmp_course), class: "btn btn-success btn-sm" %>
