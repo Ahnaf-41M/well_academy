@@ -1,0 +1,45 @@
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+    <h1 class="text-center">Quiz: <span class="text-danger"><%= @quiz.title %></span></h1>
+
+    <%= form_with model: @exam_quiz_questions, url: submit_course_quiz_path, local: true do |form| %>
+      <% @exam_quiz_questions.each_with_index do |question, q_index| %>
+
+        <div>
+          <%= form.fields_for "exam_quiz_questions[#{q_index}]", question do |question_form| %>
+            <div class="card mb-3">
+              <div class="card-header">
+                <h5><%= question.content %> (<span class="text-danger"><%= question.marks %></span>)</h5>
+
+                <%= question_form.hidden_field :id, name: "exam_quiz_questions[#{q_index}][id]", value: question.id %>
+              </div>
+
+              <% question.options.each_with_index do |option, o_index| %>
+                <%= question_form.fields_for "options[#{o_index}]", option do |option_form| %>
+                  <div class="card-body">
+                    <div class="form-check">
+                      <%= option_form.check_box :is_correct,
+                                                name: "exam_quiz_questions[#{q_index}][options][#{o_index}][is_correct]",
+                                                class: "form-check-input" %>
+
+                      <label for="exampleFormControlInput1" class="form-label"><%= option["option_text"] %></label>
+
+                      <%= option_form.hidden_field :option_text,
+                                                   name: "exam_quiz_questions[#{q_index}][options][#{o_index}][option_text]",
+                                                   value: option["option_text"],
+                                                   required: true %>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <div class="d-flex">
+        <%= form.submit "Submit", class: "btn btn-success" %>
+      </div>
+    <% end %>
+
+  </div>
+</section>
