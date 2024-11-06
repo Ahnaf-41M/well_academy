@@ -17,6 +17,10 @@ Rails.application.routes.draw do
       collection do
         get "dashboard"
       end
+      member do
+        get "start"
+        post "submit"
+      end
       resources :questions, shallow: true
     end
     resources :payments
