@@ -5,9 +5,11 @@ Rails.application.routes.draw do
   resources :categories
   resources :enrollments
   resources :quiz_participations
-  resources :reviews
 
   resources :courses do
+    collection do
+      get "index_by_category/:category_id", action: :index_by_category, as: :index_by_category
+    end
     resources :lessons do
       member do
         post :mark_as_watched
@@ -24,6 +26,7 @@ Rails.application.routes.draw do
       resources :questions, shallow: true
     end
     resources :payments
+    resources :reviews
   end
 
   resources :users do
