@@ -19,14 +19,6 @@ class Course < ApplicationRecord
   validates :language, presence: true
   validates :duration, presence: true
 
-  # def duration_hours
-  #   duration ? duration / 1.hour : 0
-  # end
-
-  # def duration_minutes
-  #   duration ? (duration % 1.hour) / 1.minute : 0
-  # end
-
   def total_duration
     return "0 hours, 0 minutes" unless duration
 
