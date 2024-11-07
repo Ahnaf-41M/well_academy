@@ -1,2 +1,28 @@
-<h1>Reviews#edit</h1>
-<p>Find me in app/views/reviews/edit.html.erb</p>
+<div class="container mt-4">
+  <div class="card mb-3">
+    <div class="card-header">
+      <h4 class="text-center"><%= @course.title %></h4>
+    </div>
+  </div>
+  <%= form_with(model: @review, url: course_review_path, local: true) do |form| %>
+    <%= form.hidden_field :course_id, value: @course.id %>
+    <%= form.hidden_field :student_id, value: @user.id %>
+
+    <div class="mb-5">
+      <label class="h4">Rating:</label>
+      <%= form.select :rating, options_for_select(1..5, selected: @review.rating), {}, { class: "form-select" } %>
+    </div>
+
+
+    <div class="mb-3">
+      <label class="h4">Comment:</label>
+
+      <%= form.text_area :comment,
+                         class: 'form-control',
+                         style: "height: 250px"
+      %>
+    </div>
+
+    <%= form.submit "Update Review", class: "btn btn-primary" %>
+  <% end %>
+</div>
