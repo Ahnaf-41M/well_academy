@@ -10,15 +10,7 @@
 
     <div class="mb-5">
       <label class="h4">Rating:</label>
-      <div data-coreui-toggle="rating" data-coreui-allow-clear="true" data-coreui-value="<%= @review.rating || 1 %>"></div>
-      <!-- Add this to your form -->
-
-      <%= f.number_field :rating, in: 1..5, step: 1, id: 'rating-input', value: @review.rating, required: true %>
-      <%= form.label :rating, "Rating" %>
-      <%= form.select :rating, options_for_select(1..5, selected: @review.rating), {}, { class: "form-select" } %>
-
-
-      <%= form.hidden_field :rating, id: 'rating-input', value: @review.rating %>
+      <%= form.select :rating, options_for_select(1..5, selected: @review.rating), {}, { class: "form-select fw-bold" } %>
     </div>
 
     <div class="mb-3">
