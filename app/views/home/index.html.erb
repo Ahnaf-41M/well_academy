@@ -1,57 +1,102 @@
-<section class="vh-100" style="background-color: #eee;">
-  <div class="container h-100">
+<div class="container mb-4">
 
-    <% @categories.each do |tmp_category| %>
-      <% @tmp_courses = Course.where(category_id: tmp_category.id).limit(4) %>
+  <% @categories.each do |tmp_category| %>
+    <% @tmp_courses = Course.where(category_id: tmp_category.id).limit(4) %>
 
-      <% if @tmp_courses.exists? %>
-        <h3 class="mt-4 mb-2"><%= tmp_category.name %></h3>
+    <% if @tmp_courses.exists? %>
 
-        <div class="row mb-4">
-          <% @tmp_courses.each do |tmp_course| %>
-            <div class="col col-4">
-              <div class="card">
-                <img src="<%= url_for(tmp_course.display_picture) %>" class="card-img-top" alt="..." width="300" height="200">
-                <h5 class="card-header"><%= tmp_course.title %></h5>
-                <div class="card-body">
-                  <p><strong>Teacher:</strong> </span> <span><%= User.find(tmp_course.teacher_id).name %></p>
-                  <p><strong>Level: </strong></span> <span><%= tmp_course.level.titleize %></p>
-                  <p><strong>Duration:</strong> </span> <span><%= tmp_course.total_duration %></p>
-                  <p class="card-text fw-bold text-success"></p>
-                  <p><strong>Price: </strong>
-                    <span class="badge text-bg-success">$<%= tmp_course.price %></span>
-                    <!--                    <span class="badge text-bg-success">$<%#= @course.price %></span>-->
-                  </p>
+      <div class="card mt-4 mb-2">
+        <div class="card-header bg-secondary text-white">
+          <h3><%= tmp_category.name %></h3>
+        </div>
+      </div>
 
-                  <% if @user %>
-                    <% if Payment.exists?(user_id: @user.id, course_id: tmp_course.id) %>
-                      <% @lesson_count = tmp_course.lessons.count %>
-                      <% @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: tmp_course.id }).count %>
+      <div class="row mb-4">
+        <% @tmp_courses.each do |tmp_course| %>
+          <div class="col col-4">
+            <div class="card">
 
-                      <% if @lesson_count == @lesson_completed %>
-                        <div class="d-flex gap-2">
-                          <%= link_to "Course Completed",
-                                      course_path(tmp_course),
-                                      class: "badge text-bg-success p-2 link-offset-2 link-underline link-underline-opacity-0" %>
-                          <a href="#" class="btn btn-primary btn-sm" onclick="showPdfModal('<%= url_for(tmp_course.completion_certificate) %>'); return false;">
-                            Completion Certificate
-                          </a>
-                        </div>
-                      <% else %>
-                        <%= link_to "Continue Course", course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
-                      <% end %>
+              <img src="<%= url_for(tmp_course.display_picture) %>" class="card-img-top" alt="..." width="300" height="200">
+              <h5 class="card-header"><%= tmp_course.title %></h5>
+              <div class="card-body">
+                <p><%= User.find(tmp_course.teacher_id).name %></p>
+                <p><span class="fw-bold"><%= tmp_course.total_duration %></p>
 
+                <% average_rating = Review.where(course_id: tmp_course.id).average(:rating) || 0.0 %>
+
+                <h6 class="fw-bold"><%= average_rating %> ⭐&nbsp;</h6>
+
+                <h5><span class="badge rounded-pill text-bg-success text-light">$<%= tmp_course.price %></span></h5>
+
+                <% if @user %>
+                  <% if Payment.exists?(user_id: @user.id, course_id: tmp_course.id) %>
+                    <% @lesson_count = tmp_course.lessons.count %>
+                    <% @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: tmp_course.id }).count %>
+
+                    <% if @lesson_count == @lesson_completed %>
+                      <div class="d-flex gap-2">
+                        <%= link_to "Course Completed",
+                                    course_path(tmp_course),
+                                    class: "badge text-bg-success p-2 link-offset-2 link-underline link-underline-opacity-0" %>
+                        <a href="#" class="btn btn-primary btn-sm" onclick="showPdfModal('<%= url_for(tmp_course.completion_certificate) %>'); return false;">
+                          Completion Certificate
+                        </a>
+                      </div>
                     <% else %>
-                      <%= link_to "View Course", course_path(tmp_course), class: "btn btn-primary btn-sm" %>
-                      <%= link_to "Enroll Course", new_course_payment_path(tmp_course), class: "btn btn-success btn-sm" %>
+                      <%= link_to "Continue Course", course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
                     <% end %>
+
+                  <% else %>
+                    <%= link_to "View Course", course_path(tmp_course), class: "btn btn-primary btn-sm" %>
+                    <%= link_to "Enroll Course", new_course_payment_path(tmp_course), class: "btn btn-success btn-sm" %>
                   <% end %>
-                </div>
+                <% end %>
               </div>
             </div>
-          <% end %>
-        </div>
-      <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <%= link_to "Show all on #{tmp_category.name} courses >>",
+                  index_by_category_courses_path(tmp_category.id),
+                  class: "btn btn-outline-dark"
+      %>
     <% end %>
+  <% end %>
+</div>
+
+
+<div id="pdfModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); align-items: center; justify-content: center;">
+  <div style="background: white; padding: 20px; border-radius: 8px; max-width: 90%; max-height: 90%; position: relative;">
+    <span onclick="closePdfModal()" style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 24px; color: black;">&times;</span>
+    <iframe id="modalPdf" src="" width="1000px" height="700px" style="border: none;"></iframe>
   </div>
-</section>
+</div>
+
+<script>
+    document.addEventListener('turbolinks:load', function () {
+        const ratingElements = document.querySelectorAll('[data-coreui-toggle="rating"]');
+        ratingElements.forEach(function (ratingElement) {
+            // Re-initialize the CoreUI rating component
+            new Coreui.Rating(ratingElement);
+        });
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        if (!sessionStorage.getItem('reloaded')) {
+            sessionStorage.setItem('reloaded', 'true');
+            location.reload();
+        }
+    });
+
+    function showPdfModal(pdfUrl) {
+        document.getElementById('modalPdf').src = pdfUrl;
+        document.getElementById('pdfModal').style.display = 'flex';
+    }
+
+    function closePdfModal() {
+        document.getElementById('pdfModal').style.display = 'none';
+        document.getElementById('modalPdf').src = '';
+    }
+</script>
