@@ -1,18 +1,17 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <%# <a class="navbar-brand" href="#">Navbar</a> %>
-    <%= link_to "WellAcademy", root_path, class: "navbar-brand" %>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+
+    <%= link_to "WellAcademy",
+                root_path,
+                class: "navbar-brand fw-bold" %>
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        <%= form_with(url: root_path, method: :get, local: true, html: { class: "d-flex", role: "search" }) do |form| %>
+          <%= form.text_field :search, class: "form-control me-2", type: "search", placeholder: "Search", aria: { label: "Search" } %>
+          <%= form.submit "Search", class: "btn btn-outline-success" %>
+        <% end %>
       </ul>
-
 
       <% if logged_in? == false %>
         <ul class="d-flex" role="search">
@@ -23,14 +22,16 @@
         <% if @user.student? %>
           <ul>
             <div class="d-grid gap-2 col-12 mx-auto">
-              <%= link_to "Become a Teacher", become_teacher_user_path(@user), class: "btn btn-outline-dark btn-round" %>
+              <%= link_to "Become a Teacher",
+                          become_teacher_user_path(@user),
+                          class: "btn btn-ghost-dark rounded-pill fw-bold" %>
             </div>
           </ul>
         <% end %>
 
         <% if @user.teacher? || @user.admin? %>
           <div class="dropdown me-2">
-            <button class="btn btn-secondary dropdown-toggle btn-round" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-ghost-primary rounded-pill dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               Courses
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
