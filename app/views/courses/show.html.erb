@@ -1,117 +1,137 @@
-<section class="vh-100" style="background-color: #eee;">
-  <div class="container h-100">
-    <div class="col">
-      <div class="card">
+<div class="container h-100">
+  <div class="col">
+    <div class="card">
 
-        <h5 class="card-header"><%= @course.title.titleize %></h5>
-        <img src="<%= url_for(@course.display_picture) %>" class="card-img-top" alt="..." width="300" height="500">
+      <h5 class="card-header"><%= @course.title.titleize %></h5>
+      <img src="<%= url_for(@course.display_picture) %>" class="card-img-top" alt="..." width="300" height="500">
 
-        <div class="card-body">
-          <p><strong>Teacher:</strong> </span> <span><%= User.find(@course.teacher_id).name %></p>
-          <p><strong>Level: </strong></span> <span><%= @course.level.titleize %></p>
-          <p><strong>Language: </strong></span> <span><%= @course.language %></p>
-          <p><strong>Duration:</strong> </span> <span><%= @course.total_duration %> </span></p>
-          <p class="card-text fw-bold text-success"></p>
-          <p><strong>Price: </strong> <span class="badge text-bg-success">$<%= @course.price %></span></p>
-          <% @lesson_count = @course.lessons.count %>
-          <p><strong>Total lessons: </strong> <span class=""><%= @lesson_count %></span></p>
-          <% if @user %>
-            <% @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count %>
-            <p><strong>Lesson
-              completed:</strong> <%= @lesson_completed %>
-            </p>
-          <% end %>
-          <% if @user && @lesson_completed == @lesson_count && @lesson_count > 0 %>
-            <p>
-              <a href="#" class="btn btn-primary btn-sm" onclick="showPdfModal('<%= url_for(@course.completion_certificate) %>'); return false;">
-                Download Course Completion Certificate
-              </a>
-            </p>
-          <% end %>
+      <div class="card-body">
+        <p><strong>Teacher:</strong> </span> <span><%= User.find(@course.teacher_id).name %></p>
+        <p><strong>Level: </strong></span> <span><%= @course.level.titleize %></p>
+        <p><strong>Language: </strong></span> <span><%= @course.language %></p>
+        <p><strong>Duration:</strong> </span> <span><%= @course.total_duration %> </span></p>
+        <p class="card-text fw-bold text-success"></p>
+        <p><strong>Price: </strong>
+          <span class="badge rounded-pill text-bg-success text-light">$<%= @course.price %></span></p>
+        <!--        <h5><span class="badge rounded-pill text-bg-success text-light">$<%#= tmp_course.price %></span></h5>-->
 
-          <% if @lesson_count > 0 %>
-            <% @progress = ((@lesson_completed / @lesson_count.to_f) * 100).round %>
-          <% else %>
-            <% @progress = 0 %>
-          <% end %>
-
-          <p class="fw-bold">Progress: </p>
-          <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 40px;">
-            <div class="progress-bar progress-bar-striped bg-success" style="width: <%= @progress %>%;">
-              <strong class="fs-5"><%= @progress %>%</strong>
-            </div>
-          </div>
-          <p>
-            <% if @course.syllabus.attached? %>
-              <a href="#" class="btn btn-outline-success btn-sm mt-3" onclick="showPdfModal('<%= url_for(@course.syllabus) %>'); return false;">Preview
-                Syllabus</a>
-            <% end %>
+        <% @lesson_count = @course.lessons.count %>
+        <p><strong>Total lessons: </strong> <span class=""><%= @lesson_count %></span></p>
+        <% if @user %>
+          <% @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count %>
+          <p><strong>Lesson
+            completed:</strong> <%= @lesson_completed %>
           </p>
-          <div class="d-flex">
+        <% end %>
+        <% if @user && @lesson_completed == @lesson_count && @lesson_count > 0 %>
+          <p>
+            <a href="#" class="btn btn-outline-primary btn-sm" onclick="showPdfModal('<%= url_for(@course.completion_certificate) %>'); return false;">
+              Download Course Completion Certificate
+            </a>
+          </p>
+        <% end %>
+
+        <% if @lesson_count > 0 %>
+          <% @progress = ((@lesson_completed / @lesson_count.to_f) * 100).round %>
+        <% else %>
+          <% @progress = 0 %>
+        <% end %>
+
+        <p class="fw-bold">Progress: </p>
+        <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 40px;">
+          <div class="progress-bar progress-bar-striped bg-success" style="width: <%= @progress %>%;">
+            <strong class="fs-5"><%= @progress %>%</strong>
+          </div>
+        </div>
+        <p>
+          <% if @course.syllabus.attached? %>
+            <a href="#" class="btn btn-outline-success btn-sm mt-3" onclick="showPdfModal('<%= url_for(@course.syllabus) %>'); return false;">
+              Syllabus</a>
+          <% end %>
+        </p>
+        <div class="d-flex">
+          <% if @course.quiz.present? %>
             <% quiz_participation = QuizParticipation.find_by(student_id: @user.id, quiz_id: @course.quiz.id) %>
-            <% if @course.quiz.present? && quiz_participation.nil? && @course.quiz.questions.present? %>
+            <% if quiz_participation.nil? && @course.quiz.questions.present? %>
               <%= link_to "Start Quiz", start_course_quiz_path(@course, @course.quiz), class: "btn btn-warning" %>
             <% elsif quiz_participation %>
               <p><strong>Quiz Marks: </strong><%= quiz_participation.marks_obtained %></p>
             <% end %>
-          </div>
+          <% end %>
         </div>
+      </div>
 
 
-        <div class="accordion" id="accordionExample">
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
-              <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Course Contents
-              </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <div class="row">
-                  <div class="col h6 fw-bold">Lesson</div>
-                  <div class="col h6 fw-bold">Video</div>
-                  <div class="col h6 fw-bold">Content</div>
-                  <div class="col h6 fw-bold">Duration</div>
-                  <div class="col h6 fw-bold">Watched</div>
-                </div>
-                <% @course.lessons.each do |lesson| %>
-                  <hr>
-                  <div class="row">
-                    <div class="col"><%= lesson.title %></div>
-                    <div class="col">
-
-                      <% if @user && Payment.exists?(user_id: @user.id, course_id: @course.id) %>
-                        <a href="#" onclick="markAsWatched(<%= @course.id %>, <%= lesson.id %>, '<%= url_for(lesson.video) %>', '<%= lesson.video.content_type %>'); return false;">Watch</a>
-                      <% else %>
-                        <p>Watch</p>
-                      <% end %>
-                    </div>
-                    <div class="col">
-                      <% if lesson.content.attached? %>
-                        <a href="#" onclick="showPdfModal('<%= url_for(lesson.content) %>'); return false;">Preview
-                          PDF</a>
-                      <% else %>
-                        <%= "None" %>
-                      <% end %>
-                    </div>
-                    <div class="col"><%= lesson.video_duration %></div>
-                    <div class="col">
-                      <% if @user.video_watches.exists?(lesson: lesson) %>
-                        <span class="badge text-bg-success">Yes</span>
-                      <% else %>
-                        <span class="badge text-bg-danger">No</span>
-                      <% end %>
-                    </div>
-                  </div>
-                <% end %>
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Course Contents
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <div class="row">
+                <div class="col h6 fw-bold">Lesson</div>
+                <div class="col h6 fw-bold">Video</div>
+                <div class="col h6 fw-bold">Content</div>
+                <div class="col h6 fw-bold">Duration</div>
+                <div class="col h6 fw-bold">Watched</div>
               </div>
+              <% @course.lessons.each do |lesson| %>
+                <hr>
+                <div class="row">
+                  <div class="col"><%= lesson.title %></div>
+                  <div class="col">
+
+                    <% if @user && Payment.exists?(user_id: @user.id, course_id: @course.id) %>
+                      <a href="#" onclick="markAsWatched(<%= @course.id %>, <%= lesson.id %>, '<%= url_for(lesson.video) %>', '<%= lesson.video.content_type %>'); return false;">Watch</a>
+                    <% else %>
+                      <p>Watch</p>
+                    <% end %>
+                  </div>
+                  <div class="col">
+                    <% if lesson.content.attached? %>
+                      <a href="#" onclick="showPdfModal('<%= url_for(lesson.content) %>'); return false;">Preview
+                        PDF</a>
+                    <% else %>
+                      <%= "None" %>
+                    <% end %>
+                  </div>
+                  <div class="col"><%= lesson.video_duration %></div>
+                  <div class="col">
+                    <% if @user.video_watches.exists?(lesson: lesson) %>
+                      <span class="badge text-bg-success">Yes</span>
+                    <% else %>
+                      <span class="badge text-bg-danger">No</span>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</section>
+
+  <% if Enrollment.exists?(student_id: @user.id, course_id: @course.id) %>
+    <div>
+      <% @review = Review.find_by(course_id: @course.id, student_id: @user.id) %>
+      <% if @review.present? %>
+        <%= link_to "Edit Review",
+                    edit_course_review_path(@course, @review),
+                    class: "btn btn-primary mt-3 mb-2"
+        %>
+      <% else %>
+        <%= link_to "Review Course",
+                    new_course_review_path(@course),
+                    class: "btn btn-primary mt-3 mb-2"
+        %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
 
 <!-- Modal structure (hidden by default) -->
 <div id="videoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); align-items: center; justify-content: center;">
