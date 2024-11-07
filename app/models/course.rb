@@ -2,8 +2,9 @@ class Course < ApplicationRecord
   belongs_to :teacher, class_name: "User" # Association to the User model
   belongs_to :category
   has_many :lessons, dependent: :destroy
+  has_many :reviews, dependent: :destroy
   has_one :quiz
-  
+
   has_one_attached :display_picture
   has_one_attached :syllabus
   has_one_attached :completion_certificate
@@ -17,7 +18,7 @@ class Course < ApplicationRecord
   validates :level, inclusion: { in: levels.keys }
   validates :language, presence: true
   validates :duration, presence: true
-  
+
   def total_duration
     return "0 hours, 0 minutes" unless duration
 
