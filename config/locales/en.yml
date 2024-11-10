@@ -1,2 +1,329 @@
 en:
-  hello: "Hello world"
+  # categories
+  categories:
+    index:
+      title: "Categories"
+      empty: "No categories available"
+    show:
+      title: "Category Details"
+    new:
+      title: "New Category"
+      form:
+        name: "Category Name"
+        description: "Category Description"
+    edit:
+      title: "Edit Category"
+    create:
+      success: "Category was successfully created."
+      failure: "There was an issue creating the category."
+    update:
+      success: "Category was successfully updated."
+      failure: "There was an issue updating the category."
+    destroy:
+      success: "Category was successfully destroyed."
+    errors:
+      name: "Name can't be blank"
+      description: "Description can't be blank"
+
+  #courses
+  courses:
+    index:
+      title: "Courses"
+      no_courses: "No courses available"
+    show:
+      title: "Course Details"
+    new:
+      title: "New Course"
+      form:
+        title: "Course Title"
+        description: "Course Description"
+        teacher: "Teacher"
+        category: "Category"
+        price: "Price"
+        level: "Level"
+        language: "Language"
+        duration: "Duration"
+        syllabus: "Syllabus"
+        certificates: "Certificates"
+    edit:
+      title: "Edit Course"
+    create:
+      success: "Course was successfully created."
+      failure: "There was an issue creating the course."
+    update:
+      success: "Course was successfully updated."
+      failure: "There was an issue updating the course."
+    destroy:
+      success: "Course was successfully deleted."
+      failure: "There was an issue deleting the course."
+    errors:
+      title: "Title can't be blank"
+      description: "Description can't be blank"
+      teacher_id: "Teacher must be assigned"
+      category_id: "Category must be selected"
+      price: "Price must be provided"
+    progress:
+      incomplete: "You have not completed any lessons in this course."
+
+  #enrollments
+  enrollments:
+    index:
+      title: "Enrollments"
+      empty: "No enrollments found"
+    show:
+      title: "Enrollment Details"
+    new:
+      title: "New Enrollment"
+    edit:
+      title: "Edit Enrollment"
+    create:
+      success: "Enrollment was successfully created."
+      failure: "There was an issue creating the enrollment."
+    update:
+      success: "Enrollment was successfully updated."
+      failure: "There was an issue updating the enrollment."
+    destroy:
+      success: "Enrollment was successfully deleted."
+      failure: "There was an issue deleting the enrollment."
+    errors:
+      course_id: "Course must be selected"
+      student_id: "Student must be assigned"
+
+  #lessons
+  lessons:
+    index:
+      title: "Lessons"
+      no_lessons: "No lessons available for this course."
+    show:
+      title: "Lesson Details"
+    new:
+      title: "New Lesson"
+      form:
+        title: "Title"
+        order: "Order"
+        video: "Video"
+        content: "Content"
+      submit: "Add Lesson"
+    edit:
+      title: "Edit Lesson"
+      form:
+        title: "Title"
+        order: "Order"
+        video: "Video"
+        content: "Content"
+      submit: "Update Lesson"
+    create:
+      success: "Lesson was added successfully."
+      failure: "There was an issue adding the lesson."
+    update:
+      success: "Lesson was successfully updated."
+      failure: "There was an issue updating the lesson."
+    destroy:
+      success: "Lesson was successfully deleted."
+      failure: "There was an issue deleting the lesson."
+    mark_as_watched:
+      success: "Marked as watched."
+      already_watched: "You have already marked this video as watched."
+    errors:
+      title: "Title can't be blank"
+      order: "Order must be a number"
+      video: "Video must be attached"
+      content: "Content can't be blank"
+
+  #password_resets
+  password_resets:
+    new:
+      title: "Password Reset"
+      instructions: "Please enter your email address to receive password reset instructions."
+    create:
+      success: "Password reset instructions have been sent to your email."
+      failure: "Email not found."
+    edit:
+      title: "Reset Your Password"
+      instructions: "Please enter a new password."
+      expired_link: "Password reset link has expired. Please request a new one."
+    update:
+      success: "Password has been reset successfully."
+      failure: "There was an error resetting your password. Please try again."
+    errors:
+      password_blank: "Password can't be blank"
+      password_confirmation_mismatch: "Password confirmation doesn't match Password"
+      password_invalid: "Password is too weak"
+
+  #payments
+  payments:
+    index:
+      title: "Payments"
+      no_payments: "No payments found."
+    show:
+      title: "Payment Details"
+    new:
+      title: "New Payment"
+      instructions: "Please review the payment details below."
+    create:
+      success: "Payment was done successfully."
+      failure: "There was an error processing your payment. Please try again."
+    edit:
+      title: "Edit Payment"
+    update:
+      success: "Payment updated successfully."
+      failure: "There was an error updating the payment. Please try again."
+    destroy:
+      success: "Payment deleted successfully."
+      failure: "There was an error deleting the payment. Please try again."
+    errors:
+      payment_invalid: "Invalid payment details."
+      payment_not_found: "Payment not found."
+
+  #questions
+  questions:
+    index:
+      title: "Questions"
+      no_questions: "No questions found for this quiz."
+    show:
+      title: "Question Details"
+    new:
+      title: "New Question"
+      instructions: "Please add a new question below."
+    create:
+      success: "Question was successfully created."
+      failure: "There was an error creating the question. Please try again."
+    edit:
+      title: "Edit Question"
+    update:
+      success: "Question was successfully updated."
+      failure: "There was an error updating the question. Please try again."
+    destroy:
+      success: "Question was successfully deleted."
+      failure: "There was an error deleting the question. Please try again."
+    errors:
+      question_invalid: "Invalid question details."
+      question_not_found: "Question not found."
+
+  #quiz_participations
+  quiz_participations:
+    index:
+      title: "Quiz Participations"
+      no_participations: "No quiz participations found."
+    show:
+      title: "Quiz Participation Details"
+    new:
+      title: "New Participation"
+      instructions: "Please select a quiz to participate in."
+    create:
+      success: "Quiz participation was successfully created."
+      failure: "There was an error creating the quiz participation. Please try again."
+    edit:
+      title: "Edit Participation"
+    update:
+      success: "Quiz participation was successfully updated."
+      failure: "There was an error updating the quiz participation. Please try again."
+    destroy:
+      success: "Quiz participation was successfully deleted."
+      failure: "There was an error deleting the quiz participation. Please try again."
+    errors:
+      participation_invalid: "Invalid participation details."
+      participation_not_found: "Participation not found."
+
+  #quizzes
+  quizzes:
+    dashboard:
+      title: "Quiz Dashboard"
+    start:
+      title: "Start Quiz"
+      instructions: "Please answer all questions before submitting your quiz."
+      submit_button: "Submit Quiz"
+      error: "There was an issue starting the quiz. Please try again."
+    submit:
+      success: "Quiz submission successful."
+      error: "An error occurred while submitting your quiz. Please try again."
+    index:
+      title: "Quiz List"
+      no_quizzes: "No quizzes available for this course."
+    show:
+      title: "Quiz Details"
+    new:
+      title: "Create New Quiz"
+      instructions: "Fill in the quiz details to create a new quiz."
+    create:
+      success: "Quiz was successfully created."
+      failure: "There was an error creating the quiz. Please try again."
+    edit:
+      title: "Edit Quiz"
+    update:
+      success: "Quiz was successfully updated."
+      failure: "There was an error updating the quiz. Please try again."
+    destroy:
+      success: "Quiz was successfully deleted."
+      failure: "There was an error deleting the quiz. Please try again."
+    errors:
+      missing_title: "Title is required."
+      invalid_marks: "Total marks must be a valid number."
+
+  #reviews
+  reviews:
+    index:
+      title: "All Reviews"
+      no_reviews: "No reviews available for this course."
+    show:
+      title: "Review Details"
+    new:
+      title: "Submit a Review"
+      instructions: "Please provide a rating and comment for the course."
+    create:
+      success: "Review was successfully submitted."
+      failure: "There was an error submitting your review. Please try again."
+    edit:
+      title: "Edit Review"
+    update:
+      success: "Review was successfully updated."
+      failure: "There was an error updating your review. Please try again."
+    destroy:
+      success: "Review was successfully deleted."
+      failure: "There was an error deleting your review. Please try again."
+    errors:
+      missing_rating: "Rating is required."
+      invalid_rating: "Rating must be between 1 and 5."
+      missing_comment: "Comment is required."
+
+  #sessions
+  sessions:
+    login:
+      title: "Login"
+      instructions: "Please enter your email and password to log in."
+    create:
+      success: "Logged in successfully."
+      failure: "Invalid email or password."
+    logout:
+      success: "Logged out successfully."
+    errors:
+      invalid_credentials: "Invalid email or password."
+      unconfirmed_account: "Your account is unconfirmed. Please check your email for the confirmation link."
+
+  #users
+  users:
+    index:
+      title: "Users"
+      no_users: "No users found."
+    create:
+      success: "User created successfully."
+      failure: "There were some errors creating the user."
+    update:
+      success: "User updated successfully."
+      failure: "Empty/Invalid fields!"
+    destroy:
+      success: "User deleted successfully."
+      failure: "There was some error deleting the user."
+    confirm:
+      success: "Your email has been confirmed successfully!"
+      failure: "Invalid confirmation token or email already confirmed."
+    approve_teacher:
+      success: "Teacher approved."
+      failure: "Couldn't approve teacher."
+    reject_teacher:
+      success: "User rejected successfully!"
+    remove_profile_picture:
+      success: "Profile picture removed successfully!"
+    errors:
+      invalid_fields: "Empty/Invalid fields!"
+      approval_error: "Couldn't approve teacher."
