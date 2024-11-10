@@ -26,7 +26,7 @@
 
         <% if @user&.teacher? || @user&.admin? %>
           <div class="dropdown me-2">
-            <button class="btn btn-ghost-primary rounded-pill dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               <%= t('navbar.courses') %>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
