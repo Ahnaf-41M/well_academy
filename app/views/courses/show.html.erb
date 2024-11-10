@@ -1,4 +1,4 @@
-<div class="container h-100">
+<div class="container">
   <div class="col">
     <div class="card">
 
@@ -23,13 +23,34 @@
             completed:</strong> <%= @lesson_completed %>
           </p>
         <% end %>
-        <% if @user && @lesson_completed == @lesson_count && @lesson_count > 0 %>
-          <p>
-            <a href="#" class="btn btn-outline-primary btn-sm" onclick="showPdfModal('<%= url_for(@course.completion_certificate) %>'); return false;">
-              Download Course Completion Certificate
-            </a>
-          </p>
+        <% if @user %>
+          <% if @lesson_completed == @lesson_count && @lesson_count > 0 %>
+            <p>
+              <a href="#" class="btn btn-outline-primary btn-sm" onclick="showPdfModal('<%= url_for(@course.completion_certificate) %>'); return false;">
+                Download Course Completion Certificate
+              </a>
+            </p>
+          <% end %>
+
+          <% if @course.quiz.present? %>
+            <% @quiz_participation = QuizParticipation.find_by(student_id: @user.id, quiz_id: @course.quiz.id) %>
+            <% if @quiz_participation %>
+              <% marks_obtained = @quiz_participation.marks_obtained %>
+              <% total_marks = @quiz_participation.total_marks %>
+              <% percentage = (marks_obtained / total_marks.to_f) * 100 %>
+              <% if percentage >= 30 %>
+                <p>
+                  <a href="#" class="btn btn-outline-primary btn-sm" onclick="showPdfModal('<%= url_for(@course.achievement_certificate) %>'); return false;">
+                    Download Achievement Certificate
+                  </a>
+                </p>
+              <% end %>
+            <% end %>
+          <% end %>
+
         <% end %>
+
+
 
         <% if @lesson_count > 0 %>
           <% @progress = ((@lesson_completed / @lesson_count.to_f) * 100).round %>
@@ -46,7 +67,8 @@
         <p>
           <% if @course.syllabus.attached? %>
             <a href="#" class="btn btn-outline-success btn-sm mt-3" onclick="showPdfModal('<%= url_for(@course.syllabus) %>'); return false;">
-              Syllabus</a>
+              Syllabus
+            </a>
           <% end %>
         </p>
         <div class="d-flex">
