@@ -9,18 +9,18 @@
 
                 <p class="text-center h1 fw-bold mb-3 mx-1 mx-md-4 mt-3">Edit Profile</p>
                 <p style="color: red;" class="text-center">* indicates required fields</p>
-                <%= form_with(model: @tmp_user, url: user_path(@tmp_user), class: "mx-1 mx-md-4", method: :patch) do |f| %>
-                    
-                    <%= render 'form', user: @user, tmp_user: @tmp_user, f: f %>
+                <%= form_with(model: @tmp_user, class: "mx-1 mx-md-4") do |f| %>
 
-                    
-                    <div class="d-grid gap-2">
-                        <%= f.submit "Update", class: "btn btn-outline-success btn-lg", disable_with: 'Submiting...' %>
-                    </div>
+                  <%= render 'form', tmp_user: @tmp_user, f: f %>
+
+                  <div class="d-grid gap-2">
+                    <%= f.submit "Update", class: "btn btn-outline-success btn-lg", disable_with: 'Submiting...' %>
+                  </div>
                 <% end %>
 
               </div>
-              
+
+            </div>
           </div>
         </div>
       </div>
