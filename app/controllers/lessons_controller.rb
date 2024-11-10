@@ -2,10 +2,10 @@ class LessonsController < ApplicationController
   before_action :set_user
   before_action :set_course
   before_action :set_lesson, only: %i[show edit update destroy]
-  # before_action :set_course_duration, only: %i[create edit update destroy]
 
   def index
     @lessons = @course.lessons.order(:order)
+    flash.now[:notice] = t('lessons.index.no_lessons') if @lessons.empty?
   end
 
   def show
@@ -19,9 +19,10 @@ class LessonsController < ApplicationController
     @lesson = @course.lessons.build(lesson_params)
     if @lesson.save
       set_course_duration
-      redirect_to edit_course_path(@course), notice: "Lesson was added successfully."
+      redirect_to edit_course_path(@course), notice: t('lessons.create.success')
     else
-      flash.now[:alert] = @lesson.errors.full_messages.join(", ")
+      # flash.now[:alert] = @lesson.errors.full_messages.join(", ")
+      flash.now[:alert] = t('lessons.create.failure')
       render :new, status: :unprocessable_entity
     end
   end
@@ -32,9 +33,10 @@ class LessonsController < ApplicationController
   def update
     if @lesson.update(lesson_params)
       set_course_duration
-      redirect_to course_lessons_path(@course, @lesson), notice: "Lesson was successfully updated."
+      redirect_to course_lessons_path(@course), notice: t('lessons.update.success')
     else
-      flash.now[:alert] = @lesson.errors.full_messages.join(", ")
+      # flash.now[:alert] = @lesson.errors.full_messages.join(", ")
+      flash.now[:alert] = t('lessons.update.failure')
       render :edit, status: :unprocessable_entity
     end
   end
@@ -42,13 +44,18 @@ class LessonsController < ApplicationController
   def destroy
     @lesson.destroy
     set_course_duration
-    redirect_to course_lessons_path(@course), notice: "Lesson was successfully deleted."
+    redirect_to course_lessons_path(@course), notice: t('lessons.destroy.success')
   end
 
   def mark_as_watched
     @lesson = Lesson.find(params[:id])
-    current_user.video_watches.create(lesson: @lesson, watched_at: Time.current) unless current_user.video_watches.exists?(lesson: @lesson)
-    head :ok
+    if current_user.video_watches.exists?(lesson: @lesson)
+      flash[:alert] = t('lessons.mark_as_watched.already_watched')
+    else
+      current_user.video_watches.create(lesson: @lesson, watched_at: Time.current)
+      flash[:notice] = t('lessons.mark_as_watched.success')
+    end
+    redirect_to course_lessons_path(@course)
   end
 
   private
