@@ -1,37 +1,40 @@
-<div class="d-flex justify-content-center mt-2 mb-4">
-  <p class="fw-bold h1 text-center"> <%= t('categories.index.title') %> </p>
-</div>
-<div class="d-flex justify-content-center mt-2">
-  <div class="row" style="width: 70rem;">
-    <% if @categories.any? %>
+<div class="container h-100">
+  <div class="d-flex justify-content-center mt-2 mb-4">
+    <p class="fw-bold h1 text-center"> <%= t('categories.index.title') %> </p>
+  </div>
+  <div class="d-flex justify-content-center mt-2">
+    <div class="row" style="width: 70rem;">
+      <% if @categories.any? %>
 
-      <div class="row">
-        <div class="col"><h6><%= t('categories.new.form.name') %></h6></div>
-        <div class="col"><h6><%= t('categories.index.actions') %></h6></div>
-      </div>
+        <div class="row">
+          <div class="col"><h6><%= t('categories.new.form.name') %></h6></div>
+          <div class="col"><h6><%= t('categories.index.actions') %></h6></div>
+        </div>
 
-      <% @categories.each do |tmp_category| %>
+        <% @categories.each do |tmp_category| %>
 
-        <div class="row mb-3">
-          <hr>
-          <div class="col mt-2"> <%= tmp_category.name %> </div>
-          <div class="col mt-2">
-            <div class="d-flex">
-              <%= link_to t('categories.edit.title'),
-                          edit_category_path(tmp_category),
-                          class: "btn btn-sm btn-warning me-2" %>
-              <%= button_to t('delete_button'),
-                            category_path(tmp_category),
-                            method: :delete,
-                            class: "btn btn-sm btn-danger",
-                            onclick: "return confirm('#{t('categories.destroy.success')}?');" %>
+          <div class="row mb-3">
+            <hr>
+            <div class="col mt-2"> <%= tmp_category.name %> </div>
+            <div class="col mt-2">
+              <div class="d-flex">
+                <%= link_to t('categories.edit.title'),
+                            edit_category_path(tmp_category),
+                            class: "btn btn-sm btn-warning me-2" %>
+                <%= button_to t('delete_button'),
+                              category_path(tmp_category),
+                              method: :delete,
+                              class: "btn btn-sm btn-danger",
+                              onclick: "return confirm('#{t('categories.destroy.success')}?');" %>
+              </div>
             </div>
           </div>
-        </div>
+        <% end %>
+      <% else %>
+        <h1><%= t('categories.index.empty') %></h1>
       <% end %>
-    <% else %>
-      <h1><%= t('categories.index.empty') %></h1>
-    <% end %>
 
+    </div>
   </div>
+
 </div>
