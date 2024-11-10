@@ -114,9 +114,16 @@
                 <% @enrollments = Enrollment.where(student_id: @user.id) %>
                 <% @enrollments.each do |enrollment| %>
                   <% @course = Course.find(enrollment.course_id) %>
-                  <% if @user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count == @course.lessons.count %>
-                    <%= link_to "#{@course.title}", url_for(@course.completion_certificate), class: "fw-bold text-dark", target: "_blank" %>
-                    <hr>
+                  <% if @course.quiz.present? %>
+                    <% @quiz_participation = QuizParticipation.find_by(student_id: @user.id, quiz_id: @course.quiz.id) %>
+                    <% if @quiz_participation %>
+                      <% marks_obtained = @quiz_participation.marks_obtained %>
+                      <% total_marks = @quiz_participation.total_marks %>
+                      <% percentage = (marks_obtained / total_marks.to_f) * 100 %>
+                      <% if percentage >= 30 %>
+                        <%= link_to "#{@course.title}", url_for(@course.achievement_certificate), class: "fw-bold text-dark", target: "_blank" %>
+                      <% end %>
+                    <% end %>
                   <% end %>
                 <% end %>
               </div>
