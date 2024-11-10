@@ -20,7 +20,6 @@ class QuizzesController < ApplicationController
     @obtained_marks = 0
 
     @quiz_submission.each do |key, val|
-      # puts "#{key}: #{val}"
       @selected_answers[val["id"]] = val["options"].values
                                                    .select { |option| option["is_correct"] == "1" }
                                                    .map { |option| option["option_text"] }
@@ -42,10 +41,6 @@ class QuizzesController < ApplicationController
       end
     end
 
-    puts "obtained #{@obtained_marks}"
-
-    puts QuizParticipation.column_names
-
     @quiz_participation = QuizParticipation.new(
       student_id: @user.id,
       quiz_id: @quiz.id,
@@ -55,16 +50,17 @@ class QuizzesController < ApplicationController
     )
 
     if @quiz_participation.save
-      redirect_to course_path(@course)
+      redirect_to course_path(@course), notice: t('quizzes.submit.success')
     else
-      flash.now[:alert] = @quiz_participation.errors.full_messages
+      # flash.now[:alert] = @quiz_participation.errors.full_messages
+      flash.now[:alert] = t('quizzes.submit.error')
       render :start, status: :unprocessable_entity
     end
-
   end
 
   def index
     @quizzes = @course.quiz
+    flash.now[:notice] = t('quizzes.index.no_quizzes') if @quizzes.empty?
   end
 
   def show
@@ -78,9 +74,10 @@ class QuizzesController < ApplicationController
     @quiz = @course.build_quiz(quiz_params)
     @quiz.total_marks ||= 0
     if @quiz.save
-      redirect_to dashboard_course_quizzes_path(@course), notice: 'Quiz was successfully created.'
+      redirect_to dashboard_course_quizzes_path(@course), notice: t('quizzes.create.success')
     else
-      flash.now[:alert] = @quiz.errors.full_messages.join(", ")
+      # flash.now[:alert] = @quiz.errors.full_messages.join(", ")
+      flash.now[:alert] = t('quizzes.create.failure')
       render :new, status: :unprocessable_entity
     end
   end
@@ -90,16 +87,21 @@ class QuizzesController < ApplicationController
 
   def update
     if @quiz.update(quiz_params)
-      redirect_to course_quiz_path(@course), notice: 'Quiz was successfully updated.'
+      redirect_to course_quiz_path(@course), notice: t('quizzes.update.success')
     else
-      flash.now[:alert] = @quiz.errors.full_messages.join(", ")
+      # flash.now[:alert] = @quiz.errors.full_messages.join(", ")
+      flash.now[:alert] = t('quizzes.create.failure')
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @quiz.destroy
-    redirect_to dashboard_course_quizzes_path(@course), notice: 'Quiz was successfully deleted.'
+    if @quiz.destroy
+      redirect_to dashboard_course_quizzes_path(@course), notice: t('quizzes.destroy.success')
+    else
+      flash.now[:alert] = t('quizzes.destroy.failure')
+      render :show, status: :unprocessable_entity
+    end
   end
 
   private
@@ -129,7 +131,6 @@ class QuizzesController < ApplicationController
           option["is_correct"] = "0"
         end
       end
-
     end
   end
 
