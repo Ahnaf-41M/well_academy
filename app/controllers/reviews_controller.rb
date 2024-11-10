@@ -39,7 +39,10 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-    @review.destroy
+    @review = @review.find(student_id: @user.id)
+    if @review
+      @review.destroy
+    end
     redirect_to course_path(@review.course), notice: 'Review was successfully deleted.'
   end
 
