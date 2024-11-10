@@ -23,7 +23,6 @@
                 <p><span class="fw-bold"><%= tmp_course.total_duration %></p>
 
                 <% average_rating = Review.where(course_id: tmp_course.id).average(:rating) || 0.0 %>
-
                 <h6 class="fw-bold"><%= average_rating %> ⭐&nbsp;</h6>
 
                 <h5><span class="badge rounded-pill text-bg-success text-light">$<%= tmp_course.price %></span></h5>
@@ -33,7 +32,7 @@
                     <% @lesson_count = tmp_course.lessons.count %>
                     <% @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: tmp_course.id }).count %>
 
-                    <% if @lesson_count == @lesson_completed %>
+                    <% if @lesson_count == @lesson_completed && @lesson_count > 0 %>
                       <div class="d-flex gap-2">
                         <%= link_to "Course Completed",
                                     course_path(tmp_course),
