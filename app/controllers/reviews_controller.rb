@@ -19,7 +19,7 @@ class ReviewsController < ApplicationController
     @review.student_id = @user.id
 
     if @review.save
-      redirect_to course_path(@course), notice: 'Review was successfully created.'
+      redirect_to course_path(@course), notice: 'Review was submitted successfully.'
     else
       flash.now[:alert] = @review.errors.full_messages
       render :new, status: :unprocessable_entity
