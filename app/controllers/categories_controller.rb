@@ -1,7 +1,11 @@
 class CategoriesController < ApplicationController
   before_action :set_user, only: %i[index new show edit create update destroy]
+
   def index
     @categories = Category.all
+    if @categories.empty?
+      flash.now[:notice] = t('categories.index.empty')
+    end
   end
 
   def show
@@ -15,8 +19,9 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to categories_path, notice: "Category was successfully created."
+      redirect_to categories_path, notice: t('categories.create.success')
     else
+      flash.now[:alert] = t('categories.create.failure')
       render :new
     end
   end
@@ -28,8 +33,9 @@ class CategoriesController < ApplicationController
   def update
     @category = Category.find(params[:id])
     if @category.update(category_params)
-      redirect_to categories_path, notice: "Category was successfully updated."
+      redirect_to categories_path, notice: t('categories.update.success')
     else
+      flash.now[:alert] = t('categories.update.failure')
       render :edit
     end
   end
@@ -37,7 +43,7 @@ class CategoriesController < ApplicationController
   def destroy
     @category = Category.find(params[:id])
     @category.destroy
-    redirect_to categories_path, notice: "Category was successfully destroyed."
+    redirect_to categories_path, notice: t('categories.destroy.success')
   end
 
   def set_user
