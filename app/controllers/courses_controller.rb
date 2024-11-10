@@ -1,7 +1,14 @@
 class CoursesController < ApplicationController
-  before_action :set_user, only: %i[index new show edit create update destroy]
+  before_action :set_user
   before_action :set_course, only: %i[show edit update destroy]
-  before_action :set_categories, only: %i[new show edit update destroy]
+  before_action :set_categories, only: %i[create new show edit update destroy]
+  before_action :update_enrollment, only: %i[show]
+
+  def index_by_category
+    category_id = params[:category_id]
+    @category = Category.find(category_id)
+    @courses = Course.where(category_id: category_id)
+  end
 
   def index
     if @user.admin?
@@ -20,6 +27,7 @@ class CoursesController < ApplicationController
 
   def create
     @course = Course.new(course_params)
+    @course.duration = 0
 
     if @course.save
       redirect_to courses_path, notice: "Course was successfully created."
@@ -60,7 +68,17 @@ class CoursesController < ApplicationController
     @categories = Category.order(name: :asc)
   end
 
+  def update_enrollment
+    @lesson_count = @course.lessons.count
+    @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count
+    @progress = 0
+    if @lesson_count > 0
+      @progress = ((@lesson_completed / @lesson_count.to_f) * 100).round
+    end
+  end
+
   def course_params
     params.require(:course).permit(:title, :description, :teacher_id, :category_id, :price, :level, :language, :duration, :syllabus, :completion_certificate, :achievement_certificate, :display_picture)
   end
+  
 end
