@@ -27,6 +27,8 @@
 
                 <h5><span class="badge rounded-pill text-bg-success text-light">$<%= tmp_course.price %></span></h5>
 
+                <%= link_to "View Course", course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
+
                 <% if @user %>
                   <% if Payment.exists?(user_id: @user.id, course_id: tmp_course.id) %>
                     <% @lesson_count = tmp_course.lessons.count %>
@@ -44,10 +46,8 @@
                     <% else %>
                       <%= link_to "Continue Course", course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
                     <% end %>
-
                   <% else %>
-                    <%= link_to "View Course", course_path(tmp_course), class: "btn btn-primary btn-sm" %>
-                    <%= link_to "Enroll Course", new_course_payment_path(tmp_course), class: "btn btn-success btn-sm" %>
+                    <%= link_to "Enroll Course", new_course_payment_path(course_id: tmp_course.id), class: "btn btn-success btn-sm" %>
                   <% end %>
                 <% end %>
               </div>
@@ -57,7 +57,7 @@
       </div>
 
       <%= link_to "Show all on #{tmp_category.name} courses >>",
-                  index_by_category_courses_path(tmp_category.id),
+                  index_by_category_courses_path(category_id: tmp_category.id),
                   class: "btn btn-outline-dark"
       %>
     <% end %>
