@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new
     if @user.save
       UserMailerJob.new.perform(@user.id)
       flash[:notice] = t('users.create.success')
@@ -122,7 +122,8 @@ class UsersController < ApplicationController
                                  :email,
                                  :password,
                                  :password_confirmation,
-                                 :phone, :date_joined,
+                                 :phone,
+                                 :date_joined,
                                  :bio,
                                  :role,
                                  :confirmation_token,
