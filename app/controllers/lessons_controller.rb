@@ -5,18 +5,18 @@ class LessonsController < ApplicationController
   # before_action :set_course_duration, only: %i[create edit update destroy]
 
   def index
-    @lessons = @course.lessons.order(:order, updated_at: :desc) # Fetch lessons for a specific course, ordered by their order attribute
+    @lessons = @course.lessons.order(:order)
   end
 
   def show
   end
 
   def new
-    @lesson = @course.lessons.build # Initializes a new lesson associated with the course
+    @lesson = @course.lessons.build
   end
 
   def create
-    @lesson = @course.lessons.build(lesson_params) # Builds a new lesson under the course
+    @lesson = @course.lessons.build(lesson_params)
     if @lesson.save
       set_course_duration
       redirect_to edit_course_path(@course), notice: "Lesson was added successfully."
@@ -48,7 +48,6 @@ class LessonsController < ApplicationController
   def mark_as_watched
     @lesson = Lesson.find(params[:id])
     current_user.video_watches.create(lesson: @lesson, watched_at: Time.current) unless current_user.video_watches.exists?(lesson: @lesson)
-
     head :ok
   end
 
@@ -72,7 +71,7 @@ class LessonsController < ApplicationController
       if lesson.video.attached?
         video_path = ActiveStorage::Blob.service.path_for(lesson.video.key)
         movie = FFMPEG::Movie.new(video_path)
-        @course.duration += movie.duration # Duration in seconds
+        @course.duration += movie.duration
       end
     end
     @course.save
