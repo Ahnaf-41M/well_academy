@@ -1,9 +1,93 @@
 bn:
+  pending_teachers: "অপেক্ষারত শিক্ষকরা"
+  picture: "ছবি"
+  name: "নাম"
+  email: "ইমেইল"
+  graduation_certificate: "স্নাতক সার্টিফিকেট"
+  post_graduation_certificate: "পোস্ট গ্র্যাজুয়েশন সার্টিফিকেট"
+  action: "অ্যাকশন"
+  view: "দেখুন"
+  approve: "অনুমোদন করুন"
+  reject: "বাতিল করুন"
+  no_users_found: "কোনো ব্যবহারকারী পাওয়া যায়নি।"
+  update_button: "আপডেট করুন"
+  login_button: "লগইন করুন"
+  logout_button: "লগআউট করুন"
+  delete_button: "মুছে ফেলুন"
+  submit_button: "সাবমিট"
+  edit_button: "সম্পাদনা"
+
+
+  navbar:
+    course_categories: "কোর্স ক্যাটেগরি"
+    users: "ব্যবহারকারীরা"
+    courses: "কোর্স"
+    brand: "ওয়েলঅ্যাকাডেমি"
+    search_placeholder: "অনুসন্ধান করুন"
+    search_button: "অনুসন্ধান"
+    login: "লগইন"
+    signup: "সাইনআপ"
+    become_teacher: "শিক্ষক হন"
+    manage_courses: "কোর্স পরিচালনা করুন"
+    create_course: "নতুন কোর্স তৈরি করুন"
+    manage_categories: "ক্যাটেগরি পরিচালনা করুন"
+    create_category: "নতুন ক্যাটেগরি তৈরি করুন"
+    manage_users: "ব্যবহারকারী পরিচালনা করুন"
+    pending_teachers: "অপেক্ষমাণ শিক্ষক"
+    profile: "প্রোফাইল"
+    edit_profile: "প্রোফাইল সম্পাদনা করুন"
+    logout: "লগ আউট"
+    no_profile_picture: "কোন প্রোফাইল ছবি নেই"
+    profile_picture: "প্রোফাইল ছবি"
+
+  profile:
+    title: "ব্যবহারকারী প্রোফাইল"
+    remove_picture: "চিত্র মুছুন"
+    upload: "আপলোড করুন"
+    profile_picture: "প্রোফাইল ছবি"
+    full_name: "পুরো নাম"
+    email: "ইমেইল"
+    phone: "ফোন"
+    role: "ভূমিকা"
+    date_joined: "যোগদান তারিখ"
+    certificates:
+      completion: "সম্পূর্ণতা সনদপত্র"
+      achievement: "অর্জন সনদপত্র"
+
+  login:
+    title: "লগইন"
+    email: "আপনার ইমেইল"
+    password: "আপনার পাসওয়ার্ড"
+    login_button: "লগইন"
+    register_link: "একাউন্ট নেই? রেজিস্টার করুন"
+    forgot_password_link: "পাসওয়ার্ড ভুলে গেছেন?"
+
+  signup:
+    title: "সাইন আপ"
+    register_button: "রেজিস্টার করুন"
+
+  form:
+    name: "নাম"
+    email: "ইমেইল"
+    role: "ভূমিকা"
+    phone: "ফোন নম্বর"
+    bio: "বায়ো"
+    profile_picture: "প্রোফাইল ছবি"
+    password: "নতুন পাসওয়ার্ড"
+    password_confirmation: "পাসওয়ার্ড পুনরায় প্রবেশ করান"
+    placeholder:
+      name: "আপনার নাম"
+      email: "আপনার ইমেইল"
+      phone: "আপনার ফোন নম্বর"
+      bio: "আপনার বায়ো"
+    required: "*"
+
   # categories
   categories:
     index:
       title: "বিভাগসমূহ"
       empty: "কোনও বিভাগ উপলব্ধ নেই"
+      actions: "অ্যাকশনস"
     show:
       title: "বিভাগের বিবরণ"
     new:
@@ -27,14 +111,27 @@ bn:
 
   # courses
   courses:
+    course_completed: "কোর্স সম্পন্ন"
+    view_course: "কোর্স দেখুন"
+    continue_course: "কোর্স চালিয়ে যান"
+    enroll_course: "কোর্সে ভর্তি হন"
+    show_all_courses: "%{category_name} কোর্সসমূহ দেখুন >>"
+
     index:
       title: "কোর্সসমূহ"
+      teacher: "শিক্ষক"
+      category: "ক্যাটাগরি"
+      price: "মূল্য"
+      actions: "অ্যাকশনস"
       no_courses: "কোনও কোর্স উপলব্ধ নেই"
     show:
       title: "কোর্সের বিবরণ"
     new:
       title: "নতুন কোর্স"
       form:
+        add_lessons: "পাঠ্যক্রম যোগ করুন"
+        view_lessons: "পাঠ্যক্রম দেখুন"
+        quiz_dashboard: "কুইজ ড্যাশবোর্ড"
         title: "কোর্সের শিরোনাম"
         description: "কোর্সের বিবরণ"
         teacher: "শিক্ষক"
@@ -44,7 +141,9 @@ bn:
         language: "ভাষা"
         duration: "সময়কাল"
         syllabus: "সিলেবাস"
-        certificates: "সার্টিফিকেট"
+        completion_certificate: "সম্পূর্ণকরণ সার্টিফিকেট"
+        achievement_certificate: "অর্জন সার্টিফিকেট"
+        display_picture: "প্রদর্শনী ছবি"
     edit:
       title: "কোর্স সম্পাদনা করুন"
     create:
