@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_user, only: %i[index new show edit create update destroy]
 
   def index

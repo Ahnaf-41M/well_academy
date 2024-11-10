@@ -1,4 +1,5 @@
 class QuizParticipationsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_quiz_participation, only: %i[show edit update destroy]
   before_action :set_quiz, only: %i[new create]
 

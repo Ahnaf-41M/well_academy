@@ -1,4 +1,5 @@
 class QuizzesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_user
   before_action :set_course
   before_action :set_quiz, except: %i[dashboard index]

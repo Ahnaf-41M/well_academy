@@ -1,4 +1,5 @@
 class PaymentsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_course, only: %i[index new show edit create update destroy]
   before_action :set_payment, only: %i[show edit update destroy]
   before_action :set_user, only: %i[index new show edit create update destroy]
