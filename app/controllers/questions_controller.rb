@@ -6,6 +6,7 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = @quiz.questions
+    flash.now[:notice] = t('questions.index.no_questions') if @questions.empty?
   end
 
   def show
@@ -30,9 +31,10 @@ class QuestionsController < ApplicationController
     end
 
     if @question.save
-      redirect_to dashboard_course_quizzes_path(@course, @quiz), notice: 'Question was successfully created.'
+      redirect_to dashboard_course_quizzes_path(@course, @quiz), notice: t('questions.create.success')
     else
-      flash.now[:alert] = @question.errors.full_messages.join(", ")
+      # flash.now[:alert] = @question.errors.full_messages.join(", ")
+      flash.now[:alert] = t('questions.create.failure')
       render :new, status: :unprocessable_entity
     end
   end
@@ -43,8 +45,6 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question = Question.find(params[:id])
-
     if question_params[:options].present?
       options_array = question_params[:options].to_h.values # Convert to array of option hashes
       @question.options = options_array.map do |option|
@@ -56,17 +56,20 @@ class QuestionsController < ApplicationController
     end
 
     if @question.update(question_params.except(:options))
-      redirect_to course_quiz_path(@question.quiz.course, @question.quiz), notice: 'Question was successfully updated.'
+      redirect_to course_quiz_path(@question.quiz.course, @question.quiz), notice: t('questions.update.success')
     else
-      render :edit
+      # flash.now[:alert] = @question.errors.full_messages.join(", ")
+      flash.now[:alert] = t('questions.update.failure')
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     if @question.destroy
-      redirect_to course_quiz_path(@question.quiz.course, @question.quiz), notice: 'Question was successfully deleted.'
+      redirect_to course_quiz_path(@question.quiz.course, @question.quiz), notice: t('questions.destroy.success')
     else
-      flash.now[:alert] = @question.errors.full_messages.join(", ")
+      # flash.now[:alert] = @question.errors.full_messages.join(", ")
+      flash.now[:alert] = t('questions.destroy.failure')
       render :edit, status: :unprocessable_entity
     end
   end
