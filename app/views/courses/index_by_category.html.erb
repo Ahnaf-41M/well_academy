@@ -20,11 +20,8 @@
               <p><span class="fw-bold"><%= tmp_course.total_duration %></p>
 
               <% average_rating = Review.where(course_id: tmp_course.id).average(:rating) || 0.0 %>
+              <h6 class="fw-bold"><%= average_rating %> ⭐&nbsp;</h6>
 
-              <div class="mb-2" data-coreui-read-only="true" data-coreui-size="sm" data-coreui-toggle="rating" data-coreui-allow-clear="true" data-coreui-value="<%= average_rating %>">
-                <h6 class="fw-bold"><%= average_rating %> &nbsp;</h6>
-              </div>
-              
               <h5><span class="badge rounded-pill text-bg-success text-light">$<%= tmp_course.price %></span></h5>
 
               <% if @user %>
