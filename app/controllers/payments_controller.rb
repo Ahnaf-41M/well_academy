@@ -5,6 +5,7 @@ class PaymentsController < ApplicationController
 
   def index
     @payments = Payment.all.order(created_at: :desc)
+    flash.now[:notice] = t('payments.index.no_payments') if @payments.empty?
   end
 
   def show
@@ -15,19 +16,20 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    # binding.pry
     @payment = Payment.new(payment_params)
 
     @payment.user_id = @user.id
     @payment.course_id = @course.id
     @payment.course_price = @course.price
     @payment.status = "paid"
+
     if @payment.save
       Enrollment.new(student_id: @payment.user_id, course_id: @payment.course_id, enrolled_at: Time.current, completion_status: "in_progress").save
-      flash[:notice] = "Payment was done successfully."
+      flash[:notice] = t('payments.create.success')
       redirect_to course_path(@course)
     else
-      flash.now[:alert] = @payment.errors.full_messages.to_sentence
+      # flash.now[:alert] = @payment.errors.full_messages.to_sentence
+      flash.now[:alert] = t('payments.create.failure')
       render :new, status: :unprocessable_entity
     end
   end
@@ -37,20 +39,22 @@ class PaymentsController < ApplicationController
 
   def update
     if @payment.update(payment_params)
-      flash[:notice] = "Payment updated successfully."
+      flash[:notice] = t('payments.update.success')
       redirect_to payment_path(@payment)
     else
-      flash.now[:alert] = @payment.errors.full_messages.to_sentence
+      # flash.now[:alert] = @payment.errors.full_messages.to_sentence
+      flash.now[:alert] = t('payments.update.failure')
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     if @payment.destroy
-      flash[:notice] = "Payment deleted successfully."
+      flash[:notice] = t('payments.destroy.success')
       redirect_to payments_path
     else
-      flash.now[:alert] = @payment.errors.full_messages.to_sentence
+      # flash.now[:alert] = @payment.errors.full_messages.to_sentence
+      flash.now[:alert] = t('payments.destroy.failure')
       redirect_to payment_path(@payment), status: :unprocessable_entity
     end
   end
@@ -72,5 +76,4 @@ class PaymentsController < ApplicationController
   def payment_params
     params.require(:payment).permit(:user_id, :course_id, :course_price, :payment_type, :status)
   end
-
 end
