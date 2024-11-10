@@ -55,7 +55,10 @@ class QuizzesController < ApplicationController
     )
 
     if @quiz_participation.save
-      redirect_to start_course_quiz_path(@course, @quiz)
+      redirect_to course_path(@course)
+    else
+      flash.now[:alert] = @quiz_participation.errors.full_messages
+      render :start, status: :unprocessable_entity
     end
 
   end
