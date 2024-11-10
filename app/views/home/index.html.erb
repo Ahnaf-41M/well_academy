@@ -27,8 +27,6 @@
 
                 <h5><span class="badge rounded-pill text-bg-success text-light">$<%= tmp_course.price %></span></h5>
 
-                <%= link_to "View Course", course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
-
                 <% if @user %>
                   <% if Payment.exists?(user_id: @user.id, course_id: tmp_course.id) %>
                     <% @lesson_count = tmp_course.lessons.count %>
@@ -36,19 +34,21 @@
 
                     <% if @lesson_count == @lesson_completed && @lesson_count > 0 %>
                       <div class="d-flex gap-2">
-                        <%= link_to "Course Completed",
+                        <%= link_to t('courses.course_completed'),
                                     course_path(tmp_course),
                                     class: "badge text-bg-success p-2 link-offset-2 link-underline link-underline-opacity-0" %>
                         <a href="#" class="btn btn-primary btn-sm" onclick="showPdfModal('<%= url_for(tmp_course.completion_certificate) %>'); return false;">
-                          Completion Certificate
+                          <%= t('courses.new.form.completion_certificate') %>
                         </a>
                       </div>
                     <% else %>
-                      <%= link_to "Continue Course", course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
+                      <%= link_to t('courses.continue_course'), course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
                     <% end %>
                   <% else %>
-                    <%= link_to "Enroll Course", new_course_payment_path(course_id: tmp_course.id), class: "btn btn-success btn-sm" %>
+                    <%= link_to t('courses.enroll_course'), new_course_payment_path(course_id: tmp_course.id), class: "btn btn-success btn-sm" %>
                   <% end %>
+                <% else %>
+                  <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
                 <% end %>
               </div>
             </div>
@@ -56,14 +56,13 @@
         <% end %>
       </div>
 
-      <%= link_to "Show all on #{tmp_category.name} courses >>",
+      <%= link_to t('courses.show_all_courses', category_name: tmp_category.name),
                   index_by_category_courses_path(category_id: tmp_category.id),
-                  class: "btn btn-outline-dark"
-      %>
+                  class: "btn btn-outline-dark" %>
+
     <% end %>
   <% end %>
 </div>
-
 
 <div id="pdfModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); align-items: center; justify-content: center;">
   <div style="background: white; padding: 20px; border-radius: 8px; max-width: 90%; max-height: 90%; position: relative;">
@@ -80,7 +79,6 @@
             new Coreui.Rating(ratingElement);
         });
     });
-
 
     document.addEventListener('DOMContentLoaded', function () {
         if (!sessionStorage.getItem('reloaded')) {
