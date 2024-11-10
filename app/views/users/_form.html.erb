@@ -1,7 +1,7 @@
 <% if !tmp_user.new_record? %>
   <p>
     <i class="fas fa-user fa-lg fa-fw"></i>
-    Name <span class="text-danger">*</span>
+    <%= t('form.name') %> <span class="text-danger"><%= t('form.required') %></span>
   </p>
 <% end %>
 <div class="d-flex flex-row align-items-center mb-4">
@@ -9,14 +9,14 @@
     <i class="fas fa-user fa-lg fa-fw me-3"></i>
   <% end %>
   <div data-mdb-input-init class="form-outline flex-fill mb-0">
-    <%= f.text_field :name, class: "form-control", placeholder: "Your name", value: tmp_user.name, required: true %>
+    <%= f.text_field :name, class: "form-control", placeholder: t('form.placeholder.name'), value: tmp_user.name, required: true %>
   </div>
 </div>
 
 <% if !tmp_user.new_record? %>
   <p>
     <i class="fas fa-envelope fa-lg fa-fw"> </i>
-    Email <span class="text-danger">*</span>
+    <%= t('form.email') %> <span class="text-danger"><%= t('form.required') %></span>
   </p>
 <% end %>
 
@@ -25,13 +25,12 @@
     <i class="fas fa-envelope fa-lg fa-fw me-3"> </i>
   <% end %>
   <div data-mdb-input-init class="form-outline flex-fill mb-0">
-    <%= f.email_field :email, class: "form-control", placeholder: "Your email", value: tmp_user.email, required: true %>
+    <%= f.email_field :email, class: "form-control", placeholder: t('form.placeholder.email'), value: tmp_user.email, required: true %>
   </div>
 </div>
 
-
 <% if !tmp_user.new_record? %>
-  <p><i class="fa-solid fa-circle-user fa-lg fa-fw"></i> Role<span style="color: red;">*</span></p>
+  <p><i class="fa-solid fa-circle-user fa-lg fa-fw"></i> <%= t('form.role') %><span style="color: red;">*</span></p>
   <div class="d-flex flex-row align-items-center mb-4">
     <div data-mdb-input-init class="form-outline flex-fill mb-0">
 
@@ -49,23 +48,21 @@
     </div>
   </div>
 
-  <p><i class="fa-solid fa-phone fa-lg fa-fw"></i> Phone No</p>
+  <p><i class="fa-solid fa-phone fa-lg fa-fw"></i> <%= t('form.phone') %></p>
   <div class="d-flex flex-row align-items-center mb-4">
     <div data-mdb-input-init class="form-outline flex-fill mb-0">
-      <%= f.number_field :phone, class: "form-control", placeholder: "Your phone no" %>
+      <%= f.number_field :phone, class: "form-control", placeholder: t('form.placeholder.phone') %>
     </div>
   </div>
 
-  <p><i class="fa-solid fa-rectangle-list"></i> Bio</p>
+  <p><i class="fa-solid fa-rectangle-list"></i> <%= t('form.bio') %></p>
   <div class="d-flex flex-row align-items-center mb-4">
-
     <div data-mdb-input-init class="form-outline flex-fill mb-0">
-      <%= f.text_field :bio, class: "form-control", placeholder: "Your bio" %>
+      <%= f.text_field :bio, class: "form-control", placeholder: t('form.placeholder.bio') %>
     </div>
   </div>
 
-
-  <p><i class="fa-solid fa-file-image fa-lg fa-fw"></i> Profile Picture</p>
+  <p><i class="fa-solid fa-file-image fa-lg fa-fw"></i> <%= t('form.profile_picture') %></p>
   <div class="d-flex flex-row align-items-center mb-4">
     <div data-mdb-input-init class="form-outline flex-fill mb-0">
       <%= f.file_field :profile_picture, accept: "image/*", class: "form-control" %>
@@ -74,11 +71,10 @@
 
 <% end %>
 
-
 <% if !tmp_user.new_record? %>
   <p>
     <i class="fas fa-lock fa-lg fa-fw"> </i>
-    New password
+    <%= t('form.password') %>
   </p>
 <% end %>
 <div class="d-flex flex-row align-items-center mb-4">
@@ -86,16 +82,14 @@
     <i class="fas fa-lock fa-lg fa-fw me-3"> </i>
   <% end %>
   <div data-mdb-input-init class="form-outline flex-fill mb-0">
-    <%= f.password_field :password, class: "form-control", placeholder: "Password", value: tmp_user.password, required: tmp_user.new_record? %>
+    <%= f.password_field :password, class: "form-control", placeholder: t('form.password'), value: tmp_user.password, required: tmp_user.new_record? %>
   </div>
 </div>
-
-
 
 <% if !tmp_user.new_record? %>
   <p>
     <i class="fas fa-key fa-lg fa-fw"></i>
-    Repeat new password
+    <%= t('form.password_confirmation') %>
   </p>
 <% end %>
 <div class="d-flex flex-row align-items-center mb-4">
@@ -103,6 +97,6 @@
     <i class="fas fa-key fa-lg fa-fw me-3"></i>
   <% end %>
   <div data-mdb-input-init class="form-outline flex-fill mb-0">
-    <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Repeat your password", value: tmp_user.password_confirmation, required: tmp_user.new_record? %>
+    <%= f.password_field :password_confirmation, class: "form-control", placeholder: t('form.password_confirmation'), value: tmp_user.password_confirmation, required: tmp_user.new_record? %>
   </div>
 </div>
