@@ -12,8 +12,8 @@
         <p><strong>Duration:</strong> </span> <span><%= @course.total_duration %> </span></p>
         <p class="card-text fw-bold text-success"></p>
         <p><strong>Price: </strong>
-          <span class="badge rounded-pill text-bg-success text-light">$<%= @course.price %></span></p>
-        <!--        <h5><span class="badge rounded-pill text-bg-success text-light">$<%#= tmp_course.price %></span></h5>-->
+          <span class="badge rounded-pill text-bg-success text-light">$<%= @course.price %></span>
+        </p>
 
         <% @lesson_count = @course.lessons.count %>
         <p><strong>Total lessons: </strong> <span class=""><%= @lesson_count %></span></p>
@@ -78,7 +78,7 @@
                 <div class="col h6 fw-bold">Duration</div>
                 <div class="col h6 fw-bold">Watched</div>
               </div>
-              <% @course.lessons.each do |lesson| %>
+              <% @course.lessons.sort_by(&:order).each do |lesson| %>
                 <hr>
                 <div class="row">
                   <div class="col"><%= lesson.title %></div>
