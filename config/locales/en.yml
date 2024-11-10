@@ -1,9 +1,92 @@
 en:
+  pending_teachers: "Pending Teachers"
+  picture: "Picture"
+  name: "Name"
+  email: "Email"
+  graduation_certificate: "Graduation Certificate"
+  post_graduation_certificate: "Post Graduation Certificate"
+  action: "Action"
+  view: "View"
+  approve: "Approve"
+  reject: "Reject"
+  no_users_found: "No users found."
+  update_button: "Update"
+  login_button: "Login"
+  logout_button: "Logout"
+  delete_button: "Delete"
+  submit_button: "Submit"
+  edit_button: "Edit"
+
+  navbar:
+    users: "Users"
+    brand: "WellAcademy"
+    search_placeholder: "Search"
+    search_button: "Search"
+    login: "Login"
+    signup: "Signup"
+    become_teacher: "Become a Teacher"
+    courses: "Courses"
+    manage_courses: "Manage Courses"
+    course_categories: "Course Categories"
+    create_course: "Create a new course"
+    manage_categories: "Manage Categories"
+    create_category: "Create a new category"
+    manage_users: "Manage Users"
+    pending_teachers: "Pending Teachers"
+    profile: "Profile"
+    edit_profile: "Edit Profile"
+    logout: "Logout"
+    no_profile_picture: "No profile picture"
+    profile_picture: "Profile picture"
+
+  profile:
+    title: "User Profile"
+    remove_picture: "Remove Picture"
+    upload: "Upload"
+    profile_picture: "Profile picture"
+    full_name: "Full Name"
+    email: "Email"
+    phone: "Phone"
+    role: "Role"
+    date_joined: "Date Joined"
+    certificates:
+      completion: "Completion Certificates"
+      achievement: "Achievement Certificates"
+
+  login:
+    title: "Login"
+    email: "Your email"
+    password: "Your password"
+    login_button: "Login"
+    register_link: "Don't have an account? Register"
+    forgot_password_link: "Forgot password?"
+
+  signup:
+    title: "Sign up"
+    register_button: "Register"
+
+  form:
+    name: "Name"
+    email: "Email"
+    role: "Role"
+    phone: "Phone No"
+    bio: "Bio"
+    profile_picture: "Profile Picture"
+    password: "New password"
+    password_confirmation: "Repeat new password"
+    placeholder:
+      name: "Your name"
+      email: "Your email"
+      phone: "Your phone no"
+      bio: "Your bio"
+    required: "*"
+
   # categories
   categories:
     index:
       title: "Categories"
       empty: "No categories available"
+      actions: "Actions"
     show:
       title: "Category Details"
     new:
@@ -27,14 +110,26 @@ en:
 
   #courses
   courses:
+    course_completed: "Course Completed"
+    view_course: "View Course"
+    continue_course: "Continue Course"
+    enroll_course: "Enroll in Course"
+    show_all_courses: "Show all on %{category_name} courses >>"
     index:
       title: "Courses"
+      teacher: "Teacher"
+      category: "Category"
+      price: "Price"
+      actions: "Actions"
       no_courses: "No courses available"
     show:
       title: "Course Details"
     new:
       title: "New Course"
       form:
+        add_lessons: "Add Lessons"
+        view_lessons: "View Lessons"
+        quiz_dashboard: "Quiz Dashboard"
         title: "Course Title"
         description: "Course Description"
         teacher: "Teacher"
@@ -44,7 +139,9 @@ en:
         language: "Language"
         duration: "Duration"
         syllabus: "Syllabus"
-        certificates: "Certificates"
+        completion_certificate: "Completion Certificate"
+        achievement_certificate: "Achievement Certificate"
+        display_picture: "Display Picture"
     edit:
       title: "Edit Course"
     create:
