@@ -40,7 +40,7 @@
 <div class="mb-3">
   <h6>
     Upload Course Syllabus <span style="color: red;">*</span>
-    <% if course.syllabus.attached? %>
+    <% if course.persisted? && course.syllabus.attached? %>
       <%= link_to "View Existing", rails_blob_path(course.syllabus, disposition: "inline"), target: "_blank" %>
     <% end %>
   </h6>
@@ -50,7 +50,7 @@
 <div class="mb-3">
   <h6>
     Upload Display Picture <span style="color: red;">*</span>
-    <% if course.display_picture.attached? %>
+    <% if course.persisted? && course.display_picture.attached? %>
       <%= link_to "View Existing", rails_blob_path(course.display_picture, disposition: "inline"), target: "_blank" %>
     <% end %>
   </h6>
@@ -60,7 +60,7 @@
 <div class="mb-3">
   <h6>
     Upload Completion Certificate (PDF) <span style="color: red;">*</span>
-    <% if course.completion_certificate.attached? %>
+    <% if course.persisted? && course.completion_certificate.attached? %>
       <%= link_to "View Existing", rails_blob_path(course.completion_certificate, disposition: "inline"), target: "_blank" %>
     <% end %>
   </h6>
@@ -70,7 +70,7 @@
 <div class="mb-3">
   <h6>
     Upload Achievement Certificate (PDF) <span style="color: red;">*</span>
-    <% if course.achievement_certificate.attached? %>
+    <% if course.persisted? && course.achievement_certificate.attached? %>
       <%= link_to "View Existing", rails_blob_path(course.achievement_certificate, disposition: "inline"), target: "_blank" %>
     <% end %>
   </h6>
