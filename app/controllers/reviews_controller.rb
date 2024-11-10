@@ -5,6 +5,7 @@ class ReviewsController < ApplicationController
 
   def index
     @reviews = Review.all
+    flash.now[:notice] = t('reviews.index.no_reviews') if @reviews.empty?
   end
 
   def show
@@ -19,9 +20,10 @@ class ReviewsController < ApplicationController
     @review.student_id = @user.id
 
     if @review.save
-      redirect_to course_path(@course), notice: 'Review was submitted successfully.'
+      redirect_to course_path(@course), notice: t('reviews.create.success')
     else
-      flash.now[:alert] = @review.errors.full_messages
+      # flash.now[:alert] = @review.errors.full_messages.join(", ")
+      flash.now[:alert] = t('reviews.create.failure')
       render :new, status: :unprocessable_entity
     end
   end
@@ -31,19 +33,22 @@ class ReviewsController < ApplicationController
 
   def update
     if @review.update(review_params)
-      redirect_to course_path(@review.course), notice: 'Review was successfully updated.'
+      redirect_to course_path(@review.course), notice: t('reviews.update.success')
     else
-      flash.now[:alert] = @review.errors.full_messages
+      # flash.now[:alert] = @review.errors.full_messages.join(", ")
+      flash.now[:alert] = t('reviews.update.failure')
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @review = @review.find(student_id: @user.id)
+    @review = @review.find_by(student_id: @user.id)
     if @review
       @review.destroy
+      redirect_to course_path(@review.course), notice: t('reviews.destroy.success')
+    else
+      redirect_to course_path(@course), alert: t('reviews.destroy.failure')
     end
-    redirect_to course_path(@review.course), notice: 'Review was successfully deleted.'
   end
 
   private
