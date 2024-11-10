@@ -1,55 +1,55 @@
-<h6>Title <span style="color: red;">*</span></h6>
+<h6><%= t('courses.new.form.title') %> <span style="color: red;">*</span></h6>
 <div class="d-flex flex-row align-items-center mb-2">
   <div data-mdb-input-init class="form-outline flex-fill mb-0">
-    <%= f.text_field :title, class: "form-control", placeholder: "Course title", required: true %>
+    <%= f.text_field :title, class: "form-control", placeholder: t('courses.new.form.title'), required: true %>
   </div>
 </div>
 
-<h6>Description <span style="color: red;">*</span></h6>
+<h6><%= t('courses.new.form.description') %> <span style="color: red;">*</span></h6>
 <div class="d-flex flex-row align-items-center mb-2">
   <div data-mdb-input-init class="form-outline flex-fill mb-0">
-    <%= f.text_area :description, class: "form-control", placeholder: "Course description", required: true %>
+    <%= f.text_area :description, class: "form-control", placeholder: t('courses.new.form.description'), required: true %>
   </div>
 </div>
 
-<h6>Category <span style="color: red;">*</span></h6>
-<%= f.select :category_id, @categories.pluck(:name, :id), { prompt: "Select a category" }, class: "form-select mb-2", required: true %>
+<h6><%= t('courses.new.form.category') %> <span style="color: red;">*</span></h6>
+<%= f.select :category_id, @categories.pluck(:name, :id), { prompt: t('courses.new.form.category') }, class: "form-select mb-2", required: true %>
 
-<h6>Level <span style="color: red;">*</span></h6>
+<h6><%= t('courses.new.form.level') %> <span style="color: red;">*</span></h6>
 <select class="form-select mb-2">
-  <option selected disabled>Select level</option>
+  <option selected disabled><%= t('courses.new.form.level') %></option>
   <% Course.levels.keys.each do |level| %>
     <option value="<%= level %>" <%= 'selected' if level == @course.level %>><%= level.capitalize %></option>
   <% end %>
 </select>
 
-<h6>Language <span style="color: red;">*</span></h6>
+<h6><%= t('courses.new.form.language') %> <span style="color: red;">*</span></h6>
 <div class="d-flex flex-row align-items-center mb-2">
   <div data-mdb-input-init class="form-outline flex-fill mb-0">
-    <%= f.text_field :language, class: "form-control", placeholder: "Course language", required: true %>
+    <%= f.text_field :language, class: "form-control", placeholder: t('courses.new.form.language'), required: true %>
   </div>
 </div>
 
-<h6>Price ($) <span style="color: red;">*</span></h6>
+<h6><%= t('courses.new.form.price') %> ($) <span style="color: red;">*</span></h6>
 <div class="d-flex flex-row align-items-center mb-2">
   <div data-mdb-input-init class="form-outline flex-fill mb-0">
-    <%= f.number_field :price, class: "form-control", placeholder: "Course price", step: "1", min: "0", required: true %>
+    <%= f.number_field :price, class: "form-control", placeholder: t('courses.new.form.price'), step: "1", min: "0", required: true %>
   </div>
 </div>
 
 <div class="mb-3">
   <h6>
-    Upload Course Syllabus <span style="color: red;">*</span>
+    <%= t('courses.new.form.syllabus') %> <span style="color: red;">*</span>
     <% if course.persisted? && course.syllabus.attached? %>
       <%= link_to "View Existing", rails_blob_path(course.syllabus, disposition: "inline"), target: "_blank" %>
     <% end %>
   </h6>
-  <%= f.file_field :syllabus, class: "form-control", accept: "application/pdf", required: !course.display_picture.attached? %>
+  <%= f.file_field :syllabus, class: "form-control", accept: "application/pdf", required: !course.syllabus.attached? %>
 </div>
 
 <div class="mb-3">
   <h6>
-    Upload Display Picture <span style="color: red;">*</span>
+    <%= t('courses.new.form.display_picture') %> <span style="color: red;">*</span>
     <% if course.persisted? && course.display_picture.attached? %>
       <%= link_to "View Existing", rails_blob_path(course.display_picture, disposition: "inline"), target: "_blank" %>
     <% end %>
@@ -59,7 +59,7 @@
 
 <div class="mb-3">
   <h6>
-    Upload Completion Certificate (PDF) <span style="color: red;">*</span>
+    <%= t('courses.new.form.completion_certificate') %> (PDF) <span style="color: red;">*</span>
     <% if course.persisted? && course.completion_certificate.attached? %>
       <%= link_to "View Existing", rails_blob_path(course.completion_certificate, disposition: "inline"), target: "_blank" %>
     <% end %>
@@ -69,7 +69,7 @@
 
 <div class="mb-3">
   <h6>
-    Upload Achievement Certificate (PDF) <span style="color: red;">*</span>
+    <%= t('courses.new.form.achievement_certificate') %> (PDF) <span style="color: red;">*</span>
     <% if course.persisted? && course.achievement_certificate.attached? %>
       <%= link_to "View Existing", rails_blob_path(course.achievement_certificate, disposition: "inline"), target: "_blank" %>
     <% end %>
