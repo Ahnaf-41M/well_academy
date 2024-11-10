@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
-  load_and_authorize_resource
-  
+  # load_and_authorize_resource
+
   before_action :set_user
   before_action :set_course, only: %i[show edit update destroy]
   before_action :set_categories, only: %i[create new show edit update destroy]
@@ -78,13 +78,15 @@ class CoursesController < ApplicationController
   end
 
   def update_enrollment
-    @lesson_count = @course.lessons.count
-    @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count
-    @progress = 0
-    if @lesson_count > 0
-      @progress = ((@lesson_completed / @lesson_count.to_f) * 100).round
-    else
+    if @user
+      @lesson_count = @course.lessons.count
+      @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count
       @progress = 0
+      if @lesson_count > 0
+        @progress = ((@lesson_completed / @lesson_count.to_f) * 100).round
+      else
+        @progress = 0
+      end
     end
   end
 
