@@ -23,7 +23,7 @@ class PaymentsController < ApplicationController
     @payment.course_price = @course.price
     @payment.status = "paid"
     if @payment.save
-      Enrollment.new(student_id: @payment.user_id, course_id: @payment.course_id, enrolled_at: Time.current).save
+      Enrollment.new(student_id: @payment.user_id, course_id: @payment.course_id, enrolled_at: Time.current, completion_status: "in_progress").save
       flash[:notice] = "Payment was done successfully."
       redirect_to course_path(@course)
     else
