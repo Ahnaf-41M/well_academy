@@ -4,6 +4,7 @@ gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
 gem "cancancan", "~> 3.3"
 gem "importmap-rails"
+gem "rails-i18n"
 gem "jbuilder"
 gem "ostruct"
 gem "pg", "~> 1.1"
