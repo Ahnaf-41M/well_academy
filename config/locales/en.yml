@@ -16,6 +16,7 @@ en:
   delete_button: "Delete"
   submit_button: "Submit"
   edit_button: "Edit"
+  continue_button: "Continue"
 
   navbar:
     users: "Users"
@@ -72,8 +73,6 @@ en:
     phone: "Phone No"
     bio: "Bio"
     profile_picture: "Profile Picture"
-    password: "New password"
-    password_confirmation: "Repeat new password"
     placeholder:
       name: "Your name"
       email: "Your email"
@@ -124,6 +123,21 @@ en:
       no_courses: "No courses available"
     show:
       title: "Course Details"
+      total_lessons: "Total Lessons"
+      lessons_completed: "Lessons Completed"
+      contents: "Course Contents"
+      lesson: "Lesson"
+      video: "Video"
+      content: "Content"
+      duration: "Duration"
+      watched: "Watched"
+      watch: "Watch"
+      preview_pdf: "Preview PDF"
+      none: "None"
+      yes: "Yes"
+      no: "No"
+      review_course: "Review Course"
+      edit_review: "Edit Review"
     new:
       title: "New Course"
       form:
@@ -140,7 +154,9 @@ en:
         duration: "Duration"
         syllabus: "Syllabus"
         completion_certificate: "Completion Certificate"
+        completion_certificate_download: "Download Completion Certificate"
         achievement_certificate: "Achievement Certificate"
+        achievement_certificate_download: "Download Achievement Certificate"
         display_picture: "Display Picture"
     edit:
       title: "Edit Course"
@@ -160,6 +176,7 @@ en:
       category_id: "Category must be selected"
       price: "Price must be provided"
     progress:
+      title: "Progress"
       incomplete: "You have not completed any lessons in this course."
 
   #enrollments
@@ -229,6 +246,11 @@ en:
 
   #password_resets
   password_resets:
+    enter_new_password: "Enter New Password"
+    enter_email: "Enter your email"
+    password: "New password"
+    password_confirmation: "Repeat new password"
+    update_password: "Update Password"
     new:
       title: "Password Reset"
       instructions: "Please enter your email address to receive password reset instructions."
@@ -255,8 +277,11 @@ en:
     show:
       title: "Payment Details"
     new:
-      title: "New Payment"
-      instructions: "Please review the payment details below."
+      title: "To enroll this course, you have to pay first"
+      instructions: "Price: "
+      bank_account_number: "Enter Bank Account Number"
+      routing_number: "Enter Routing Number"
+      proceed_to_pay: "Proceed to pay"
     create:
       success: "Payment was done successfully."
       failure: "There was an error processing your payment. Please try again."
@@ -272,8 +297,18 @@ en:
       payment_invalid: "Invalid payment details."
       payment_not_found: "Payment not found."
 
-  #questions
+  #question
   questions:
+    content: "Question"
+    marks: "Marks"
+    options:
+      option_text: "Option Text"
+      is_correct: "Correct?"
+      add_option: "Add Option"
+      remove_option: "Remove Option"
+    submit_button: "Create Question"
+    update_button: "Update Question"
+
     index:
       title: "Questions"
       no_questions: "No questions found for this quiz."
@@ -324,6 +359,19 @@ en:
 
   #quizzes
   quizzes:
+    title: "Title"
+    question: "Question"
+    marks: "Marks"
+    total_marks: "Total Marks"
+    options: "Options"
+    option: "Option"
+    correct: "Correct?"
+    remove: "Remove"
+    add_option: "Add Option"
+    add_questions: "Add Questions"
+    delete_quiz: "Delete Quiz"
+
+
     dashboard:
       title: "Quiz Dashboard"
     start:
@@ -338,7 +386,7 @@ en:
       title: "Quiz List"
       no_quizzes: "No quizzes available for this course."
     show:
-      title: "Quiz Details"
+      title: "View Quiz"
     new:
       title: "Create New Quiz"
       instructions: "Fill in the quiz details to create a new quiz."
@@ -424,3 +472,12 @@ en:
     errors:
       invalid_fields: "Empty/Invalid fields!"
       approval_error: "Couldn't approve teacher."
+
+  #user_mailer
+  user_mailer:
+    hello: "Hello %{name}!"
+    reset_password: "Please click the link below to enter your new password"
+    reset_link_text: "Click here to enter new password"
+    welcome: "Welcome to WellAcademy, %{name}!"
+    confirm_account: "Please confirm your account by clicking the link below"
+    confirm_button_text: "Confirm My Account"
