@@ -1,6 +1,6 @@
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
-    <h1 class="text-center">Quiz: <span class="text-danger"><%= @quiz.title %></span></h1>
+    <h1 class="text-center"> <%= t('quizzes.title') %>: <span class="text-danger"><%= @quiz.title %></span></h1>
 
     <%= form_with model: @exam_quiz_questions, url: submit_course_quiz_path, local: true do |form| %>
       <% @exam_quiz_questions.each_with_index do |question, q_index| %>
@@ -36,10 +36,10 @@
           <% end %>
         </div>
       <% end %>
-      <div class="d-flex">
-        <%= form.submit "Submit", class: "btn btn-success" %>
+
+      <div class="d-flex justify-content-center mt-3">
+        <%= form.submit t('submit_button'), class: "btn btn-success btn-lg" %>
       </div>
     <% end %>
-
   </div>
 </section>
