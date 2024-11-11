@@ -1,15 +1,15 @@
 <div id="lessons-fields">
   <div class="lesson-fields mb-3">
-    <h6>Title <span class="text-danger">*</span></h6>
-    <%= f.text_field :title, class: "form-control mb-3", placeholder: "Lesson title", required: true %>
+    <h6><%= t('lessons.new.form.title') %> <span class="text-danger">*</span></h6>
+    <%= f.text_field :title, class: "form-control mb-3", placeholder: t('lessons.new.form.title'), required: true %>
 
-    <h6>Order <span class="text-danger">*</span></h6>
-    <%= f.number_field :order, class: "form-control mb-3", placeholder: "Order", required: true %>
+    <h6><%= t('lessons.new.form.order') %> <span class="text-danger">*</span></h6>
+    <%= f.number_field :order, class: "form-control mb-3", placeholder: t('lessons.new.form.order'), required: true %>
 
-    <h6>Video <span class="text-danger"> <%= "*" if lesson.new_record? %></span></h6>
+    <h6><%= t('lessons.new.form.video') %> <span class="text-danger"><%= "*" if lesson.new_record? %></span></h6>
     <%= f.file_field :video, class: "form-control mb-3", accept: "video/*", required: lesson.new_record? %>
 
-    <h6>Content</h6>
-    <%= f.file_field :contents, class: "form-control mb-3", accept: "application/pdf", placeholder: "Lesson contents" %>
+    <h6><%= t('lessons.new.form.content') %></h6>
+    <%= f.file_field :contents, class: "form-control mb-3", accept: "application/pdf", placeholder: t('lessons.new.form.content') %>
   </div>
 </div>
