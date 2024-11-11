@@ -28,14 +28,15 @@
                               user_path(tmp_user),
                               method: :delete,
                               class: "btn btn-danger",
-                              onclick: "return confirm('#{t('users.index.confirm_delete')}');" %>
+                              onclick: "return confirm('#{t('confirm_message')}');"
+                %>
               </div>
             </div>
           </div>
-        </div>
       <% end %>
     <% else %>
       <h1><%= t('users.index.no_users') %></h1>
     <% end %>
+    </div>
   </div>
 </div>
