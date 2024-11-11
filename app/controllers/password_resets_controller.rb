@@ -1,5 +1,4 @@
 class PasswordResetsController < ApplicationController
-  load_and_authorize_resource
 
   def new; end
 
@@ -18,7 +17,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
-    @user = User.find_by(reset_password_token: params[:id])
+    @user = User.find_by(reset_password_token: params[:reset_password_token])
 
     if @user.nil? || @user.password_reset_token_expired?
       flash[:alert] = t('password_resets.edit.expired_link')
@@ -27,7 +26,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def update
-    @user = User.find_by(reset_password_token: params[:id])
+    @user = User.find_by(reset_password_token: params[:reset_password_token])
 
     if @user&.update(password_params)
       @user.update(reset_password_token: nil, reset_password_sent_at: nil)
