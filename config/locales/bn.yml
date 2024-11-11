@@ -20,7 +20,7 @@ bn:
   confirm_message: "আপনি কি নিশ্চিত?"
 
   navbar:
-    course_categories: "কোর্স ক্যাটেগরি"
+    course_categories: "কোর্স বিভাগ"
     users: "ব্যবহারকারীরা"
     courses: "কোর্স"
     brand: "ওয়েলঅ্যাকাডেমি"
@@ -31,8 +31,8 @@ bn:
     become_teacher: "শিক্ষক হন"
     manage_courses: "কোর্স পরিচালনা করুন"
     create_course: "নতুন কোর্স তৈরি করুন"
-    manage_categories: "ক্যাটেগরি পরিচালনা করুন"
-    create_category: "নতুন ক্যাটেগরি তৈরি করুন"
+    manage_categories: "বিভাগ পরিচালনা করুন"
+    create_category: "নতুন বিভাগ তৈরি করুন"
     manage_users: "ব্যবহারকারী পরিচালনা করুন"
     pending_teachers: "অপেক্ষমাণ শিক্ষক"
     profile: "প্রোফাইল"
