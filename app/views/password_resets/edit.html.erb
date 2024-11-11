@@ -1,13 +1,13 @@
-<h1 class="d-flex justify-content-center fw-bold mt-2">Enter New Password</h1>
+<h1 class="d-flex justify-content-center fw-bold mt-2"><%= t('password_resets.enter_new_password') %></h1>
 
 <div class="d-flex justify-content-center mt-5">
-  <%= form_with model: @user, url: password_reset_path(params[:id]), class: "form-control w-25", local: true do |f| %>
-    <p class="fw-bold">New Password <span class="text-danger">*</span></p>
+  <%= form_with model: @user, url: password_reset_path(params[:reset_password_token]), class: "form-control w-25", local: true do |f| %>
+    <p class="fw-bold"> <%= t('password_resets.password') %><span class="text-danger">*</span></p>
     <%= f.password_field :password, value: @user.password, class: "form-control mb-3", required: true %>
-    <p class="fw-bold">Confirm Password <span class="text-danger">*</span></p>
+    <p class="fw-bold"><%= t('password_resets.password_confirmation') %> <span class="text-danger">*</span></p>
     <%= f.password_field :password_confirmation, value: @user.password_confirmation, class: "form-control mb-3", required: true %>
     <div class="d-grid gap-2">
-      <%= f.submit "Update Password", class: "btn btn-lg btn-success" %>
+      <%= f.submit t('password_resets.update_password'), class: "btn btn-lg btn-success" %>
     </div>
   <% end %>
 </div>
