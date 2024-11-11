@@ -17,6 +17,8 @@ en:
   submit_button: "Submit"
   edit_button: "Edit"
   continue_button: "Continue"
+  confirm_message: "Are you sure?"
+
 
   navbar:
     users: "Users"
@@ -371,7 +373,6 @@ en:
     add_questions: "Add Questions"
     delete_quiz: "Delete Quiz"
 
-
     dashboard:
       title: "Quiz Dashboard"
     start:
@@ -407,6 +408,10 @@ en:
 
   #reviews
   reviews:
+    rating: "Rating"
+    comment: "Comment"
+    update_review: "Update Review"
+    submit_review: "Submit Review"
     index:
       title: "All Reviews"
       no_reviews: "No reviews available for this course."
@@ -447,12 +452,20 @@ en:
 
   #users
   users:
+    required_fields: "* indicates required fields"
     index:
-      title: "Users"
+      title: "User Management"
       no_users: "No users found."
+      email: "Email"
+      joined_on: "Joined on"
+      role: "Role"
+      edit_profile: "Edit Profile"
+      delete_profile: "Delete Profile"
     create:
       success: "User created successfully."
       failure: "There were some errors creating the user."
+    edit:
+      title: "Edit Profile"
     update:
       success: "User updated successfully."
       failure: "Empty/Invalid fields!"
@@ -481,3 +494,12 @@ en:
     welcome: "Welcome to WellAcademy, %{name}!"
     confirm_account: "Please confirm your account by clicking the link below"
     confirm_button_text: "Confirm My Account"
+
+  #certificates
+  certificates:
+    title: "Upload your certificates"
+    already_applied: "You have already applied. Your request is in process. Thank you!"
+    instructions: "* Please upload your Graduation or Post Graduation Certificates"
+    grad_certificate: "Graduation Certificate"
+    postgrad_certificate: "Post Graduation Certificate"
+    submit_button: "Submit"
