@@ -1,36 +1,35 @@
 <div>
-  <h3>Question</h3>
+  <h3><%= t('quizzes.question') %></h3>
   <%= form.text_field :content, class: "form-control", required: true %>
 </div>
 
 <div>
-  <h3>Marks</h3>
+  <h3><%= t('quizzes.marks') %></h3>
   <%= form.number_field :marks, class: "form-control", required: true %>
 </div>
 
-<h3>Options</h3>
+<h3><%= t('quizzes.options') %></h3>
 <div id="options-fields">
   <% @question.options.each_with_index do |option, index| %>
     <%= form.fields_for :options, option do |option_form| %>
       <div class="option-set">
         <div class="input-group mb-3">
-          <span class="input-group-text">Option</span>
+          <span class="input-group-text"><%= t('quizzes.option') %></span>
           <%= option_form.text_field :option_text,
                                      name: "question[options][#{index}][option_text]",
                                      class: "form-control me-2",
                                      value: option["option_text"],
                                      required: true %>
-          <span class="me-2">Correct?</span>
+          <span class="me-2"><%= t('quizzes.correct') %></span>
           <%= option_form.check_box :is_correct,
                                     name: "question[options][#{index}][is_correct]",
                                     class: "form-check-input",
                                     checked: option["is_correct"] == "1" %>
-          <button type="button" class="btn btn-danger btn-sm ms-3 remove-option">Remove</button>
+          <button type="button" class="btn btn-danger btn-sm ms-3 remove-option"><%= t('quizzes.remove') %></button>
         </div>
       </div>
     <% end %>
   <% end %>
 </div>
 
-<button class="btn btn-primary mb-3" type="button" id="add-option">Add Option</button>
-
+<button class="btn btn-primary mb-3" type="button" id="add-option"><%= t('quiz.add_option') %></button>
