@@ -1,42 +1,41 @@
 <div class="d-flex justify-content-center mt-2">
-    <p class="fw-bold h1 text-center"> User Management </p>
+  <p class="fw-bold h1 text-center"><%= t('users.index.title') %></p>
 </div>
 <div class="d-flex justify-content-center mt-2">
-    <div class="row" style="width: 60rem;">
-        <% if @users.any? %>
-            <% @users.each do |tmp_user| %>
-                <div class="col-lg-4 mb-3">
-                    <div class="card" >
-                        <% if tmp_user.profile_picture.attached? %>
-                            <img src="<%= url_for(tmp_user.profile_picture) %>" class="card-img-top" alt="" title="Profile picture">
-                        <% else %>
-                            <img src="<%= asset_path("no-image-available.jpg") %>" class="card-img-top" alt="" title="Profile picture">
-                        <% end %>
-                        <div class="card-body">
-                            
-                            <h5 class="card-title"><%= tmp_user.name %></h5>
-                            <p class="card"></p>
-                            <p class="card-text">
-                                <b>Email:</b> <%= tmp_user.email %><br>
-                                <b>Joined on:</b> <%= tmp_user.date_joined.strftime("%B %d, %Y") if tmp_user.date_joined.present? %> <br>
-                                <b>Role:</b> <%= tmp_user.role.capitalize %>
-                            </p>
-                            <div class="d-flex">
-                                <%= link_to 'Edit Profile', edit_user_path(tmp_user), class: "btn btn-primary" %> &nbsp;
-                                <%= button_to  'Delete Profile', 
-                                                user_path(tmp_user), 
-                                                method: :delete, 
-                                                class: "btn btn-danger", 
-                                                onclick: "return confirm('Are you sure?');" %>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div class="row" style="width: 60rem;">
+    <% if @users.any? %>
+      <% @users.each do |tmp_user| %>
+        <div class="col-lg-4 mb-3">
+          <div class="card">
+            <% if tmp_user.profile_picture.attached? %>
+              <img src="<%= url_for(tmp_user.profile_picture) %>" class="card-img-top" alt="" title="<%= t('users.index.role') %>">
+            <% else %>
+              <img src="<%= asset_path("no-image-available.jpg") %>" class="card-img-top" alt="" title="<%= t('users.index.role') %>">
             <% end %>
-        <% else %>
-            <h1>No users found.</h1>
-        <% end %>
-        
-    </div>
+            <div class="card-body">
+
+              <h5 class="card-title"><%= tmp_user.name %></h5>
+              <p class="card"></p>
+              <p class="card-text">
+                <b><%= t('users.index.email') %>:</b> <%= tmp_user.email %><br>
+                <b><%= t('users.index.joined_on') %>
+                  :</b> <%= tmp_user.date_joined.strftime("%B %d, %Y") if tmp_user.date_joined.present? %> <br>
+                <b><%= t('users.index.role') %>:</b> <%= tmp_user.role.capitalize %>
+              </p>
+              <div class="d-flex">
+                <%= link_to t('users.index.edit_profile'), edit_user_path(tmp_user), class: "btn btn-warning" %> &nbsp;
+                <%= button_to t('users.index.delete_profile'),
+                              user_path(tmp_user),
+                              method: :delete,
+                              class: "btn btn-danger",
+                              onclick: "return confirm('#{t('users.index.confirm_delete')}');" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <h1><%= t('users.index.no_users') %></h1>
+    <% end %>
+  </div>
 </div>
