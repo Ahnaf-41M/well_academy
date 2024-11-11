@@ -35,12 +35,14 @@
                               approve_teacher_user_path(tmp_user),
                               method: :post,
                               class: "btn btn-sm btn-outline-success me-2",
-                              onclick: "return confirm('Are you sure?');" %>
+                              onclick: "return confirm('#{t('confirm_message')}');"
+                %>
                 <%= button_to t('reject'),
                               reject_teacher_user_path(tmp_user),
                               method: :post,
                               class: "btn btn-sm btn-outline-danger",
-                              onclick: "return confirm('Are you sure?');" %>
+                              onclick: "return confirm('#{t('confirm_message')}');"
+                %>
               </div>
             </div>
           </div>
