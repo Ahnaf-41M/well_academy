@@ -16,7 +16,7 @@ bn:
   delete_button: "মুছে ফেলুন"
   submit_button: "সাবমিট"
   edit_button: "সম্পাদনা"
-
+  continue_button: "অগ্রসর হোন"
 
   navbar:
     course_categories: "কোর্স ক্যাটেগরি"
@@ -126,6 +126,21 @@ bn:
       no_courses: "কোনও কোর্স উপলব্ধ নেই"
     show:
       title: "কোর্সের বিবরণ"
+      total_lessons: "মোট পাঠ"
+      lessons_completed: "সম্পন্ন পাঠ"
+      contents: "কোর্স সামগ্রী"
+      lesson: "পাঠ"
+      video: "ভিডিও"
+      content: "সামগ্রী"
+      duration: "স্থিতিকাল"
+      watched: "দেখা হয়েছে"
+      watch: "দেখুন"
+      preview_pdf: "পিডিএফ পূর্বরূপ"
+      none: "কিছু নেই"
+      yes: "হ্যাঁ"
+      no: "না"
+      review_course: "কোর্স পর্যালোচনা"
+      edit_review: "পর্যালোচনা সম্পাদনা"
     new:
       title: "নতুন কোর্স"
       form:
@@ -143,6 +158,8 @@ bn:
         syllabus: "সিলেবাস"
         completion_certificate: "সম্পূর্ণকরণ সার্টিফিকেট"
         achievement_certificate: "অর্জন সার্টিফিকেট"
+        completion_certificate_download: "সমাপ্তির শংসাপত্র ডাউনলোড করুন"
+        achievement_certificate_download: "অর্জনের শংসাপত্র ডাউনলোড করুন"
         display_picture: "প্রদর্শনী ছবি"
     edit:
       title: "কোর্স সম্পাদনা করুন"
@@ -162,6 +179,7 @@ bn:
       category_id: "বিভাগ নির্বাচন করতে হবে"
       price: "মূল্য প্রদান করতে হবে"
     progress:
+      title: "অগ্রগতি"
       incomplete: "আপনি এই কোর্সের কোনও পাঠ সম্পন্ন করেননি।"
 
   # enrollments
@@ -231,6 +249,11 @@ bn:
 
   # password_resets
   password_resets:
+    enter_email: "আপনার ইমেল দিন"
+    enter_new_password: "নতুন পাসওয়ার্ড প্রবেশ করান"
+    password: "নতুন পাসওয়ার্ড"
+    password_confirmation: "নতুন পাসওয়ার্ড পুনরায় লিখুন"
+    update_password: "পাসওয়ার্ড আপডেট করুন"
     new:
       title: "পাসওয়ার্ড পুনরুদ্ধার"
       instructions: "পাসওয়ার্ড পুনরুদ্ধারের জন্য আপনার ইমেইল ঠিকানা দিন।"
@@ -257,8 +280,11 @@ bn:
     show:
       title: "পেমেন্ট বিবরণ"
     new:
-      title: "নতুন পেমেন্ট"
-      instructions: "নীচে পেমেন্টের বিবরণ পরীক্ষা করুন।"
+      title: "এই কোর্সে ভর্তি হওয়ার জন্য আপনাকে প্রথমে পেমেন্ট করতে হবে"
+      instructions: "মূল্য: "
+      bank_account_number: "ব্যাংক অ্যাকাউন্ট নম্বর লিখুন"
+      routing_number: "রাউটিং নম্বর লিখুন"
+      proceed_to_pay: "পেমেন্ট করতে এগিয়ে যান"
     create:
       success: "পেমেন্ট সফলভাবে সম্পন্ন হয়েছে।"
       failure: "পেমেন্ট প্রক্রিয়াকরণে সমস্যা হয়েছে। আবার চেষ্টা করুন।"
@@ -273,6 +299,87 @@ bn:
     errors:
       payment_invalid: "অবৈধ পেমেন্ট বিবরণ।"
       payment_not_found: "পেমেন্ট পাওয়া যায়নি।"
+
+  #questions
+  questions:
+    content: "প্রশ্ন"
+    marks: "মার্কস"
+    options:
+      option_text: "অপশন টেক্সট"
+      is_correct: "সঠিক?"
+      add_option: "অপশন যোগ করুন"
+      remove_option: "অপশন মুছুন"
+    submit_button: "প্রশ্ন তৈরি করুন"
+    update_button: "প্রশ্ন আপডেট করুন"
+
+    index:
+      title: "প্রশ্নসমূহ"
+      no_questions: "এই কুইজের জন্য কোনো প্রশ্ন পাওয়া যায়নি।"
+    show:
+      title: "প্রশ্নের বিবরণ"
+    new:
+      title: "নতুন প্রশ্ন"
+      instructions: "নিচে একটি নতুন প্রশ্ন যোগ করুন।"
+    create:
+      success: "প্রশ্ন সফলভাবে তৈরি হয়েছে।"
+      failure: "প্রশ্ন তৈরি করতে ত্রুটি ঘটেছে। দয়া করে আবার চেষ্টা করুন।"
+    edit:
+      title: "প্রশ্ন সম্পাদনা করুন"
+    update:
+      success: "প্রশ্ন সফলভাবে আপডেট হয়েছে।"
+      failure: "প্রশ্ন আপডেট করতে ত্রুটি ঘটেছে। দয়া করে আবার চেষ্টা করুন।"
+    destroy:
+      success: "প্রশ্ন সফলভাবে মুছে ফেলা হয়েছে।"
+      failure: "প্রশ্ন মুছতে ত্রুটি ঘটেছে। দয়া করে আবার চেষ্টা করুন।"
+    errors:
+      question_invalid: "অবৈধ প্রশ্নের বিস্তারিত।"
+      question_not_found: "প্রশ্ন পাওয়া যায়নি।"
+
+  quizzes:
+    title: "শিরোনাম"
+    question: "প্রশ্ন"
+    total_marks: "মোট মার্কস"
+    marks: "মার্কস"
+    options: "অপশনসমূহ"
+    option: "অপশন"
+    correct: "সঠিক?"
+    remove: "অপসারণ করুন"
+    add_option: "অপশন যোগ করুন"
+    add_questions: "প্রশ্ন যোগ করুন"
+    delete_quiz: "কুইজ মুছে ফেলুন"
+
+    dashboard:
+      title: "কুইজ ড্যাশবোর্ড"
+    start:
+      title: "কুইজ শুরু করুন"
+      instructions: "অনুগ্রহ করে আপনার কুইজ জমা দেওয়ার আগে সমস্ত প্রশ্নের উত্তর দিন।"
+      submit_button: "কুইজ জমা দিন"
+      error: "কুইজ শুরু করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।"
+    submit:
+      success: "কুইজ সফলভাবে জমা হয়েছে।"
+      error: "কুইজ জমা দিতে একটি ত্রুটি ঘটেছে। অনুগ্রহ করে আবার চেষ্টা করুন।"
+    index:
+      title: "কুইজের তালিকা"
+      no_quizzes: "এই কোর্সের জন্য কোন কুইজ উপলব্ধ নেই।"
+    show:
+      title: "কুইজের বিস্তারিত"
+    new:
+      title: "নতুন কুইজ তৈরি করুন"
+      instructions: "নতুন কুইজ তৈরি করতে কুইজের বিবরণ পূর্ণ করুন।"
+    create:
+      success: "কুইজ সফলভাবে তৈরি হয়েছে।"
+      failure: "কুইজ তৈরি করতে একটি ত্রুটি ঘটেছে। অনুগ্রহ করে আবার চেষ্টা করুন।"
+    edit:
+      title: "কুইজ সম্পাদনা করুন"
+    update:
+      success: "কুইজ সফলভাবে আপডেট হয়েছে।"
+      failure: "কুইজ আপডেট করতে একটি ত্রুটি ঘটেছে। অনুগ্রহ করে আবার চেষ্টা করুন।"
+    destroy:
+      success: "কুইজ সফলভাবে মুছে ফেলা হয়েছে।"
+      failure: "কুইজ মুছে ফেলতে একটি ত্রুটি ঘটেছে। অনুগ্রহ করে আবার চেষ্টা করুন।"
+    errors:
+      missing_title: "টাইটেল অবশ্যই প্রয়োজন।"
+      invalid_marks: "মোট মার্কস একটি বৈধ সংখ্যা হতে হবে।"
 
   # users
   users:
@@ -301,3 +408,12 @@ bn:
     errors:
       invalid_fields: "ফাঁকা/অবৈধ তথ্য!"
       approval_error: "শিক্ষক অনুমোদনে সমস্যা হয়েছে।"
+
+  #user_mailer
+  user_mailer:
+    hello: "হ্যালো %{name}!"
+    reset_password: "অনুগ্রহ করে নিচের লিঙ্কে ক্লিক করুন আপনার নতুন পাসওয়ার্ড সেট করার জন্য"
+    reset_link_text: "নতুন পাসওয়ার্ড সেট করতে এখানে ক্লিক করুন"
+    welcome: "ওয়েলঅ্যাকাডেমিতে আপনাকে স্বাগতম, %{name}!"
+    confirm_account: "অনুগ্রহ করে আপনার অ্যাকাউন্ট নিশ্চিত করতে নিচের লিঙ্কে ক্লিক করুন"
+    confirm_button_text: "আমার অ্যাকাউন্ট নিশ্চিত করুন"
