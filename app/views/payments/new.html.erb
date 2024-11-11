@@ -28,7 +28,8 @@
       <div class="d-grid">
         <%= f.submit t('payments.new.proceed_to_pay'),
                      class: "btn btn-outline-success btn-round btn-h-xl",
-                     onclick: "return confirm('Are you sure you want to proceed?');" %>
+                     onclick: "return confirm('#{t('confirm_message')}');"
+        %>
       </div>
     <% end %>
 
