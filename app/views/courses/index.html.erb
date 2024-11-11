@@ -24,7 +24,12 @@
           <td class="h6"><%= tmp_course.price %> $</td>
           <td class="h6 d-flex">
             <%= link_to t('edit_button'), edit_course_path(tmp_course), class: "btn btn-sm btn-warning me-2" %>
-            <%= button_to t('delete_button'), course_path(tmp_course), method: :delete, class: "btn btn-sm btn-danger", onclick: "return confirm('Are you sure?');" %>
+            <%= button_to t('delete_button'),
+                          course_path(tmp_course),
+                          method: :delete,
+                          class: "btn btn-sm btn-danger",
+                          onclick: "return confirm('#{t('confirm_message')}');"
+            %>
           </td>
         </tr>
         </tbody>
