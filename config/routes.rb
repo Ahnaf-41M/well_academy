@@ -52,7 +52,7 @@ Rails.application.routes.draw do
         get "attempt_logout"
       end
     end
-    resources :password_resets, only: [:new, :create, :edit, :update]
+    resources :password_resets, only: [:new, :create, :edit, :update], param: :reset_password_token
 
     get "up" => "rails/health#show", as: :rails_health_check
     get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
