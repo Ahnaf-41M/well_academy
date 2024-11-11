@@ -4,7 +4,7 @@ bn:
   name: "নাম"
   email: "ইমেইল"
   graduation_certificate: "স্নাতক সার্টিফিকেট"
-  post_graduation_certificate: "পোস্ট গ্র্যাজুয়েশন সার্টিফিকেট"
+  post_graduation_certificate: "স্নাতকোত্তর সার্টিফিকেট"
   action: "অ্যাকশন"
   view: "দেখুন"
   approve: "অনুমোদন করুন"
@@ -17,6 +17,7 @@ bn:
   submit_button: "সাবমিট"
   edit_button: "সম্পাদনা"
   continue_button: "অগ্রসর হোন"
+  confirm_message: "আপনি কি নিশ্চিত?"
 
   navbar:
     course_categories: "কোর্স ক্যাটেগরি"
@@ -335,6 +336,7 @@ bn:
       question_invalid: "অবৈধ প্রশ্নের বিস্তারিত।"
       question_not_found: "প্রশ্ন পাওয়া যায়নি।"
 
+  #quizzes
   quizzes:
     title: "শিরোনাম"
     question: "প্রশ্ন"
@@ -381,14 +383,52 @@ bn:
       missing_title: "টাইটেল অবশ্যই প্রয়োজন।"
       invalid_marks: "মোট মার্কস একটি বৈধ সংখ্যা হতে হবে।"
 
+  #reviews
+  reviews:
+    rating: "রেটিং"
+    comment: "মন্তব্য"
+    update_review: "রিভিউ আপডেট করুন"
+    submit_review: "রিভিউ জমা দিন"
+    index:
+      title: "সব রিভিউ"
+      no_reviews: "এই কোর্সের জন্য কোন রিভিউ পাওয়া যায়নি।"
+    show:
+      title: "রিভিউ বিস্তারিত"
+    new:
+      title: "রিভিউ জমা দিন"
+      instructions: "অনুগ্রহ করে কোর্সের জন্য একটি রেটিং এবং মন্তব্য প্রদান করুন।"
+    create:
+      success: "রিভিউ সফলভাবে জমা দেওয়া হয়েছে।"
+      failure: "রিভিউ জমা দিতে একটি ত্রুটি হয়েছে। দয়া করে আবার চেষ্টা করুন।"
+    edit:
+      title: "রিভিউ সম্পাদনা করুন"
+    update:
+      success: "রিভিউ সফলভাবে আপডেট করা হয়েছে।"
+      failure: "রিভিউ আপডেট করতে একটি ত্রুটি হয়েছে। দয়া করে আবার চেষ্টা করুন।"
+    destroy:
+      success: "রিভিউ সফলভাবে মুছে ফেলা হয়েছে।"
+      failure: "রিভিউ মুছতে একটি ত্রুটি হয়েছে। দয়া করে আবার চেষ্টা করুন।"
+    errors:
+      missing_rating: "রেটিং প্রয়োজন।"
+      invalid_rating: "রেটিংটি ১ থেকে ৫ এর মধ্যে থাকতে হবে।"
+      missing_comment: "মন্তব্য প্রয়োজন।"
+
   # users
   users:
+    required_fields: "* প্রয়োজনীয় ক্ষেত্রগুলো চিহ্নিত করে"
     index:
-      title: "ব্যবহারকারীগণ"
+      title: "ব্যবহারকারী ব্যবস্থাপনা"
       no_users: "কোনও ব্যবহারকারী পাওয়া যায়নি।"
+      email: "ইমেইল"
+      joined_on: "যোগদান তারিখ"
+      role: "ভূমিকা"
+      edit_profile: "প্রোফাইল সম্পাদনা করুন"
+      delete_profile: "প্রোফাইল মুছে দিন"
     create:
       success: "ব্যবহারকারী সফলভাবে তৈরি হয়েছে।"
       failure: "ব্যবহারকারী তৈরি করতে কিছু ত্রুটি ছিল।"
+    edit:
+      title: "প্রোফাইল সম্পাদনা করুন"
     update:
       success: "ব্যবহারকারী সফলভাবে আপডেট হয়েছে।"
       failure: "ফাঁকা/অবৈধ তথ্য!"
@@ -417,3 +457,18 @@ bn:
     welcome: "ওয়েলঅ্যাকাডেমিতে আপনাকে স্বাগতম, %{name}!"
     confirm_account: "অনুগ্রহ করে আপনার অ্যাকাউন্ট নিশ্চিত করতে নিচের লিঙ্কে ক্লিক করুন"
     confirm_button_text: "আমার অ্যাকাউন্ট নিশ্চিত করুন"
+
+  #certificates
+  certificates:
+    title: "আপনার সার্টিফিকেট আপলোড করুন"
+    already_applied: "আপনি ইতিমধ্যেই আবেদন করেছেন। আপনার অনুরোধ প্রক্রিয়াধীন। ধন্যবাদ!"
+    instructions: "* দয়া করে আপনার স্নাতক বা স্নাতকোত্তর সার্টিফিকেট আপলোড করুন"
+    grad_certificate: "স্নাতক সার্টিফিকেট"
+    postgrad_certificate: "স্নাতকোত্তর সার্টিফিকেট"
+    submit_button: "জমা দিন"
+
+  number:
+    nth:
+      ordinals:
+        default: "%{number}তম"
+      ordinalized: "%{ordinal}"
