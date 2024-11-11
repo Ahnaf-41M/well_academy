@@ -19,7 +19,8 @@
                             remove_profile_picture_user_path(@user),
                             method: :post,
                             class: "btn btn-outline-danger btn-sm mt-3",
-                            onclick: "return confirm('#{t('users.index.confirm_delete')}');" %>
+                            onclick: "return confirm('#{t('confirm_message')}');"
+              %>
             <% else %>
               <img src="<%= asset_path("no-image-available.jpg") %>" class="card-img-top" alt="" title="<%= t('profile.profile_picture') %>">
 
