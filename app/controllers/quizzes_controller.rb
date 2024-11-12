@@ -2,7 +2,7 @@ class QuizzesController < ApplicationController
   load_and_authorize_resource
   before_action :set_user
   before_action :set_course
-  before_action :set_quiz, except: %i[dashboard index]
+  before_action :set_quiz, except: %i[dashboard index new create]
   before_action :set_question, only: %i[show submit]
   before_action :set_exam_quiz, only: %i[start]
   before_action :update_quiz_marks, only: %i[show create update destroy]
@@ -61,7 +61,7 @@ class QuizzesController < ApplicationController
 
   def index
     @quizzes = @course.quiz
-    flash.now[:notice] = t('quizzes.index.no_quizzes') if @quizzes.empty?
+    flash.now[:notice] = t('quizzes.index.no_quizzes') unless @quizzes
   end
 
   def show
