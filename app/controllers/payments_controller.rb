@@ -41,7 +41,7 @@ class PaymentsController < ApplicationController
   def update
     if @payment.update(payment_params)
       flash[:notice] = t('payments.update.success')
-      redirect_to payment_path(@payment)
+      redirect_to course_payment_path(@payment)
     else
       # flash.now[:alert] = @payment.errors.full_messages.to_sentence
       flash.now[:alert] = t('payments.update.failure')
@@ -52,11 +52,11 @@ class PaymentsController < ApplicationController
   def destroy
     if @payment.destroy
       flash[:notice] = t('payments.destroy.success')
-      redirect_to payments_path
+      redirect_to course_payments_path
     else
       # flash.now[:alert] = @payment.errors.full_messages.to_sentence
       flash.now[:alert] = t('payments.destroy.failure')
-      redirect_to payment_path(@payment), status: :unprocessable_entity
+      redirect_to course_payment_path(@payment), status: :unprocessable_entity
     end
   end
 
