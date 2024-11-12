@@ -1,10 +1,8 @@
 FactoryBot.define do
   factory :question do
-    content { "What is the capital of France?" }
+    content { "What is Ruby?" }
     marks { 5 }
     quiz
-
-    created_at { Time.current }
-    updated_at { Time.current }
+    options { [{"option_text" => "Ruby", "is_correct" => "1"}, {"option_text" => "Python", "is_correct" => "0"}] }
   end
 end
