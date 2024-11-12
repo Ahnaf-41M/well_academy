@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe QuizParticipationsController, type: :controller do
   let(:quiz) { create(:quiz) }
-  let(:student) { create(:user, role: 'admin') }
+  let(:student) { create(:user) }
+  let(:admin) { create(:user, role: 'admin') }
   let(:valid_attributes) do
     {
       student_id: student.id,
@@ -23,7 +24,7 @@ RSpec.describe QuizParticipationsController, type: :controller do
   let(:quiz_participation) { create(:quiz_participation, quiz: quiz, student: student) }
 
   before do
-    allow(controller).to receive(:current_user).and_return(student)
+    allow(controller).to receive(:current_user).and_return(admin)
   end
 
   describe "GET #index" do
