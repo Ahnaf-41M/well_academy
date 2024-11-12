@@ -17,12 +17,14 @@ class Ability
       can :read, Lesson
       can :manage, Payment, user_id: user.id
       can :manage, Review, student_id: user.id
+      can :read, QuizParticipation, student_id: user.id
     when 'student'
       can :manage, User, id: user.id
       can :read, Course
       can :confirm, User
       can :manage, Payment, user_id: user.id
       can :manage, Review, student_id: user.id
+      can :read, QuizParticipation, student_id: user.id
     else
       can :create, User
       can :confirm, User
