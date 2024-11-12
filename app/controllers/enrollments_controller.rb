@@ -59,6 +59,7 @@ class EnrollmentsController < ApplicationController
   end
 
   def enrollment_params
-    params.require(:enrollment).permit(:course_id, :student_id, :progress, :completion_status)
+    params.require(:enrollment).permit(:course_id, :student_id, :progress, :completion_status, :enrolled_at)
   end
+
 end
