@@ -2,7 +2,8 @@ class Enrollment < ApplicationRecord
   belongs_to :student, class_name: "User"
   belongs_to :course
 
-  enum completion_status: %i[not_started in_progress completed].freeze
+STATUS = {not_started: 1, in_progress: 2, completed: 3}.freeze
+  enum completion_status: STATUS
 
   validates :student_id, presence: true
   validates :course_id, presence: true
