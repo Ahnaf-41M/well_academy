@@ -7,5 +7,5 @@ class Enrollment < ApplicationRecord
 
   validates :enrolled_at, presence: true
   validates :progress, numericality: { greater_than_or_equal_to: 0.0, less_than_or_equal_to: 100.0 }
-  validates :completion_status, inclusion: { in: completion_statuses.keys }
+  validates :completion_status, presence: true
 end
