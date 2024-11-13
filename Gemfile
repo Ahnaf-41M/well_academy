@@ -24,8 +24,3 @@ end
 group :development do
   gem "web-console"
 end
-
-group :test do
-  gem "capybara"
-  gem "selenium-webdriver"
-end
