@@ -42,7 +42,7 @@
         <% end %>
 
       <% else %>
-        <%= f.text_field :role, class: "form-control", required: true, value: @tmp_user.role %>
+        <%= f.text_field :role, class: "form-control", required: true, value: @tmp_user.role.titleize %>
       <% end %>
 
     </div>
@@ -97,6 +97,11 @@
     <i class="fas fa-key fa-lg fa-fw me-3"></i>
   <% end %>
   <div data-mdb-input-init class="form-outline flex-fill mb-0">
-    <%= f.password_field :password_confirmation, class: "form-control", placeholder: t('form.password_confirmation'), value: tmp_user.password_confirmation, required: tmp_user.new_record? %>
+    <%= f.password_field :password_confirmation,
+                         class: "form-control",
+                         placeholder: t('form.password_confirmation'),
+                         value: tmp_user.password_confirmation,
+                         required: tmp_user.new_record?
+    %>
   </div>
 </div>
