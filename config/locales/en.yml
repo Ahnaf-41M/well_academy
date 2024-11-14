@@ -75,6 +75,8 @@ en:
     phone: "Phone No"
     bio: "Bio"
     profile_picture: "Profile Picture"
+    password: "Password"
+    password_confirmation: "Repeat password"
     placeholder:
       name: "Your name"
       email: "Your email"
