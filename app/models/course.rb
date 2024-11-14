@@ -15,12 +15,8 @@ class Course < ApplicationRecord
   LEVEL = { beginner: 1, intermediate: 2, advanced: 3 }.freeze
   enum level: LEVEL
 
-  validates :title, presence: true
-  validates :description, presence: true
+  validates :title, :description,  :language, :duration,  presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :level, inclusion: { in: levels.keys }
-  validates :language, presence: true
-  validates :duration, presence: true
 
   def total_duration
     return "0 hours, 0 minutes" unless duration
