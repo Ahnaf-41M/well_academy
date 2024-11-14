@@ -1,7 +1,7 @@
 class CreateEnrollments < ActiveRecord::Migration[7.2]
   def change
     create_table :enrollments do |t|
-      t.references :student, null: false, foreign_key: { to_table: :users }
+      t.belongs_to :student, foreign_key: true, null: false
       t.references :course, null: false, foreign_key: true
       t.timestamp :enrolled_at, default: -> { 'CURRENT_TIMESTAMP' }
       t.decimal :progress, precision: 10, scale: 2, default: 0.0
