@@ -8,7 +8,7 @@ class CreateCourses < ActiveRecord::Migration[7.2]
       t.decimal :price, precision: 10, scale: 2
       t.integer :level, null: false, default: 0  # For enum
       t.string :language, limit: 50
-      t.integer :duration
+      t.column :duration, :interval
 
       t.timestamps
     end
