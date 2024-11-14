@@ -93,7 +93,7 @@
               <div class="col-sm-9">
                 <p class="text-muted mb-0">
                   <%#= @user.date_joined.day.ordinalize + " " + @user.date_joined.strftime("%B, %Y") %>
-                  <%= "#{@user.date_joined.day} #{I18n.t("date.month_names")[@user.date_joined.month]} #{@user.date_joined.year}" %>
+                  <%= "#{@user.created_at.day} #{I18n.t("date.month_names")[@user.created_at.month]} #{@user.created_at.year}" %>
                 </p>
               </div>
             </div>
