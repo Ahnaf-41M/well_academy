@@ -5,7 +5,6 @@ class CreateUsers < ActiveRecord::Migration[7.2]
       t.string :email, null: false
       t.string :password, null: false
       t.string :phone, limit: 20
-      t.timestamp :date_joined, default: -> { 'CURRENT_TIMESTAMP' }
       t.text :bio
       t.integer :role, default: 0
 
