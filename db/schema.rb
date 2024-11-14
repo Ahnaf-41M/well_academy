@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_04_065131) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_31_084048) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,20 +79,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_04_065131) do
 
   create_table "lessons", force: :cascade do |t|
     t.bigint "course_id", null: false
-    t.string "title", limit: 255, null: false
+    t.string "title", null: false
     t.integer "order", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_lessons_on_course_id"
-  end
-
-  create_table "options", force: :cascade do |t|
-    t.bigint "question_id", null: false
-    t.text "option_text", null: false
-    t.boolean "is_correct", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["question_id"], name: "index_options_on_question_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -111,9 +102,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_04_065131) do
     t.bigint "quiz_id", null: false
     t.text "content", null: false
     t.integer "marks", null: false
+    t.jsonb "options", default: [], null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "options", default: [], null: false
     t.index ["quiz_id"], name: "index_questions_on_quiz_id"
   end
 
@@ -154,15 +145,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_04_065131) do
     t.string "email", null: false
     t.string "password_digest", null: false
     t.string "phone", limit: 20
-    t.datetime "date_joined", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
     t.text "bio"
     t.integer "role", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "confirmation_token"
     t.datetime "confirmed_at"
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
@@ -183,7 +172,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_04_065131) do
   add_foreign_key "enrollments", "courses"
   add_foreign_key "enrollments", "users", column: "student_id"
   add_foreign_key "lessons", "courses"
-  add_foreign_key "options", "questions"
   add_foreign_key "payments", "courses"
   add_foreign_key "payments", "users"
   add_foreign_key "questions", "quizzes"
