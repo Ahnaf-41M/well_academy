@@ -3,11 +3,12 @@ class CreateUsers < ActiveRecord::Migration[7.2]
     create_table :users do |t|
       t.string :name, null: false
       t.string :email, null: false
-      t.string :password, null: false
+      t.string :password_digest, null: false
       t.string :phone, limit: 20
-      t.timestamp :date_joined, default: -> { 'CURRENT_TIMESTAMP' }
       t.text :bio
       t.integer :role, default: 0
+      t.string :confirmation_token
+      t.datetime :confirmed_at
 
       t.timestamps
     end
