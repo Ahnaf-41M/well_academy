@@ -1,7 +1,6 @@
 class ChangeDurationTypeInCourses < ActiveRecord::Migration[6.0]
   def up
-    # Change the column type to interval with specific casting
-    change_column :courses, :duration, :interval, using: 'duration * interval \'1 minute\''
+    change_column :courses, :duration, :interval
   end
 
   def down
