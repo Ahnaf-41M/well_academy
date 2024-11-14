@@ -6,6 +6,7 @@ class Lesson < ApplicationRecord
 
   validates :title, presence: true
   validates :order, presence: true
+  validates :video, content_type: { in: ['video/mp4', 'video/webm', 'video/ogg'], message: 'must be a video file (MP4, WebM, or Ogg)' }
 
   before_save :adjust_order_within_course, if: :will_save_change_to_order?
 
