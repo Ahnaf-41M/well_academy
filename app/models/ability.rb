@@ -17,6 +17,12 @@ class Ability
       can :read, Lesson
       can :manage, Payment, user_id: user.id
       can :manage, Review, student_id: user.id
+      can [:new, :create], Question
+      can [:show, :edit, :update, :destroy], Question, course: { teacher_id: user.id }
+      can [:new, :create], Quiz
+      can [:show, :edit, :update, :destroy], Quiz, course: { teacher_id: user.id }
+
+      can :manage, Quiz, course: { teacher_id: user.id }
       can :read, QuizParticipation, student_id: user.id
     when 'student'
       can :manage, User, id: user.id
