@@ -34,8 +34,8 @@ class CoursesController < ApplicationController
     if @course.save
       redirect_to courses_path, notice: t('courses.create.success')
     else
-      # flash.now[:alert] = @course.errors.full_messages.join(", ")
-      flash.now[:alert] = t('courses.create.failure')
+      flash.now[:alert] = @course.errors.full_messages.join(", ")
+      # flash.now[:alert] = t('courses.create.failure')
       render :new, status: :unprocessable_entity
     end
   end
