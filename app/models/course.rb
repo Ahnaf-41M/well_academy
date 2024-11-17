@@ -18,7 +18,6 @@ class Course < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :level, inclusion: { in: levels.keys }
   validates :language, presence: true
   validates :duration, presence: true
 
