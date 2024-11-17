@@ -1,9 +1,12 @@
 source "https://rubygems.org"
 
 gem "bcrypt", "~> 3.1.7"
+gem "benchmark"
 gem "bootsnap", require: false
 gem "cancancan", "~> 3.3"
 gem "importmap-rails"
+gem "rails-controller-testing"
+gem "rails-i18n"
 gem "jbuilder"
 gem "ostruct"
 gem "pg", "~> 1.1"
@@ -16,8 +19,8 @@ gem "sprockets-rails"
 gem "stimulus-rails"
 gem "streamio-ffmpeg"
 gem "turbo-rails"
-# gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "tzinfo-data", platforms: %i[ mswin mingw x64_mingw jruby ]
+gem "webpacker"
 
 group :development, :test do
   gem "brakeman", require: false
