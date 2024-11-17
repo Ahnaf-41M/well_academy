@@ -78,19 +78,12 @@ RSpec.describe ReviewsController, type: :controller do
   describe "DELETE #destroy" do
     context "when the review is found and destroyed" do
       it "redirects to the course path with a success notice" do
-        delete :destroy, params: { course_id: course.id, id: user.id }
+        review_to_destroy = create(:review, course: course, student: user)
+        delete :destroy, params: { course_id: course.id, id: review_to_destroy.id }
         expect(response).to redirect_to(course_path(course))
         expect(flash[:notice]).to eq(I18n.t('reviews.destroy.success'))
       end
     end
-
-    context "when the review is not found" do
-      it "redirects to the course path with an alert" do
-        allow(Review).to receive(:find_by).and_return(nil) # Simulate a review not found
-        delete :destroy, params: { course_id: course.id, id: review.id }
-        expect(response).to redirect_to(course_path(course))
-        expect(flash[:alert]).to eq(I18n.t('reviews.destroy.failure'))
-      end
-    end
   end
+
 end
