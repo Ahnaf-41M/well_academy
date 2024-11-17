@@ -1,9 +1,12 @@
 source "https://rubygems.org"
 
 gem "bcrypt", "~> 3.1.7"
+gem "benchmark"
 gem "bootsnap", require: false
 gem "cancancan", "~> 3.3"
 gem "importmap-rails"
+gem "rails-controller-testing"
+gem "rails-i18n"
 gem "jbuilder"
 gem "ostruct"
 gem "pg", "~> 1.1"
