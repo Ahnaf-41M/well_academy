@@ -1,15 +1,13 @@
-<section class="vh-100" style="background-color: #eee;">
-  <div class="container h-100">
+<div class="container min-vh-100 mt-4">
 
-    <h1 class="row d-flex justify-content-center"><%= t('questions.submit_button') %></h1>
+  <h1 class="row d-flex justify-content-center"><%= t('questions.submit_button') %></h1>
 
-    <%= form_with model: @question, url: course_quiz_questions_path, local: true do |form| %>
-      <div class="row d-flex justify-content-center">
-        <%= render "form", form: form %>
-        <%= form.submit t('questions.submit_button'), class: "btn btn-success" %>
-      </div>
-    <% end %>
-  </div>
-</section>
+  <%= form_with model: @question, url: course_quiz_questions_path, local: true do |form| %>
+    <div class="row d-flex justify-content-center">
+      <%= render "form", form: form %>
+      <%= form.submit t('questions.submit_button'), class: "btn btn-success" %>
+    </div>
+  <% end %>
+</div>
 
 <%= javascript_include_tag "question_form" %>
