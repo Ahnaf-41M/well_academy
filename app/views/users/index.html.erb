@@ -19,7 +19,7 @@
               <p class="card-text">
                 <b><%= t('users.index.email') %>:</b> <%= tmp_user.email %><br>
                 <b><%= t('users.index.joined_on') %>
-                  :</b> <%= tmp_user.date_joined.strftime("%B %d, %Y") if tmp_user.date_joined.present? %> <br>
+                  :</b> <%= tmp_user.created_at.strftime("%B %d, %Y") if tmp_user.created_at.present? %> <br>
                 <b><%= t('users.index.role') %>:</b> <%= tmp_user.role.capitalize %>
               </p>
               <div class="d-flex">
