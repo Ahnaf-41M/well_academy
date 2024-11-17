@@ -16,10 +16,12 @@
 <%= f.select :category_id, @categories.pluck(:name, :id), { prompt: t('courses.new.form.category') }, class: "form-select mb-2", required: true %>
 
 <h6><%= t('courses.new.form.level') %> <span style="color: red;">*</span></h6>
-<select class="form-select mb-2">
+<select class="form-select mb-2" name="course[level]">
   <option selected disabled><%= t('courses.new.form.level') %></option>
   <% Course.levels.keys.each do |level| %>
-    <option value="<%= level %>" <%= 'selected' if level == @course.level %>><%= level.capitalize %></option>
+    <option value="<%= level %>" <%= 'selected' if level.to_s == @course.level %>>
+      <%= level.to_s.capitalize %>
+    </option>
   <% end %>
 </select>
 
