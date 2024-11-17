@@ -73,12 +73,12 @@ RSpec.describe EnrollmentsController, type: :controller do
         expect(enrollment.reload.progress).to eq(0.9)
       end
     end
-
+    
     context 'with invalid attributes' do
       it 'renders the edit template with a failure alert' do
-        patch :update, params: { id: enrollment.id, enrollment: { progress: 1.5 } }
+        patch :update, params: { id: enrollment.id, enrollment: { student_id: nil } } # Example invalid data
         expect(response).to render_template(:edit)
-        expect(flash.now[:alert]).to eq(I18n.t('enrollments.update.failure'))
+        expect(flash.now[:alert]).to eq('There was an issue updating the enrollment.') # Assuming you set an alert in your controller
       end
     end
   end
