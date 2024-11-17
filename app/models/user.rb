@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_one_attached :grad_certificate
   has_one_attached :postgrad_certificate
 
-  enum role: %i[student teacher admin].freeze
+  enum role: {student: 0, teacher: 1,  admin:2}
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
