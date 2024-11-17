@@ -3,6 +3,8 @@ class Course < ApplicationRecord
   belongs_to :category
   has_many :lessons, dependent: :destroy
   has_many :reviews, dependent: :destroy
+  has_many :payments, dependent: :destroy
+  has_many :enrollments, dependent: :destroy
   has_one :quiz
 
   has_one_attached :display_picture
@@ -10,7 +12,7 @@ class Course < ApplicationRecord
   has_one_attached :completion_certificate
   has_one_attached :achievement_certificate
 
-  LEVEL = {beginner: 1, intermediate: 2, advanced: 3}.freeze 
+  LEVEL = { beginner: 1, intermediate: 2, advanced: 3 }.freeze
   enum level: LEVEL
 
   validates :title, presence: true
