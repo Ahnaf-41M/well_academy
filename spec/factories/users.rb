@@ -4,7 +4,6 @@ FactoryBot.define do
     sequence(:email) { |n| "user#{n}@example.com" }
     password { "password" }
     phone { "1234567890" }
-    date_joined { Time.now }
     bio { "A test bio" }
 
     # Define the roles
