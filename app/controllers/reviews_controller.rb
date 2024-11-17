@@ -43,7 +43,8 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-    @review = @review.find_by(student_id: @user.id)
+    @review = @course.reviews.find_by(id: params[:id], student_id: @user.id)
+
     if @review
       @review.destroy
       redirect_to course_path(@review.course), notice: t('reviews.destroy.success')
