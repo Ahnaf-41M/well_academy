@@ -1,2 +1,38 @@
-<h1>QuizParticipations#index</h1>
-<p>Find me in app/views/quiz_participations/index.html.erb</p>
+<div class="min-vh-100">
+  <div class="d-flex justify-content-center mt-2">
+    <p class="fw-bold h1 text-center mb-3"> <%= t('quiz_participations.index.title') %> </p>
+  </div>
+  <div class="d-flex justify-content-center mt-2">
+
+    <div class="row" style="width: 80rem;">
+
+      <% if @quiz_participations.any? %>
+
+        <div class="row">
+          <div class="col"><h6 class="fw-bold"><%= t('courses.name') %></h6></div>
+          <div class="col"><h6 class="fw-bold"><%= t('quiz_participations.marks_obtained') %></h6></div>
+          <div class="col"><h6 class="fw-bold"><%= t('quiz_participations.total_marks') %></h6></div>
+          <div class="col"><h6 class="fw-bold"><%= t('quiz_participations.percentage') %></h6></div>
+        </div>
+        <hr>
+        <% @quiz_participations.each do |quiz_participation| %>
+
+          <div class="row mb-3">
+            <div class="col"><h6><%= Quiz.find(quiz_participation.quiz_id).course.title %></h6></div>
+            <div class="col"><h6><%= quiz_participation.marks_obtained %></h6></div>
+            <div class="col"><h6><%= quiz_participation.total_marks %></h6></div>
+            <div class="col">
+              <h6>
+                <%= number_to_percentage((quiz_participation.marks_obtained.to_f / quiz_participation.total_marks * 100).round, precision: 0) %>
+              </h6>
+            </div>
+          </div>
+          <hr>
+        <% end %>
+      <% else %>
+        <h1><%= t('no_users_found') %></h1>
+      <% end %>
+    </div>
+  </div>
+
+</div>
