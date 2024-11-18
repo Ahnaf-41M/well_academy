@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  before_create :generate_confirmation_token
   has_secure_password
   has_many :video_watches
   has_many :watched_lessons, through: :video_watches, source: :lesson
@@ -9,11 +8,10 @@ class User < ApplicationRecord
   has_one_attached :grad_certificate
   has_one_attached :postgrad_certificate
 
-  enum role: %i[student teacher admin].freeze
+  enum role: {student: 0, teacher: 1,  admin:2}
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
-  validates :role, inclusion: { in: roles.keys }
 
   def generate_confirmation_token
     self.confirmation_token = SecureRandom.hex(10)

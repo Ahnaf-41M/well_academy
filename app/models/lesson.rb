@@ -4,8 +4,7 @@ class Lesson < ApplicationRecord
   has_one_attached :video
   has_one_attached :content
 
-  validates :title, presence: true
-  validates :order, presence: true
+  validates :title, :order, presence: true
   validate :correct_video_format
 
   before_save :adjust_order_within_course, if: :will_save_change_to_order?
