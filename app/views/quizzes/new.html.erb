@@ -1,20 +1,18 @@
-<section class="vh-100" style="background-color: #eee;">
-  <div class="container h-100">
+<div class="container min-vh-100">
 
-    <div class="row justify-content-center">
-      <h1 class="text-center mb-3 fw-bold mt-2"><%= t('courses.show.title') %></h1>
-      <h5 class="text-center mb-3 fw-bold text-danger"> <%= @course.title %></h5>
+  <div class="row justify-content-center">
+    <h1 class="text-center mb-3 fw-bold mt-2"><%= t('courses.show.title') %></h1>
+    <h5 class="text-center mb-3 fw-bold text-danger"> <%= @course.title %></h5>
 
-      <%= form_with model: [@course, @quiz], local: true do |f| %>
-        <div class="fw-bold h5"> <%= t('quizzes.title') %> <span class="text-danger">*</span></div>
-        <div class="bd-highlight"><%= f.text_field :title, class: "form-control mb-3", placeholder: "Quiz title", required: true %></div>
-        <div class="d-grid">
-          <%= f.submit t('submit_button'), class: "btn btn-primary btn-lg", disable_with: 'Submitting...' %>
-        </div>
-      <% end %>
+    <%= form_with model: [@course, @quiz], local: true do |f| %>
+      <div class="fw-bold h5"> <%= t('quizzes.title') %> <span class="text-danger">*</span></div>
+      <div class="bd-highlight"><%= f.text_field :title, class: "form-control mb-3", placeholder: "Quiz title", required: true %></div>
+      <div class="d-grid">
+        <%= f.submit t('submit_button'), class: "btn btn-primary btn-lg", disable_with: 'Submitting...' %>
+      </div>
+    <% end %>
 
 
-    </div>
   </div>
+</div>
 
-</section>
