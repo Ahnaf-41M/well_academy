@@ -13,9 +13,13 @@ class SessionsController < ApplicationController
   def attempt_login
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
-      if user.confirmed_at.nil? && !user.confirmation_token.nil?
+      if user.confirmed_at.nil?
+        if user.confirmation_token.nil?
+          user.generate_confirmation_token
+          user.save
+        end
         UserMailerJob.new.perform(user.id)
-        redirect_to root_path, notice: t('sessions.errors.unconfirmed_account')
+        redirect_to login_sessions_path, notice: t('sessions.confirmed_account')
       else
         session[:user_id] = user.id
         session[:email] = user.email

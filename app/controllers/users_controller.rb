@@ -68,7 +68,7 @@ class UsersController < ApplicationController
     @user = User.find_by(confirmation_token: params[:token])
     if @user && @user.confirmed_at.nil?
       @user.update(confirmed_at: Time.now, confirmation_token: nil)
-      redirect_to root_path, notice: t('users.confirm.success')
+      redirect_to login_sessions_path, notice: t('users.confirm.success')
     else
       flash.now[:alert] = t('users.confirm.failure')
       redirect_to root_path, status: :unprocessable_entity
