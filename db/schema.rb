@@ -58,7 +58,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_31_084048) do
     t.decimal "price", precision: 10, scale: 2
     t.integer "level", default: 0, null: false
     t.string "language", limit: 50
-    t.interval "duration"
+    t.interval "duration", default: "PT0S"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_courses_on_category_id"
