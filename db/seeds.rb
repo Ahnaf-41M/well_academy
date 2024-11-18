@@ -38,5 +38,7 @@ user = User.create!(name: "Radoan Sharkar", email: "radoan@welldev.io", password
 attach_local_image(user, :profile_picture, "/Users/ahnaf/Documents/GitHub/well_academy/app/assets/images/richi.jpeg")
 user = User.create!(name: "Tahsin Turab", email: "turab@welldev.io", password: "1234", phone: "1234567894", bio: "Demo user", role: "student")
 attach_local_image(user, :profile_picture, "/Users/ahnaf/Documents/GitHub/well_academy/app/assets/images/turab.jpeg")
+user = User.create!(name: "Imtiaz Rafi", email: "rafi@welldev.io", password: "1234", phone: "1234567894", bio: "Demo user", role: "student")
+attach_local_image(user, :profile_picture, "/Users/ahnaf/Documents/GitHub/well_academy/app/assets/images/rafi-bhai.jpeg")
 
 puts "*** Database created. ***"
