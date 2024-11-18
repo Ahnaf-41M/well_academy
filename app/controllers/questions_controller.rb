@@ -2,8 +2,8 @@ class QuestionsController < ApplicationController
   load_and_authorize_resource
   before_action :set_user
   before_action :set_question, only: %i[show edit update destroy]
-  before_action :set_quiz, except: %i[edit update destroy]
-  before_action :set_course, except: %i[edit update destroy]
+  before_action :set_quiz, except: %i[show edit update destroy]
+  before_action :set_course, except: %i[show edit update destroy]
 
   def index
     @questions = @quiz.questions
@@ -34,14 +34,13 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to dashboard_course_quizzes_path(@course, @quiz), notice: t('questions.create.success')
     else
-      # flash.now[:alert] = @question.errors.full_messages.join(", ")
       flash.now[:alert] = t('questions.create.failure')
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @course = @question.quiz.course
+    @course = @question.quiz.course # Ensure this gets the course from the associated quiz
     @quiz = @question.quiz
   end
 
@@ -59,8 +58,7 @@ class QuestionsController < ApplicationController
     if @question.update(question_params.except(:options))
       redirect_to course_quiz_path(@question.quiz.course, @question.quiz), notice: t('questions.update.success')
     else
-      # flash.now[:alert] = @question.errors.full_messages.join(", ")
-      flash.now[:alert] = t('questions.update.failure')
+      flash.now[:alert] = @question.errors.full_messages.join(", ")
       render :edit, status: :unprocessable_entity
     end
   end
@@ -69,7 +67,6 @@ class QuestionsController < ApplicationController
     if @question.destroy
       redirect_to course_quiz_path(@question.quiz.course, @question.quiz), notice: t('questions.destroy.success')
     else
-      # flash.now[:alert] = @question.errors.full_messages.join(", ")
       flash.now[:alert] = t('questions.destroy.failure')
       render :edit, status: :unprocessable_entity
     end
@@ -82,7 +79,7 @@ class QuestionsController < ApplicationController
   end
 
   def set_course
-    @course = @quiz.course
+    @course = @quiz.course # Ensure course is set from the quiz before actions
   end
 
   def set_quiz
