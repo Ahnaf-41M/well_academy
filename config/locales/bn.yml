@@ -18,6 +18,7 @@ bn:
   edit_button: "সম্পাদনা"
   continue_button: "অগ্রসর হোন"
   confirm_message: "আপনি কি নিশ্চিত?"
+  teacher_applied_notice: "শিক্ষকের জন্য সফলভাবে আবেদন করা হয়েছে!"
 
   navbar:
     course_categories: "কোর্স বিভাগ"
