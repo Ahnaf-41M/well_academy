@@ -444,6 +444,7 @@ en:
 
   #sessions
   sessions:
+    confirmed_account: "Your account has been confirmed!"
     login:
       title: "Login"
       instructions: "Please enter your email and password to log in."
