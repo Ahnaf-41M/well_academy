@@ -5,7 +5,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <%= form_with(url: root_path, method: :get, local: true, html: { class: "d-flex", role: "search" }) do |form| %>
-          <%= form.text_field :search, class: "form-control me-2", type: "search", placeholder: t('navbar.search_placeholder'), aria: { label: "Search" } %>
+          <%= form.text_field :search,
+                              class: "form-control me-2",
+                              type: "search",
+                              placeholder: t('navbar.search_placeholder'),
+                              aria: { label: "Search" } %>
           <%= form.submit t('navbar.search_button'), class: "btn btn-outline-success" %>
         <% end %>
       </ul>
@@ -16,9 +20,14 @@
           <%= link_to t('navbar.signup'), new_user_path, class: "btn btn-outline-success" %>
         </ul>
       <% else %>
+
         <% if @user&.student? %>
           <ul>
-            <div class="d-grid gap-2 col-12 mx-auto">
+            <div class="d-flex gap-2 col-12 mx-auto">
+              <%= link_to t('quiz_participations.index.title'),
+                          quiz_participations_path,
+                          class: "btn btn-outline-dark rounded-pill fw-bold"
+              %>
               <%= link_to t('navbar.become_teacher'), become_teacher_user_path(id: @user.id), class: "btn btn-outline-dark rounded-pill fw-bold" %>
             </div>
           </ul>
@@ -57,6 +66,7 @@
             </ul>
           </div>
         <% end %>
+
 
         <ul class="d-flex me-5 mt-2" role="search">
           <div class="collapse navbar-collapse me-5" id="navbarNavDropdown">
