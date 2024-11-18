@@ -22,10 +22,11 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       UserMailerJob.new.perform(@user.id)
-      flash[:notice] = "User created successfully."
+      flash[:notice] = t('users.create.success')
       redirect_to root_path
     else
-      flash.now[:alert] = @user.errors.full_messages.to_sentence
+      # flash.now[:alert] = @user.errors.full_messages.to_sentence
+      flash.now[:alert] = t('users.create.failure')
       render :new, status: :unprocessable_entity
     end
   end
@@ -37,14 +38,14 @@ class UsersController < ApplicationController
   def update
     @tmp_user = User.find(params[:id])
     if @tmp_user.update(user_params)
-      flash[:notice] = "User updated successfully."
+      flash[:notice] = t('users.update.success')
       if @tmp_user == @user
         redirect_to user_path
       else
         redirect_to users_path
       end
     else
-      flash.now[:alert] = "Empty/Invalid fields!"
+      flash.now[:alert] = t('users.update.failure')
       render :edit, status: :unprocessable_entity
     end
   end
@@ -54,18 +55,22 @@ class UsersController < ApplicationController
 
   def destroy
     @tmp_user = User.find(params[:id])
-    @tmp_user.destroy
-    flash[:notice] = "User deleted successfully."
-    redirect_to users_path
+    if @tmp_user.destroy
+      flash[:notice] = t('users.destroy.success')
+      redirect_to users_path
+    else
+      flash.now[:alert] = t('users.destroy.failure')
+      render :show, status: :unprocessable_entity
+    end
   end
 
   def confirm
     @user = User.find_by(confirmation_token: params[:token])
     if @user && @user.confirmed_at.nil?
       @user.update(confirmed_at: Time.now, confirmation_token: nil)
-      redirect_to root_path, notice: "Your email has been confirmed successfully!"
+      redirect_to login_sessions_path, notice: t('users.confirm.success')
     else
-      flash.now[:alert] = "Invalid confirmation token or email already confirmed."
+      flash.now[:alert] = t('users.confirm.failure')
       redirect_to root_path, status: :unprocessable_entity
     end
   end
@@ -84,10 +89,10 @@ class UsersController < ApplicationController
 
     @tmp_user.role = :teacher
     if @tmp_user.save
-      flash[:notice] = "Teacher approved"
+      flash[:notice] = t('users.approve_teacher.success')
       redirect_to pending_users_path
     else
-      flash.now[:alert] = "Couldn't approve teacher"
+      flash.now[:alert] = t('users.approve_teacher.failure')
       render :pending, status: :unprocessable_entity
     end
   end
@@ -98,7 +103,7 @@ class UsersController < ApplicationController
     @tmp_user.grad_certificate.purge
     @tmp_user.postgrad_certificate.purge
 
-    flash.now[:alert] = "User rejected successfully!"
+    flash.now[:alert] = t('users.reject_teacher.success')
     render :pending, status: :unprocessable_entity
   end
 
@@ -106,7 +111,7 @@ class UsersController < ApplicationController
     @tmp_user = User.find(params[:id])
     @tmp_user.profile_picture.purge
 
-    flash.now[:alert] = "Profile picture removed successfully!"
+    flash.now[:alert] = t('users.remove_profile_picture.success')
     render :show, status: :unprocessable_entity
   end
 
@@ -117,7 +122,8 @@ class UsersController < ApplicationController
                                  :email,
                                  :password,
                                  :password_confirmation,
-                                 :phone, :date_joined,
+                                 :phone,
+                                 :date_joined,
                                  :bio,
                                  :role,
                                  :confirmation_token,
@@ -131,7 +137,7 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = current_user
     @tmp_user = @user
   end
 
