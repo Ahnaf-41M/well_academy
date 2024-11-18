@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  layout "application"
+
   def new
   end
 
@@ -11,18 +13,28 @@ class SessionsController < ApplicationController
   def attempt_login
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      redirect_to root_path, notice: "Logged in successfully"
+      if user.confirmed_at.nil?
+        if user.confirmation_token.nil?
+          user.generate_confirmation_token
+          user.save
+        end
+        UserMailerJob.new.perform(user.id)
+        redirect_to login_sessions_path, notice: t('sessions.confirmed_account')
+      else
+        session[:user_id] = user.id
+        session[:email] = user.email
+        redirect_to root_path, notice: t('sessions.create.success')
+      end
     else
-      flash.now[:alert] = "Invalid email or password"
-      render :new
+      flash.now[:alert] = t('sessions.errors.invalid_credentials')
+      render :login, status: :unprocessable_entity
     end
   end
 
   def destroy
-    params[:id] = nil
     session[:user_id] = nil
-    redirect_to root_path, notice: "Logged out successfully"
+    session[:email] = nil
+    redirect_to root_path, notice: t('sessions.logout.success')
   end
 
   def attempt_logout
