@@ -112,6 +112,7 @@ bn:
 
   # courses
   courses:
+    name: "কোর্সের নাম"
     course_completed: "কোর্স সম্পন্ন"
     view_course: "কোর্স দেখুন"
     continue_course: "কোর্স চালিয়ে যান"
@@ -335,6 +336,35 @@ bn:
     errors:
       question_invalid: "অবৈধ প্রশ্নের বিস্তারিত।"
       question_not_found: "প্রশ্ন পাওয়া যায়নি।"
+
+
+  # quiz_participations
+  quiz_participations:
+    marks_obtained: "প্রাপ্ত নম্বর"
+    total_marks: "মোট নম্বর"
+    percentage: "শতকরা"
+    index:
+      title: "কুইজ অংশগ্রহণ"
+      no_participations: "কোনো কুইজ অংশগ্রহণ পাওয়া যায়নি।"
+    show:
+      title: "কুইজ অংশগ্রহণের বিস্তারিত"
+    new:
+      title: "নতুন অংশগ্রহণ"
+      instructions: "অংশগ্রহণ করতে একটি কুইজ নির্বাচন করুন।"
+    create:
+      success: "কুইজ অংশগ্রহণ সফলভাবে তৈরি করা হয়েছে।"
+      failure: "কুইজ অংশগ্রহণ তৈরি করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।"
+    edit:
+      title: "অংশগ্রহণ সম্পাদনা"
+    update:
+      success: "কুইজ অংশগ্রহণ সফলভাবে আপডেট করা হয়েছে।"
+      failure: "কুইজ অংশগ্রহণ আপডেট করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।"
+    destroy:
+      success: "কুইজ অংশগ্রহণ সফলভাবে মুছে ফেলা হয়েছে।"
+      failure: "কুইজ অংশগ্রহণ মুছতে সমস্যা হয়েছে। আবার চেষ্টা করুন।"
+    errors:
+      participation_invalid: "অবৈধ অংশগ্রহণের বিবরণ।"
+      participation_not_found: "অংশগ্রহণ পাওয়া যায়নি।"
 
   #quizzes
   quizzes:
