@@ -113,6 +113,7 @@ en:
 
   #courses
   courses:
+    name: "Course Name"
     course_completed: "Course Completed"
     view_course: "View Course"
     continue_course: "Continue Course"
@@ -338,6 +339,9 @@ en:
 
   #quiz_participations
   quiz_participations:
+    marks_obtained: "Marks Obtained"
+    total_marks: "Total Marks"
+    percentage: "Percentage"
     index:
       title: "Quiz Participations"
       no_participations: "No quiz participations found."
