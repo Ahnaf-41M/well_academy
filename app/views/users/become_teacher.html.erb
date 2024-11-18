@@ -10,7 +10,8 @@
               <% else %>
                 <p class="text-center h1 fw-bold mb-3 mt-1"><%= t('certificates.title') %></p>
                 <p style="color: red;" class="text-center"><%= t('certificates.instructions') %></p>
-                <%= form_with(model: @user, url: user_path(@user), class: "mx-1 mx-md-4", method: :patch) do |f| %>
+
+                <%= form_with(model: @user, url: user_path(@user, notice: t('teacher_applied_notice')), class: "mx-1 mx-md-4", method: :patch) do |f| %>
 
                   <p><i class="fa-solid fa-file-pdf fa-lg fa-fw"></i><%= t('certificates.grad_certificate') %></p>
                   <div class="d-flex flex-row align-items-center mb-4">
@@ -30,6 +31,7 @@
                     <%= f.submit t('certificates.submit_button'), class: "btn btn-outline-success btn-lg" %>
                   </div>
                 <% end %>
+
               <% end %>
             </div>
           </div>
