@@ -92,7 +92,6 @@
               </div>
               <div class="col-sm-9">
                 <p class="text-muted mb-0">
-                  <%#= @user.date_joined.day.ordinalize + " " + @user.date_joined.strftime("%B, %Y") %>
                   <%= "#{@user.created_at.day} #{I18n.t("date.month_names")[@user.created_at.month]} #{@user.created_at.year}" %>
                 </p>
               </div>
@@ -134,8 +133,9 @@
                       <% marks_obtained = @quiz_participation.marks_obtained %>
                       <% total_marks = @quiz_participation.total_marks %>
                       <% percentage = (marks_obtained / total_marks.to_f) * 100 %>
-                      <% if percentage >= 30 %>
-                        <%= link_to @course.title, url_for(@course.achievement_certificate), class: "fw-bold text-dark", target: "_blank" %>
+                      <% if percentage >= 40 %>
+                        <% link_to @course.title, url_for(@course.achievement_certificate), class: "fw-bold text-dark", target: "_blank" %>
+                        <hr>
                       <% end %>
                     <% end %>
                   <% end %>
