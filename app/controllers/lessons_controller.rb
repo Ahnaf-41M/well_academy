@@ -50,11 +50,8 @@ class LessonsController < ApplicationController
 
   def mark_as_watched
     @lesson = Lesson.find(params[:id])
-    if current_user.video_watches.exists?(lesson: @lesson)
-      flash[:alert] = t('lessons.mark_as_watched.already_watched')
-    else
+    if !current_user.video_watches.exists?(lesson: @lesson)
       current_user.video_watches.create(lesson: @lesson, watched_at: Time.current)
-      flash[:notice] = t('lessons.mark_as_watched.success')
     end
     redirect_to course_lessons_path(@course)
   end
