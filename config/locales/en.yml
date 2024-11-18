@@ -18,6 +18,7 @@ en:
   edit_button: "Edit"
   continue_button: "Continue"
   confirm_message: "Are you sure?"
+  teacher_applied_notice: "Applied for teacher successfully!"
 
 
   navbar:
