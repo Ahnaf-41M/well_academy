@@ -6,9 +6,9 @@ class CreateCourses < ActiveRecord::Migration[7.2]
       t.references :teacher, null: false, foreign_key: { to_table: :users }
       t.references :category, null: false, foreign_key: true
       t.decimal :price, precision: 10, scale: 2
-      t.integer :level, null: false, default: 0  # For enum
+      t.integer :level, null: false, default: 0 # For enum
       t.string :language, limit: 50
-      t.column :duration, :interval
+      t.column :duration, :interval, default: '0 seconds'
 
       t.timestamps
     end
