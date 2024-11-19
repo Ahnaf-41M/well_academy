@@ -23,7 +23,7 @@ class CategoriesController < ApplicationController
       redirect_to categories_path, notice: t('categories.create.success')
     else
       flash.now[:alert] = t('categories.create.failure')
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
