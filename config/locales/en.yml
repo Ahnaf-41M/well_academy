@@ -308,7 +308,7 @@ en:
     content: "Question"
     marks: "Marks"
     options:
-      option_text: "Option Text"
+      option_text: "Option"
       is_correct: "Correct?"
       add_option: "Add Option"
       remove_option: "Remove Option"
@@ -372,6 +372,7 @@ en:
     question: "Question"
     marks: "Marks"
     total_marks: "Total Marks"
+    total_questions: "Total Questions"
     options: "Options"
     option: "Option"
     correct: "Correct?"
