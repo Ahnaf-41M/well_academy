@@ -1,4 +1,4 @@
-<div class="container mb-4 min-vh-100">
+<div class="container mb-4">
 
   <% @categories.each do |tmp_category| %>
     <% @tmp_courses = Course.where(category_id: tmp_category.id).limit(4) %>
