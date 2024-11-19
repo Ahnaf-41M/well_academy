@@ -17,3 +17,10 @@
 .btn-w-xl {
     width: 100%;
 }
+
+.single-line {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
