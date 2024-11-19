@@ -43,6 +43,7 @@
                   <% end %>
 
                 <% else %>
+                  <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
                   <%= link_to t('courses.enroll_course'), new_course_payment_path(tmp_course), class: "btn btn-success btn-sm" %>
                 <% end %>
               <% else %>
