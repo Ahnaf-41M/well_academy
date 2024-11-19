@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   def index
     @user = current_user
-    @categories = Category.all
+    @categories = Category.order(:name)
 
     if params[:search].present?
       search_pattern = params[:search]
