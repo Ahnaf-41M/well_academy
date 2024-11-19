@@ -7,7 +7,6 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = @quiz.questions
-    flash.now[:notice] = t('questions.index.no_questions') if @questions.empty?
   end
 
   def show
@@ -20,18 +19,29 @@ class QuestionsController < ApplicationController
 
   def create
     @question = @quiz.questions.build(question_params)
-
+    min_one_correct = false
     if question_params[:options].present?
       options_array = question_params[:options].to_h.values # Convert to array of option hashes
       @question.options = options_array.map do |option|
         {
           "option_text" => option["option_text"],
-          "is_correct" => option["is_correct"] == "on" ? "1" : "0"
+          # "is_correct" => option["is_correct"] == "on" ? "1" : "0"
+          "is_correct" => option["is_correct"]
         }
+      end
+
+      options_array.each do |option|
+        puts "#{option[:option_text]} => #{option[:is_correct]}"
+        if option["is_correct"] == "on" || option["is_correct"] == "1"
+          min_one_correct = true
+        end
       end
     end
 
-    if @question.save
+    if !min_one_correct
+      flash.now[:alert] = t('questions.create.failure')
+      render :new, status: :unprocessable_entity
+    elsif @question.save
       redirect_to dashboard_course_quizzes_path(@course, @quiz), notice: t('questions.create.success')
     else
       flash.now[:alert] = t('questions.create.failure')
@@ -45,6 +55,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    min_one_correct = false
     if question_params[:options].present?
       options_array = question_params[:options].to_h.values # Convert to array of option hashes
       @question.options = options_array.map do |option|
@@ -53,12 +64,23 @@ class QuestionsController < ApplicationController
           "is_correct" => option["is_correct"] == "on" || option["is_correct"]
         }
       end
+
+      options_array.each do |option|
+        puts "#{option[:option_text]} => #{option[:is_correct]}"
+        if option["is_correct"] == "on" || option["is_correct"] == "1"
+          min_one_correct = true
+        end
+      end
     end
 
-    if @question.update(question_params.except(:options))
+    if !min_one_correct
+      flash.now[:alert] = t('questions.update.failure')
+      render :edit, status: :unprocessable_entity
+    elsif @question.update(question_params.except(:options))
       redirect_to course_quiz_path(@question.quiz.course, @question.quiz), notice: t('questions.update.success')
     else
-      flash.now[:alert] = @question.errors.full_messages.join(", ")
+      # flash.now[:alert] = @question.errors.full_messages.join(", ")
+      flash.now[:alert] = t('questions.update.failure')
       render :edit, status: :unprocessable_entity
     end
   end
