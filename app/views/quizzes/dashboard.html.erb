@@ -5,7 +5,7 @@
     <h4 class="text-center mb-4"><%= t('courses.show.title') %>:
       <strong class="text-danger"><%= @course.title %></strong></h4>
 
-    <div class="container text-center">
+    <div class="container">
 
       <% if @course.quiz.present? %>
         <div class="row mb-3">
@@ -41,7 +41,12 @@
         </div>
       <% end %>
 
-
+      <div class="d-grid d-md-block mb-3 text-center">
+        <%= link_to "<< " + t('courses.edit.title'),
+                    edit_course_path(@course),
+                    class: "btn btn-outline-dark btn-sm rounded-pill"
+        %>
+      </div>
     </div>
   </div>
 </div>
