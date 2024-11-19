@@ -1,10 +1,11 @@
 class Lesson < ApplicationRecord
   belongs_to :course
-  
+
   has_one_attached :video
   has_one_attached :content
 
-  validates :title, :order, presence: true
+  validates :title, presence: true
+  validates :order, presence: true, numericality: { greater_than_or_equal_to: 1 }
   validate :correct_video_format
 
   before_save :adjust_order_within_course, if: :will_save_change_to_order?
