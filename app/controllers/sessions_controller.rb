@@ -8,6 +8,9 @@ class SessionsController < ApplicationController
   end
 
   def login
+    if current_user.present?
+      redirect_to root_path
+    end
   end
 
   def attempt_login
