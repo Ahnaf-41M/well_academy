@@ -372,6 +372,7 @@ bn:
     title: "শিরোনাম"
     question: "প্রশ্ন"
     total_marks: "মোট মার্কস"
+    total_questions: "মোট প্রশ্ন"
     marks: "মার্কস"
     options: "অপশনসমূহ"
     option: "অপশন"
