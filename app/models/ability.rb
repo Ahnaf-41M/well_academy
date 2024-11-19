@@ -18,6 +18,7 @@ class Ability
       can :manage, Payment, user_id: user.id
       can :manage, Review, student_id: user.id
       can :manage, Question, quiz: { course: { teacher_id: user.id } }
+      can :create, Question
 
       can [:new, :create], Quiz
       can [:show, :edit, :update, :destroy], Quiz, course: { teacher_id: user.id }
