@@ -1,4 +1,4 @@
-<div class="container min-vh-100">
+<div class="container">
   <% @tmp_courses = @courses %>
   <% if @tmp_courses.exists? %>
 
@@ -10,7 +10,7 @@
 
     <div class="row mb-4">
       <% @tmp_courses.each do |tmp_course| %>
-        <div class="col col-4">
+        <div class="col col-4 mb-3">
           <div class="card">
 
             <img src="<%= url_for(tmp_course.display_picture) %>" class="card-img-top" alt="..." width="300" height="200">
