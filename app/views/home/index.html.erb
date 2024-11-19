@@ -1,7 +1,7 @@
 <div class="container mb-4">
 
   <% @categories.each do |tmp_category| %>
-    <% @tmp_courses = Course.where(category_id: tmp_category.id).limit(4) %>
+    <% @tmp_courses = Course.where(category_id: tmp_category.id).limit(3) %>
 
     <% if @tmp_courses.exists? %>
 
@@ -13,11 +13,10 @@
 
       <div class="row mb-4">
         <% @tmp_courses.each do |tmp_course| %>
-          <div class="col col-4">
+          <div class="col col-lg-4">
             <div class="card">
-
               <img src="<%= url_for(tmp_course.display_picture) %>" class="card-img-top" alt="..." width="300" height="200">
-              <h5 class="card-header"><%= tmp_course.title %></h5>
+              <h5 class="card-header single-line"><%= tmp_course.title %></h5>
               <div class="card-body">
                 <p><%= User.find(tmp_course.teacher_id).name %></p>
                 <p><span class="fw-bold"><%= tmp_course.total_duration %></p>
