@@ -1,10 +1,31 @@
-<div class="container min-vh-100">
-  <div class="row justify-content-center">
+<div class="container">
+  <div class="row">
+
     <h1 class="text-center mb-3 fw-bold mt-2"><%= t('quizzes.edit.title') %></h1>
     <h5 class="text-center mb-3 fw-bold text-danger"> <%= @quiz.title %></h5>
-    <h5 class="text-center fw-bold mb-3"> <%= t('quizzes.total_marks') %>: <%= @quiz.total_marks %></h5>
+    <h2 class="text-center fw-bold mb-3">
+    <span class="badge bg-secondary">
+      <%= t('quizzes.total_marks') %> : <%= @quiz.total_marks %>
+    </span>
+    </h2>
+
+    <h2 class="text-center fw-bold mb-3">
+    <span class="badge bg-secondary">
+      <%= t('quizzes.total_questions') %>: <%= @questions.length %>
+    </span>
+    </h2>
+
+    <h5 class="text-center fw-bold mb-3 badge bg-secondary"></h5>
+
 
     <% if @user.teacher? %>
+      <div class="d-grid gap-2 d-md-block mb-3">
+        <%= link_to "<< " + t('quizzes.dashboard.title'),
+                    dashboard_course_quizzes_path(@course),
+                    class: "btn btn-outline-dark btn-sm rounded-pill"
+        %>
+      </div>
+
       <%= form_with model: [@course, @quiz], local: true do |f| %>
         <div class="fw-bold h5"> <%= t('quizzes.title') %> <span class="text-danger">*</span></div>
         <div class="bd-highlight">
