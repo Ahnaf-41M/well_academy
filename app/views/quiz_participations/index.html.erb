@@ -9,7 +9,9 @@
       <% if @quiz_participations %>
 
         <div class="row">
-          <div class="col"><h6 class="fw-bold"><%= t('courses.name') %></h6></div>
+          <div class="col">
+            <h6 class="fw-bold"><%= t('courses.name') %></h6>
+          </div>
           <div class="col"><h6 class="fw-bold"><%= t('quiz_participations.marks_obtained') %></h6></div>
           <div class="col"><h6 class="fw-bold"><%= t('quiz_participations.total_marks') %></h6></div>
           <div class="col"><h6 class="fw-bold"><%= t('quiz_participations.percentage') %></h6></div>
@@ -18,7 +20,14 @@
         <% @quiz_participations.each do |quiz_participation| %>
 
           <div class="row mb-3">
-            <div class="col"><h6><%= Quiz.find(quiz_participation.quiz_id).course.title %></h6></div>
+            <div class="col">
+              <h6>
+                <% tmp_course = Quiz.find(quiz_participation.quiz_id).course %>
+                <%= link_to tmp_course.title,
+                            course_path(tmp_course)
+                %>
+              </h6>
+            </div>
             <div class="col"><h6><%= quiz_participation.marks_obtained %></h6></div>
             <div class="col"><h6><%= quiz_participation.total_marks %></h6></div>
             <div class="col">
