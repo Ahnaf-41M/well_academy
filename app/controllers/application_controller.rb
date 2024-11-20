@@ -17,9 +17,16 @@ class ApplicationController < ActionController::Base
     { locale: I18n.locale }
   end
 
+  rescue_from CanCan::AccessDenied do |exception|
+    @error_message = exception.message
+
+    redirect_to unauthorized_path, alert: exception.message
+  end
+
   private
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
   end
+
 end
