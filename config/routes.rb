@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   scope "(:locale)", locale: /en|bn/ do
     root "home#index"
     get "home/index"
+    get 'unauthorized', to: 'errors#unauthorized'
 
     resources :categories
     resources :enrollments
