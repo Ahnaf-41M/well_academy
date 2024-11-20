@@ -1,11 +1,12 @@
 class QuizzesController < ApplicationController
-  load_and_authorize_resource
   before_action :set_user
   before_action :set_course
   before_action :set_quiz, except: %i[dashboard index new create]
   before_action :set_question, only: %i[show submit]
   before_action :set_exam_quiz, only: %i[start]
   before_action :update_quiz_marks, only: %i[show create update destroy]
+  load_and_authorize_resource :course
+  load_and_authorize_resource :quizzes, through: :course
 
   def dashboard
   end
@@ -137,10 +138,10 @@ class QuizzesController < ApplicationController
 
   def update_quiz_marks
     total_marks = 0
-    @quiz.questions.each do |question|
+    @quiz && @quiz.questions.each do |question|
       total_marks += question.marks
     end
-    @quiz.total_marks = total_marks
+    @quiz&.total_marks = total_marks
   end
 
   def quiz_params
