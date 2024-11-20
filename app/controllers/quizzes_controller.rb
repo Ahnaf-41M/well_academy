@@ -5,7 +5,7 @@ class QuizzesController < ApplicationController
   before_action :set_question, only: %i[show submit]
   before_action :set_exam_quiz, only: %i[start]
   before_action :update_quiz_marks, only: %i[show create update destroy]
-  load_and_authorize_resource :course
+
   load_and_authorize_resource :quizzes, through: :course
 
   def dashboard
@@ -114,6 +114,7 @@ class QuizzesController < ApplicationController
 
   def set_quiz
     @quiz = Quiz.find(params[:id])
+    @quiz.save
   end
 
   def set_course
