@@ -6,15 +6,18 @@ class QuizzesController < ApplicationController
   before_action :set_exam_quiz, only: %i[start]
   before_action :update_quiz_marks, only: %i[show create update destroy]
 
-  load_and_authorize_resource :quizzes, through: :course
+  load_and_authorize_resource
 
   def dashboard
+    authorize! :dashboard, @course
   end
 
   def start
+    authorize! :start, @quiz
   end
 
   def submit
+    authorize! :submit, @quiz
     @quiz_submission = params[:exam_quiz_questions]
     @marks = Hash.new
     @selected_answers = Hash.new
@@ -62,7 +65,6 @@ class QuizzesController < ApplicationController
 
   def index
     @quizzes = @course.quiz
-    flash.now[:notice] = t('quizzes.index.no_quizzes') unless @quizzes
   end
 
   def show
@@ -74,6 +76,7 @@ class QuizzesController < ApplicationController
 
   def create
     @quiz = @course.build_quiz(quiz_params)
+
     @quiz.total_marks ||= 0
     if @quiz.save
       redirect_to dashboard_course_quizzes_path(@course), notice: t('quizzes.create.success')
@@ -85,6 +88,7 @@ class QuizzesController < ApplicationController
   end
 
   def edit
+    authorize! :edit, @course
   end
 
   def update
