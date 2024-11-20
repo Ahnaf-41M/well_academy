@@ -1,9 +1,12 @@
 class QuestionsController < ApplicationController
-  load_and_authorize_resource
+
   before_action :set_user
   before_action :set_question, only: %i[show edit update destroy]
   before_action :set_quiz, except: %i[show edit update destroy]
   before_action :set_course, except: %i[show edit update destroy]
+  load_and_authorize_resource :course
+  load_and_authorize_resource :quiz, through: :course
+  load_and_authorize_resource :question, through: :quiz
 
   def index
     @questions = @quiz.questions
@@ -25,8 +28,7 @@ class QuestionsController < ApplicationController
       @question.options = options_array.map do |option|
         {
           "option_text" => option["option_text"],
-          # "is_correct" => option["is_correct"] == "on" ? "1" : "0"
-          "is_correct" => option["is_correct"]
+          "is_correct" => (option["is_correct"] == "on" || option["is_correct"] == "1") ? "1" : "0"
         }
       end
 
@@ -42,7 +44,7 @@ class QuestionsController < ApplicationController
       flash.now[:alert] = t('questions.create.failure')
       render :new, status: :unprocessable_entity
     elsif @question.save
-      redirect_to dashboard_course_quizzes_path(@course, @quiz), notice: t('questions.create.success')
+      redirect_to dashboard_course_quizzes_path(@course), notice: t('questions.create.success')
     else
       flash.now[:alert] = t('questions.create.failure')
       render :new, status: :unprocessable_entity
