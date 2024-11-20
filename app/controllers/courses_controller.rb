@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  # load_and_authorize_resource
+  load_and_authorize_resource
 
   before_action :set_user
   before_action :set_course, only: %i[show edit update destroy]
