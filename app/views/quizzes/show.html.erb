@@ -3,17 +3,20 @@
 
     <h1 class="text-center mb-3 fw-bold mt-2"><%= t('quizzes.edit.title') %></h1>
     <h5 class="text-center mb-3 fw-bold text-danger"> <%= @quiz.title %></h5>
-    <h2 class="text-center fw-bold mb-3">
-    <span class="badge bg-secondary">
-      <%= t('quizzes.total_marks') %> : <%= @quiz.total_marks %>
-    </span>
-    </h2>
 
-    <h2 class="text-center fw-bold mb-3">
-    <span class="badge bg-secondary">
-      <%= t('quizzes.total_questions') %>: <%= @questions.length %>
-    </span>
-    </h2>
+    <div class="d-flex justify-content-center gap-2">
+      <h4 class="text-center fw-bold mb-3">
+        <span class="badge bg-primary">
+          <%= t('quizzes.total_marks') %> : <%= @quiz.total_marks %>
+        </span>
+      </h4>
+
+      <h4 class="text-center fw-bold mb-3">
+        <span class="badge bg-success">
+          <%= t('quizzes.total_questions') %>: <%= @questions.length %>
+        </span>
+      </h4>
+    </div>
 
     <h5 class="text-center fw-bold mb-3 badge bg-secondary"></h5>
 
