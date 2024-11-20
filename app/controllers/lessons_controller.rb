@@ -1,12 +1,12 @@
 class LessonsController < ApplicationController
-  load_and_authorize_resource
   before_action :set_user
   before_action :set_course
   before_action :set_lesson, only: %i[show edit update destroy]
+  load_and_authorize_resource :course
+  load_and_authorize_resource :lesson, through: :course
 
   def index
     @lessons = @course.lessons.order(:order)
-    flash.now[:notice] = t('lessons.index.no_lessons') if @lessons.empty?
   end
 
   def show
@@ -22,7 +22,6 @@ class LessonsController < ApplicationController
       set_course_duration
       redirect_to edit_course_path(@course), notice: t('lessons.create.success')
     else
-      # flash.now[:alert] = @lesson.errors.full_messages.join(", ")
       flash.now[:alert] = t('lessons.create.failure')
       render :new, status: :unprocessable_entity
     end
@@ -36,7 +35,6 @@ class LessonsController < ApplicationController
       set_course_duration
       redirect_to course_lessons_path(@course), notice: t('lessons.update.success')
     else
-      # flash.now[:alert] = @lesson.errors.full_messages.join(", ")
       flash.now[:alert] = t('lessons.update.failure')
       render :edit, status: :unprocessable_entity
     end
@@ -50,6 +48,8 @@ class LessonsController < ApplicationController
 
   def mark_as_watched
     @lesson = Lesson.find(params[:id])
+    # Changed from :create to :mark_as_watched for more specific permission
+    authorize! :mark_as_watched, @lesson
     if !current_user.video_watches.exists?(lesson: @lesson)
       current_user.video_watches.create(lesson: @lesson, watched_at: Time.current)
     end
