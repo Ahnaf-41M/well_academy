@@ -1,4 +1,4 @@
-<div class="container min-vh-100">
+<div class="container">
   <h1 class="card text-center mt-4 mb-4 fw-bold"><span class="card-header text-danger"><%= @quiz.title %></span></h1>
 
   <%= form_with model: @exam_quiz_questions, url: submit_course_quiz_path, local: true do |form| %>
