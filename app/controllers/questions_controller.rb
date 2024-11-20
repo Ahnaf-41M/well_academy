@@ -4,6 +4,7 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: %i[show edit update destroy]
   before_action :set_quiz, except: %i[show edit update destroy]
   before_action :set_course, except: %i[show edit update destroy]
+  
   load_and_authorize_resource :course
   load_and_authorize_resource :quiz, through: :course
   load_and_authorize_resource :question, through: :quiz
