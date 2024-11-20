@@ -1,11 +1,12 @@
 class Course < ApplicationRecord
   belongs_to :teacher, class_name: "User"
   belongs_to :category
+
+  has_one :quiz, dependent: :destroy
   has_many :lessons, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :payments, dependent: :destroy
   has_many :enrollments, dependent: :destroy
-  has_one :quiz
 
   has_one_attached :display_picture
   has_one_attached :syllabus
