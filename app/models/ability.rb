@@ -9,21 +9,21 @@ class Ability
       can :manage, :all
     when 'teacher'
       can :manage, User, id: user.id
-      can :manage, Course, teacher_id: user.id
+
       can :create, Course
       can :read, Course
+      can :manage, Course, teacher_id: user.id
+
       can :manage, Lesson, course: { teacher_id: user.id }
-      can :create, Lesson
-      can :read, Lesson
+
+      can :manage, Question, quiz: { course: { teacher_id: user.id } }
+      can :manage, Quiz, course: { teacher_id: user.id }
+      can :dashboard, Quiz, course: { teacher_id: user.id }
+      can :submit, Quiz, course: { payments: { user_id: user.id } }
+      can :start, Quiz, course: { payments: { user_id: user.id } }
+
       can :manage, Payment, user_id: user.id
       can :manage, Review, student_id: user.id
-      can :manage, Question, quiz: { course: { teacher_id: user.id } }
-      can :create, Question
-
-      can [:new, :create], Quiz
-      can [:show, :edit, :update, :destroy], Quiz, course: { teacher_id: user.id }
-
-      can :manage, Quiz, course: { teacher_id: user.id }
       can :read, QuizParticipation, student_id: user.id
     when 'student'
       can :manage, User, id: user.id
@@ -33,8 +33,10 @@ class Ability
       can :manage, Review, student_id: user.id
       can :read, QuizParticipation, student_id: user.id
       can :mark_as_watched, Lesson, course: { payments: { user_id: user.id } }
-      can :start, Quiz
-      can :submit, Quiz, course: { enrollments: { student_id: user.id } }
+
+      can :submit, Quiz, course: { payments: { user_id: user.id } }
+      # can :start, Quiz, course: { payments: { user_id: user.id } }
+      can :start, Quiz, course: { payments: { user_id: user.id, status: :paid } }
 
     else
       can :create, User
