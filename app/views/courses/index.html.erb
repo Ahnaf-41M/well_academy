@@ -1,5 +1,5 @@
-<div class="container min-vh-100">
-  <div class="d-flex justify-content-center mt-2">
+<div class="container">
+  <div class="d-flex justify-content-center">
     <p class="fw-bold h1 text-center"><%= t('courses.index.title') %></p>
   </div>
 
@@ -23,14 +23,19 @@
           <td class="h6"><%= User.find(tmp_course.teacher_id).name %></td>
           <td class="h6"><%= Category.find(tmp_course.category_id).name %></td>
           <td class="h6"><%= tmp_course.price %> $</td>
-          <td class="h6 d-flex">
-            <%= link_to t('edit_button'), edit_course_path(tmp_course), class: "btn btn-sm btn-warning me-2" %>
+          <td class="h6 d-flex gap-2">
+            <%= link_to t('edit_button'), edit_course_path(tmp_course), class: "btn btn-sm btn-warning" %>
             <%= button_to t('delete_button'),
                           course_path(tmp_course),
                           method: :delete,
                           class: "btn btn-sm btn-danger",
                           onclick: "return confirm('#{t('confirm_message')}');"
             %>
+            <%= link_to t('reviews.index.title'),
+                        course_reviews_path(tmp_course),
+                        class: "btn btn-primary btn-sm"
+            %>
+
           </td>
         </tr>
         </tbody>
