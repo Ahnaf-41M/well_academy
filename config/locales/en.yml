@@ -16,9 +16,12 @@ en:
   delete_button: "Delete"
   submit_button: "Submit"
   edit_button: "Edit"
+  goto_button: "Go to"
   continue_button: "Continue"
+  back_button: "<< Back"
   confirm_message: "Are you sure?"
   teacher_applied_notice: "Applied for teacher successfully!"
+
 
 
   navbar:
@@ -416,12 +419,13 @@ en:
 
   #reviews
   reviews:
+    average_rating: "Average Rating"
     rating: "Rating"
     comment: "Comment"
     update_review: "Update Review"
     submit_review: "Submit Review"
     index:
-      title: "All Reviews"
+      title: "Show all reviews"
       no_reviews: "No reviews available for this course."
     show:
       title: "Review Details"
@@ -461,6 +465,7 @@ en:
 
   #users
   users:
+    teacher_name: "Teacher Name"
     required_fields: "* indicates required fields"
     index:
       title: "User Management"
