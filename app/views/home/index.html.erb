@@ -21,7 +21,7 @@
                 <p><%= User.find(tmp_course.teacher_id).name %></p>
                 <p><span class="fw-bold"><%= tmp_course.total_duration %></p>
 
-                <% average_rating = Review.where(course_id: tmp_course.id).average(:rating) || 0.0 %>
+                <% average_rating = (Review.where(course_id: tmp_course.id).average(:rating) || 0.0).round(1) %>
                 <h6 class="fw-bold"><%= average_rating %> ⭐&nbsp;</h6>
 
                 <h5><span class="badge rounded-pill text-bg-success text-light">$<%= tmp_course.price %></span></h5>
@@ -33,12 +33,8 @@
 
                     <% if @lesson_count == @lesson_completed && @lesson_count > 0 %>
                       <div class="d-flex gap-2">
-                        <%= link_to t('courses.course_completed'),
-                                    course_path(tmp_course),
-                                    class: "badge text-bg-success p-2 link-offset-2 link-underline link-underline-opacity-0" %>
-                        <a href="#" class="btn btn-primary btn-sm" onclick="showPdfModal('<%= url_for(tmp_course.completion_certificate) %>'); return false;">
-                          <%= t('courses.new.form.completion_certificate') %>
-                        </a>
+                        <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
+                        <span class="badge bg-success p-2"><%= t('courses.course_completed') %></span>
                       </div>
                     <% else %>
                       <%= link_to t('courses.continue_course'), course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
