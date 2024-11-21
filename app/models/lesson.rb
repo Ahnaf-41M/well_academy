@@ -1,6 +1,8 @@
 class Lesson < ApplicationRecord
   belongs_to :course
 
+  has_many :video_watches, dependent: :destroy
+  
   has_one_attached :video, dependent: :purge
   has_one_attached :content
 
