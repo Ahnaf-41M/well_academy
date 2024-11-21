@@ -141,8 +141,9 @@
     </div>
   </div>
 
-  <% if @user && Enrollment.exists?(student_id: @user.id, course_id: @course.id) %>
-    <div class="d-flex gap-2 mt-3">
+
+  <div class="d-flex gap-2 mt-3">
+    <% if @user && Enrollment.exists?(student_id: @user.id, course_id: @course.id) %>
       <% @review = Review.find_by(course_id: @course.id, student_id: @user.id) %>
       <% if @review.present? %>
         <%= link_to t('courses.show.edit_review'),
@@ -152,15 +153,19 @@
       <% else %>
         <%= link_to t('courses.show.review_course'),
                     new_course_review_path(@course),
-                    class: "btn btn-success btn-sm"
+                    class: "btn btn-outline-dark btn-sm"
         %>
       <% end %>
-      <%= link_to t('reviews.index.title'),
-                  course_reviews_path(@course),
-                  class: "btn btn-primary btn-sm"
-      %>
-    </div>
-  <% end %>
+    <% else %>
+      <%= link_to t('courses.enroll_course'), new_course_payment_path(@course), class: "btn btn-success btn-sm" %>
+    <% end %>
+
+    <%= link_to t('reviews.index.title'),
+                course_reviews_path(@course),
+                class: "btn btn-primary btn-sm"
+    %>
+  </div>
+
 </div>
 
 <!-- Modal structure (hidden by default) -->
