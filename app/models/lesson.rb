@@ -1,7 +1,7 @@
 class Lesson < ApplicationRecord
   belongs_to :course
 
-  has_one_attached :video
+  has_one_attached :video, dependent: :purge
   has_one_attached :content
 
   validates :title, presence: true
