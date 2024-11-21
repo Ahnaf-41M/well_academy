@@ -5,8 +5,9 @@ class ReviewsController < ApplicationController
   before_action :set_course, only: %i[new create edit update destroy]
 
   def index
-    @reviews = Review.all
-    flash.now[:notice] = t('reviews.index.no_reviews') if @reviews.empty?
+    @reviews = Review.where(course_id: params[:course_id])
+    @course = Course.find(params[:course_id])
+    @teacher = @course.teacher
   end
 
   def show
