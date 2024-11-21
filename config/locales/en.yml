@@ -371,6 +371,7 @@ en:
 
   #quizzes
   quizzes:
+    quiz: "Quiz"
     title: "Title"
     question: "Question"
     marks: "Marks"
