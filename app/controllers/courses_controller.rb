@@ -1,10 +1,11 @@
 class CoursesController < ApplicationController
-  load_and_authorize_resource
 
   before_action :set_user
   before_action :set_course, only: %i[show edit update destroy]
   before_action :set_categories, only: %i[create new show edit update destroy]
   before_action :update_enrollment, only: %i[show]
+
+  load_and_authorize_resource :course, only: %i[new create edit update destroy]
 
   def index_by_category
     category_id = params[:category_id]
@@ -45,7 +46,7 @@ class CoursesController < ApplicationController
 
   def update
     if @course.update(course_params)
-      redirect_to courses_path, notice: t('courses.update.success')
+      redirect_to edit_course_path(@course), notice: t('courses.update.success')
     else
       # flash.now[:alert] = @course.errors.full_messages.join(", ")
       flash.now[:alert] = t('courses.update.failure')
