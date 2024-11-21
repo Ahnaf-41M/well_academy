@@ -14,7 +14,7 @@
           <div class="card">
 
             <img src="<%= url_for(tmp_course.display_picture) %>" class="card-img-top" alt="..." width="300" height="200">
-            <h5 class="card-header"><%= tmp_course.title %></h5>
+            <h5 class="card-header single-line"><%= tmp_course.title %></h5>
             <div class="card-body">
               <p><%= User.find(tmp_course.teacher_id).name %></p>
               <p><span class="fw-bold"><%= tmp_course.total_duration %></span></p>
@@ -31,12 +31,8 @@
 
                   <% if @lesson_count == @lesson_completed %>
                     <div class="d-flex gap-2">
-                      <%= link_to t('courses.course_completed'),
-                                  course_path(tmp_course),
-                                  class: "badge text-bg-success p-2 link-offset-2 link-underline link-underline-opacity-0" %>
-                      <a href="#" class="btn btn-primary btn-sm" onclick="showPdfModal('<%= url_for(tmp_course.completion_certificate) %>'); return false;">
-                        <%= t('courses.new.form.completion_certificate') %>
-                      </a>
+                      <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
+                      <span class="badge bg-success p-2"><%= t('courses.course_completed') %></span>
                     </div>
                   <% else %>
                     <%= link_to t('courses.continue_course'), course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
