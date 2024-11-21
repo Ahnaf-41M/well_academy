@@ -15,8 +15,6 @@
               <% question.content.split("\n").each do |line| %>
                 <h5><%= line %></h5>
               <% end %>
-              <!--              <h5><%#= question.content %> (<span class="text-danger"><%#= question.marks %></span>)</h5>-->
-
               <%= question_form.hidden_field :id, name: "exam_quiz_questions[#{q_index}][id]", value: question.id %>
             </div>
 
