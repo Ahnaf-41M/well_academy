@@ -1,11 +1,11 @@
 <div>
   <h3><%= t('questions.content') %></h3>
-  <%= form.text_field :content, class: "form-control", required: true %>
+  <%= form.text_area :content, class: "form-control mb-2", required: true %>
 </div>
 
 <div>
   <h3><%= t('questions.marks') %></h3>
-  <%= form.number_field :marks, class: "form-control", required: true %>
+  <%= form.number_field :marks, class: "form-control mb-2", required: true %>
 </div>
 
 <h3><%= t('questions.options.option_text') %></h3>
