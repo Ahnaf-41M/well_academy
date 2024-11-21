@@ -43,7 +43,9 @@
     <% @questions.each do |question| %>
       <div class="card mb-3">
         <div class="card-header">
-          <h5><%= question.content %></h5>
+          <% question.content.split("\n").each do |line| %>
+            <h5><%= line %></h5>
+          <% end %>
         </div>
         <div class="card-body">
           <% question.options.each do |option| %>
