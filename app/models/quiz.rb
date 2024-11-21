@@ -1,6 +1,7 @@
 class Quiz < ApplicationRecord
   belongs_to :course
   has_many :questions, dependent: :destroy
+  has_many :quiz_participations, dependent: :destroy
 
   before_save :update_total_marks
 
