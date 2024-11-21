@@ -48,7 +48,6 @@ class LessonsController < ApplicationController
 
   def mark_as_watched
     @lesson = Lesson.find(params[:id])
-    # Changed from :create to :mark_as_watched for more specific permission
     authorize! :mark_as_watched, @lesson
     if !current_user.video_watches.exists?(lesson: @lesson)
       current_user.video_watches.create(lesson: @lesson, watched_at: Time.current)
@@ -75,8 +74,11 @@ class LessonsController < ApplicationController
     @course.lessons.each do |lesson|
       if lesson.video.attached?
         video_path = ActiveStorage::Blob.service.path_for(lesson.video.key)
-        movie = FFMPEG::Movie.new(video_path)
-        @course.duration += movie.duration
+        # binding.pry
+        if File.exist?(video_path)
+          movie = FFMPEG::Movie.new(video_path)
+          @course.duration += movie.duration
+        end
       end
     end
     @course.save
