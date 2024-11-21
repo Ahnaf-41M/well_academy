@@ -291,9 +291,11 @@ GEM
       rubocop-performance
       rubocop-rails
     ruby-progressbar (1.13.0)
+    rufus-scheduler (3.9.2)
+      fugit (~> 1.1, >= 1.11.1)
     securerandom (0.3.2)
     semantic_range (3.1.0)
-    sidekiq (7.3.5)
+    sidekiq (7.3.6)
       connection_pool (>= 2.3.0)
       logger
       rack (>= 2.2.4)
@@ -369,6 +371,7 @@ DEPENDENCIES
   rails-i18n
   rspec-rails (~> 6.0)
   rubocop-rails-omakase
+  rufus-scheduler
   sidekiq
   sidekiq-cron
   sprockets-rails
