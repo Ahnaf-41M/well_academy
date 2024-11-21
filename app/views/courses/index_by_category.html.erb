@@ -1,5 +1,5 @@
 <div class="container">
-  <% @tmp_courses = @courses %>
+  <% @tmp_courses = @courses.order(:title) %>
   <% if @tmp_courses.exists? %>
 
     <div class="card mt-4 mb-2">
