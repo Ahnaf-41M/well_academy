@@ -1,2 +1,42 @@
-<h1>Reviews#index</h1>
-<p>Find me in app/views/reviews/index.html.erb</p>
+<div class="container">
+
+  <h1 class="text-center card card-header mb-3 fw-bold"><%= t('reviews.show.title') %></h1>
+  <h2 class="text-center"><span class="badge bg-success"><%= @course.title %></span></h2>
+  <h5 class="text-center"><span class="badge bg-secondary"><%= @teacher.name %></span></h5>
+  <% average_rating = (@reviews.average(:rating) || 0.0).round(1) %>
+  <h4 class="text-center"><span class="badge bg-success"><%= average_rating %> ⭐</span></h4>
+
+  <h6>
+    <%= link_to "<< " + t('goto_button') + " " + t('courses.view_course'),
+                course_path(@course),
+                class: "btn btn-outline-dark btn-sm rounded-pill fw-bold"
+    %>
+  </h6>
+
+
+  <% if @reviews %>
+    <% @reviews.each do |review| %>
+      <% tmp_user = User.find(review.student_id) %>
+      <div class="card mb-3">
+        <div class="d-flex gap-2 card-header">
+          <%= image_tag tmp_user.profile_picture.attached? ? url_for(tmp_user.profile_picture) : asset_path('no-image-available.jpg'),
+                        alt: "Profile picture",
+                        style: "width: 50px; height: 50px; border-radius: 50%;",
+                        title: "Profile picture"
+          %>
+          <h5 class="p-2"> <%= tmp_user.name %></h5>
+        </div>
+        <div class="card-body">
+          <h6 class="card-title fw-bold">
+            <%= t('reviews.rating') + ": " + review.rating.to_s %>  ⭐
+          </h6>
+          <hr>
+          <h6 class="fw-bold"><%= t('reviews.comment') %>:</h6>
+          <p class="card-text"><%= review.comment %></p>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+
+  <% end %>
+</div>
