@@ -19,7 +19,6 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     @error_message = exception.message
-
     redirect_to unauthorized_path, alert: exception.message
   end
 
