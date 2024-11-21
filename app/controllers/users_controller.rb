@@ -58,6 +58,9 @@ class UsersController < ApplicationController
 
   def destroy
     @tmp_user = User.find(params[:id])
+    @tmp_user.courses.destroy_all if @tmp_user.courses
+    @tmp_user.quiz_participations.destroy_all if @tmp_user.courses
+    
     if @tmp_user.destroy
       flash[:notice] = t('users.destroy.success')
       redirect_to users_path
