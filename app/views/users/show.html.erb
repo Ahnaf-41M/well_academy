@@ -133,8 +133,8 @@
                       <% marks_obtained = @quiz_participation.marks_obtained %>
                       <% total_marks = @quiz_participation.total_marks %>
                       <% percentage = (marks_obtained / total_marks.to_f) * 100 %>
-                      <% if percentage >= 40 %>
-                        <% link_to @course.title, url_for(@course.achievement_certificate), class: "fw-bold text-dark", target: "_blank" %>
+                      <% if percentage >= 30 %>
+                        <%= link_to @course.title, url_for(@course.achievement_certificate), class: "fw-bold text-dark", target: "_blank" %>
                         <hr>
                       <% end %>
                     <% end %>
