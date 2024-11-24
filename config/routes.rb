@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+
+  match "/404", to: "errors#not_found", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
+  match "/422", to: "errors#unprocessable_entity", via: :all
+  #
+  get '/assets/*path', to: lambda { |_| [404, {}, []] }
+  # get '/packs/*path', to: lambda { |_| [404, {}, []] } # if using webpacker
+
   scope "(:locale)", locale: /en|bn/ do
     root "home#index"
     get "home/index"
@@ -58,5 +66,25 @@ Rails.application.routes.draw do
     get "up" => "rails/health#show", as: :rails_health_check
     get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
     get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+
+    match "*path", to: "errors#not_found", via: :all, constraints: ->(req) do
+      !req.path.start_with?("/rails/active_storage/")
+    end
   end
+
+  match "*path", to: redirect("/#{I18n.default_locale}/%{path}"),
+        constraints: lambda { |req|
+          path = req.path
+          !path.starts_with?("/#{I18n.default_locale}/") &&
+            !path.starts_with?('/404') &&
+            !path.starts_with?('/500') &&
+            !path.starts_with?('/422') &&
+            !path.start_with?('/rails/active_storage') &&
+            !path.start_with?('/rails/blobs') &&
+            !path.start_with?('/rails/representations') &&
+            !path.start_with?('/rails/disk') &&
+            !path.match?(/\A\/assets\/.*/) &&
+            !path.match?(/\A\/packs\/.*/)
+        },
+        via: :all
 end
