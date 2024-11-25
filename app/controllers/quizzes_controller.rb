@@ -6,18 +6,23 @@ class QuizzesController < ApplicationController
   before_action :set_exam_quiz, only: %i[start]
   before_action :update_quiz_marks, only: %i[show create update destroy]
 
-  load_and_authorize_resource
+  load_and_authorize_resource :course, except: [:dashboard, :start, :submit]
+  load_and_authorize_resource :quiz, through: :course, except: [:dashboard, :start, :submit]
 
   def dashboard
     authorize! :dashboard, @course
   end
 
   def start
-    authorize! :start, @quiz
+    payment = Payment.find_by(user_id: current_user.id, course_id: @course.id)
+    if payment.nil?
+      redirect_to unauthorized_path
+    end
   end
 
   def submit
     authorize! :submit, @quiz
+    
     @quiz_submission = params[:exam_quiz_questions]
     @marks = Hash.new
     @selected_answers = Hash.new
