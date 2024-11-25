@@ -1,14 +1,17 @@
-<div class="container min-vh-100">
-  <div class="d-flex justify-content-center mt-2">
+<div class="container">
+  <div class="d-flex justify-content-center">
+
+  </div>
+  <div class="card card-header mb-3">
     <p class="fw-bold h1 text-center"><%= t('courses.index.title') %></p>
   </div>
 
-  <table class="table table-striped table-hover">
+  <table class="table table-striped">
 
     <% if @courses.any? %>
       <thead>
       <tr class="h5">
-        <th scope="col"><%= t('courses.index.title') %></th>
+        <th scope="col"><%= t('courses.show.title') %></th>
         <th scope="col"><%= t('courses.index.teacher') %></th>
         <th scope="col"><%= t('courses.index.category') %></th>
         <th scope="col"><%= t('courses.index.price') %></th>
@@ -19,24 +22,32 @@
       <% @courses.each do |tmp_course| %>
         <tbody>
         <tr>
-          <td class="h6"><%= tmp_course.title.titleize %></td>
+          <td class="h6"><%= tmp_course.title %></td>
           <td class="h6"><%= User.find(tmp_course.teacher_id).name %></td>
           <td class="h6"><%= Category.find(tmp_course.category_id).name %></td>
           <td class="h6"><%= tmp_course.price %> $</td>
-          <td class="h6 d-flex">
-            <%= link_to t('edit_button'), edit_course_path(tmp_course), class: "btn btn-sm btn-warning me-2" %>
+          <td class="h6 d-flex gap-2">
+            <%= link_to t('edit_button'), edit_course_path(tmp_course), class: "btn btn-sm btn-warning" %>
             <%= button_to t('delete_button'),
                           course_path(tmp_course),
                           method: :delete,
                           class: "btn btn-sm btn-danger",
                           onclick: "return confirm('#{t('confirm_message')}');"
             %>
+            <%= link_to t('reviews.index.title'),
+                        course_reviews_path(tmp_course),
+                        class: "btn btn-primary btn-sm"
+            %>
+
           </td>
         </tr>
         </tbody>
       <% end %>
     <% else %>
-      <h1 class="text-center text-danger"><%= t('courses.index.no_courses') %></h1>
+
+      <div class="alert alert-warning" role="alert">
+        <h1 class="text-center text-danger"><%= t('courses.index.no_courses') %></h1>
+      </div>
     <% end %>
   </table>
 </div>
