@@ -18,8 +18,8 @@ class Ability
 
       can :manage, Quiz, course: { teacher_id: user.id }
       can :dashboard, Quiz, course: { teacher_id: user.id }
-      can :submit, Quiz, course: { payments: { user_id: user.id } }
-      can :start, Quiz, course: { payments: { user_id: user.id } }
+      can :submit, Quiz
+      can :start, Quiz
 
       can :manage, Question, quiz: { course: { teacher_id: user.id } }
 
@@ -34,9 +34,9 @@ class Ability
 
       can :read, Course
 
-      can :start, Quiz, course: { payments: { user_id: user.id } }
-      can :submit, Quiz, course: { payments: { user_id: user.id } }
-      
+      can :start, Quiz
+      can :submit, Quiz
+
       can :manage, Payment, user_id: user.id
 
       can :manage, Review, student_id: user.id
