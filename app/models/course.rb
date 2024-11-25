@@ -26,4 +26,21 @@ class Course < ApplicationRecord
 
     "#{hours} hour#{'s' if hours != 1}, #{minutes} minute#{'s' if minutes != 1}"
   end
+
+  def set_course_duration
+    new_duration = 0
+
+    lessons.each do |lesson|
+      if lesson.video.attached?
+        video_path = ActiveStorage::Blob.service.path_for(lesson.video.key)
+
+        if File.exist?(video_path)
+          movie = FFMPEG::Movie.new(video_path)
+          new_duration += movie.duration
+        end
+      end
+    end
+
+    update_column(:duration, new_duration) if duration
+  end
 end
