@@ -7,7 +7,7 @@ class QuizzesController < ApplicationController
   before_action :update_quiz_marks, only: %i[show create update destroy]
 
   load_and_authorize_resource :course, except: [:dashboard, :start, :submit]
-  load_and_authorize_resource :quiz, through: :course, except: [:dashboard, :start, :submit]
+  load_and_authorize_resource :quizzes, through: :course, except: [:dashboard, :start, :submit]
 
   def dashboard
     authorize! :dashboard, @course
@@ -22,7 +22,7 @@ class QuizzesController < ApplicationController
 
   def submit
     authorize! :submit, @quiz
-    
+
     @quiz_submission = params[:exam_quiz_questions]
     @marks = Hash.new
     @selected_answers = Hash.new
