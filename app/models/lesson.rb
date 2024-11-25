@@ -41,7 +41,7 @@ class Lesson < ApplicationRecord
   end
 
   def update_course_duration
-    course.set_course_duration
+    course.set_course_duration unless course.destroyed?
   end
 
 end
