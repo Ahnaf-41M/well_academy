@@ -19,6 +19,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
+  validates :phone, length: { is: 11 }, allow_blank: true
 
   def generate_confirmation_token
     self.confirmation_token = SecureRandom.hex(10)
