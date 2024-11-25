@@ -1,7 +1,9 @@
-<div class="min-vh-100">
-  <div class="d-flex justify-content-center mt-2">
-    <p class="fw-bold h1 text-center mb-3"> <%= t('pending_teachers') %> </p>
+<div class="container">
+  <!--  <div class="d-flex justify-content-center mt-2">-->
+  <div class="fw-bold h1 text-center mb-3 card card-header">
+    <%= t('pending_teachers') %>
   </div>
+  <!--  </div>-->
   <div class="d-flex justify-content-center mt-2">
 
     <div class="row" style="width: 80rem;">
@@ -47,7 +49,9 @@
           </div>
         <% end %>
       <% else %>
-        <h1 class="text-center text-danger"><%= t('no_users_found') %></h1>
+        <div class="alert alert-warning" role="alert">
+          <h1 class="text-center text-danger"><%= t('no_users_found') %></h1>
+        </div>
       <% end %>
     </div>
   </div>
