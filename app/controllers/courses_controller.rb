@@ -45,7 +45,7 @@ class CoursesController < ApplicationController
   end
 
   def update
-    if @course.update(course_params)
+    if @course.update(course_params.except(:teacher_id))
       redirect_to edit_course_path(@course), notice: t('courses.update.success')
     else
       # flash.now[:alert] = @course.errors.full_messages.join(", ")
