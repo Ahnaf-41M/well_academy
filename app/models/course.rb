@@ -29,6 +29,7 @@ class Course < ApplicationRecord
   end
 
   def set_course_duration
+    return if destroyed? || frozen?
     new_duration = 0
 
     lessons.each do |lesson|
