@@ -22,6 +22,22 @@ class ApplicationController < ActionController::Base
     redirect_to unauthorized_path, alert: exception.message
   end
 
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    Rails.logger.error "Record not found: #{exception.message}"
+
+    respond_to do |format|
+      format.html do
+        flash[:alert] = "Sorry, we couldn't find what you were looking for."
+        if request.referer
+          redirect_back(fallback_location: root_path)
+        else
+          redirect_to root_path
+        end
+      end
+      format.json { render json: { error: 'Record not found' }, status: :not_found }
+    end
+  end
+
   private
 
   def set_locale
