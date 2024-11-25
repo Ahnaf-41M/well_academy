@@ -40,7 +40,9 @@
         </tbody>
       <% end %>
     <% else %>
-      <h1 class="text-center text-danger"><%= t('courses.index.no_courses') %></h1>
+      <div class="alert alert-warning" role="alert">
+        <h1 class="text-center text-danger"><%= t('courses.index.no_courses') %></h1>
+      </div>
     <% end %>
   </table>
 </div>
