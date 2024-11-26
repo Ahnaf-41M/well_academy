@@ -5,7 +5,7 @@
 
     <% if @tmp_courses.exists? %>
 
-      <div class="card mt-4 mb-2">
+      <div class="card mt-2 mb-3">
         <div class="card-header bg-secondary text-white">
           <h3><%= tmp_category.name %></h3>
         </div>
@@ -54,7 +54,7 @@
 
       <%= link_to t('courses.show_all_courses', category_name: tmp_category.name),
                   index_by_category_courses_path(category_id: tmp_category.id),
-                  class: "btn btn-outline-dark" %>
+                  class: "btn btn-outline-dark mb-3" %>
 
     <% end %>
   <% end %>
