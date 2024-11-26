@@ -476,6 +476,8 @@ en:
       role: "Role"
       edit_profile: "Edit Profile"
       delete_profile: "Delete Profile"
+    show:
+      title: "View Profile"
     create:
       success: "User created successfully."
       failure: "There were some errors creating the user."
