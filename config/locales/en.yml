@@ -17,6 +17,7 @@ en:
   submit_button: "Submit"
   edit_button: "Edit"
   goto_button: "Go to"
+  view_button: "View"
   continue_button: "Continue"
   back_button: "<< Back"
   confirm_message: "Are you sure?"
