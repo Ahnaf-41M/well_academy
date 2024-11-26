@@ -35,7 +35,7 @@
 <h6><%= t('courses.new.form.price') %> ($) <span style="color: red;">*</span></h6>
 <div class="d-flex flex-row align-items-center mb-2">
   <div data-mdb-input-init class="form-outline flex-fill mb-0">
-    <%= f.number_field :price, class: "form-control", placeholder: t('courses.new.form.price'), step: "1", min: "0", required: true %>
+    <%= f.number_field :price, class: "form-control", placeholder: t('courses.new.form.price'), step: ".01", min: "0", required: true %>
   </div>
 </div>
 
