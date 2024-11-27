@@ -40,7 +40,7 @@
           </ul>
         </div>
         <% if @user&.student? %>
-          <ul>
+          <ul class="navbar-nav">
             <%= link_to t('navbar.become_teacher'),
                         become_teacher_user_path(id: @user.id),
                         class: "btn btn-outline-dark rounded-pill fw-bold"
