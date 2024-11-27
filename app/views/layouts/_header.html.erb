@@ -20,13 +20,27 @@
           <%= link_to t('navbar.signup'), new_user_path, class: "btn btn-outline-success" %>
         </ul>
       <% else %>
-
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle rounded-pill me-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= t('activities_button') %>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>
+              <%= link_to t('courses.enrollments.title'),
+                          enrollments_courses_path,
+                          class: "dropdown-item"
+              %>
+            </li>
+            <li>
+              <%= link_to t('quiz_participations.index.title'),
+                          quiz_participations_path,
+                          class: "dropdown-item"
+              %>
+            </li>
+          </ul>
+        </div>
         <% if @user&.student? %>
           <ul>
-            <%= link_to t('quiz_participations.index.title'),
-                        quiz_participations_path,
-                        class: "btn btn-outline-secondary rounded-pill fw-bold me-2"
-            %>
             <%= link_to t('navbar.become_teacher'),
                         become_teacher_user_path(id: @user.id),
                         class: "btn btn-outline-dark rounded-pill fw-bold"
@@ -35,10 +49,6 @@
         <% end %>
 
         <% if @user&.teacher? || @user&.admin? %>
-          <%= link_to t('quiz_participations.index.title'),
-                      quiz_participations_path,
-                      class: "btn btn-outline-secondary rounded-pill fw-bold me-2"
-          %>
           <div class="dropdown me-2">
             <button class="btn btn-secondary dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               <%= t('navbar.courses') %>
