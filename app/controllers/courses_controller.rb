@@ -13,6 +13,11 @@ class CoursesController < ApplicationController
     @courses = Course.where(category_id: category_id)
   end
 
+  def enrollments
+    @enrollments = Enrollment.where(student_id: @user.id)
+    @courses = Course.where(id: @enrollments.select(:course_id)).order(:title)
+  end
+
   def index
     if @user.admin?
       @courses = Course.order(:title)
