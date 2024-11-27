@@ -18,6 +18,7 @@ en:
   edit_button: "Edit"
   goto_button: "Go to"
   view_button: "View"
+  activities_button: "Activities"
   continue_button: "Continue"
   back_button: "<< Back"
   confirm_message: "Are you sure?"
@@ -124,6 +125,9 @@ en:
     continue_course: "Continue Course"
     enroll_course: "Enroll in Course"
     show_all_courses: "Show all on %{category_name} courses >>"
+
+    enrollments:
+      title: "Enrollments"
     index:
       title: "Courses"
       teacher: "Teacher"
