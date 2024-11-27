@@ -4,7 +4,7 @@
 
     <div class="row" style="width: 80rem;">
 
-      <% if @quiz_participations %>
+      <% if @quiz_participations.present? %>
 
         <div class="row">
           <div class="col">
@@ -37,7 +37,7 @@
           <hr>
         <% end %>
       <% else %>
-        <h1 class="text-center text-danger"><%= t('quiz_participations.index.no_participations') %></h1>
+        <h1 class="alert alert-warning text-center text-danger"><%= t('quiz_participations.index.no_participations') %></h1>
       <% end %>
     </div>
   </div>
