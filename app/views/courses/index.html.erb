@@ -5,7 +5,6 @@
   <table class="table table-striped table-hover">
 
     <% if @courses.any? %>
-      <thead>
       <tr class="h5">
         <th scope="col"><%= t('courses.index.title') %></th>
         <th scope="col"><%= t('courses.index.teacher') %></th>
@@ -13,32 +12,36 @@
         <th scope="col"><%= t('courses.index.price') %></th>
         <th scope="col"><%= t('courses.index.actions') %></th>
       </tr>
-      </thead>
 
       <% @courses.each do |tmp_course| %>
-        <tbody>
         <tr>
           <td class="h6"><%= tmp_course.title.titleize %></td>
           <td class="h6"><%= User.find(tmp_course.teacher_id).name %></td>
           <td class="h6"><%= Category.find(tmp_course.category_id).name %></td>
           <td class="h6"><%= tmp_course.price %> $</td>
-          <td class="h6 d-flex gap-2">
-            <%= link_to t('view_button'), course_path(tmp_course), class: "btn btn-sm btn-primary" %>
-            <%= link_to t('edit_button'), edit_course_path(tmp_course), class: "btn btn-sm btn-warning" %>
-            <%= button_to t('delete_button'),
+          <td class="h6 gap-2">
+            <div class="btn-toolbar" role="group" aria-label="Basic example">
+              <%= link_to t('view_button'),
                           course_path(tmp_course),
-                          method: :delete,
-                          class: "btn btn-sm btn-danger",
-                          onclick: "return confirm('#{t('confirm_message')}');"
-            %>
-            <%= link_to t('reviews.index.title'),
-                        course_reviews_path(tmp_course),
-                        class: "btn btn-outline-dark btn-sm"
-            %>
-
+                          class: "btn btn-sm btn-primary me-2"
+              %>
+              <%= link_to t('edit_button'),
+                          edit_course_path(tmp_course),
+                          class: "btn btn-sm btn-warning me-2"
+              %>
+              <%= button_to t('delete_button'),
+                            course_path(tmp_course),
+                            method: :delete,
+                            class: "btn btn-sm btn-danger me-2",
+                            onclick: "return confirm('#{t('confirm_message')}');"
+              %>
+              <%= link_to t('reviews.index.title'),
+                          course_reviews_path(tmp_course),
+                          class: "btn btn-outline-dark btn-sm me-2"
+              %>
+            </div>
           </td>
         </tr>
-        </tbody>
       <% end %>
     <% else %>
       <div class="alert alert-warning" role="alert">
