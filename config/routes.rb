@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :courses do
       collection do
         get "index_by_category/:category_id", action: :index_by_category, as: :index_by_category
+        get "enrollments", action: :enrollments
       end
       resources :lessons do
         member do
