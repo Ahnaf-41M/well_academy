@@ -1,15 +1,19 @@
 class HomeController < ApplicationController
   def index
     @user = current_user
-    @categories = Category.order(:name)
 
     if params[:search].present?
       search_pattern = params[:search]
       @courses = Course.where("title ~* ? OR description ~* ?", search_pattern, search_pattern)
-      @categories = Category.all
       if @courses.present?
-        @categories = Category.where(id: @courses.pluck(:category_id).uniq)
+        @categories = Category.where(id: @courses.pluck(:category_id).uniq).page(params[:page]).per(3)
+      else
+        @categories = Category.order(:name).page(params[:page]).per(3)
+        flash.now[:alert] = "No courses found!"
+        redirect_to root_path
       end
+    else
+      @categories = Category.order(:name).page(params[:page]).per(3)
     end
   end
 end
