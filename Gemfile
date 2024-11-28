@@ -22,6 +22,7 @@ gem "streamio-ffmpeg"
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[ mswin mingw x64_mingw jruby ]
 gem "webpacker"
+gem 'kaminari'
 
 group :development, :test do
   gem "brakeman", require: false
