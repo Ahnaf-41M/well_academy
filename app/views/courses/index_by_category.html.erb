@@ -20,7 +20,7 @@
               <p><span class="fw-bold"><%= tmp_course.total_duration %></span></p>
 
               <% average_rating = Review.where(course_id: tmp_course.id).average(:rating) || 0.0 %>
-              <h6 class="fw-bold"><%= average_rating %> ⭐&nbsp;</h6>
+              <h6 class="fw-bold"><%= average_rating.round(1) %> ⭐&nbsp;</h6>
 
               <h5><span class="badge rounded-pill text-bg-success text-light">$<%= tmp_course.price %></span></h5>
 
