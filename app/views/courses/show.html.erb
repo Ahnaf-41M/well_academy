@@ -172,7 +172,7 @@
                     class: "btn btn-outline-dark btn-sm"
         %>
       <% end %>
-    <% else %>
+    <% elsif @user %>
       <%= link_to t('courses.enroll_course'), new_course_payment_path(@course), class: "btn btn-success btn-sm" %>
     <% end %>
 
