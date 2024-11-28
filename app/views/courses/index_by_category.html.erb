@@ -51,6 +51,11 @@
       <% end %>
     </div>
 
+    <!--    Paginator-->
+    <nav aria-label="Page navigation">
+      <%= paginate @tmp_courses, theme: 'bootstrap4' %>
+    </nav>
+
   <% else %>
     <h1 class="text-center text-danger"><%= t('courses.index.no_courses') %></h1>
   <% end %>
