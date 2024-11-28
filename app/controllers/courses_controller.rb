@@ -10,9 +10,7 @@ class CoursesController < ApplicationController
   def index_by_category
     category_id = params[:category_id]
     @category = Category.find(category_id)
-    # @courses = Course.where(category_id: category_id)
     @courses = Course.where(category_id: category_id).page(params[:page]).per(3)
-
   end
 
   def enrollments
