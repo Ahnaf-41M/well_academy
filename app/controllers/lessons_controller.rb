@@ -46,7 +46,6 @@ class LessonsController < ApplicationController
 
   def mark_as_watched
     @lesson = Lesson.find(params[:id])
-    authorize! :mark_as_watched, @lesson
     if !current_user.video_watches.exists?(lesson: @lesson)
       current_user.video_watches.create(lesson: @lesson, watched_at: Time.current)
     end
