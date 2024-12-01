@@ -134,7 +134,11 @@
                 </div>
                 <div class="col">
                   <% if lesson.content.attached? %>
-                    <a href="#" onclick="showPdfModal('<%= url_for(lesson.content) %>'); return false;"><%= t('course.preview_pdf') %></a>
+                    <% if @user && Payment.exists?(user_id: @user.id, course_id: @course.id) %>
+                      <a href="#" onclick="showPdfModal('<%= url_for(lesson.content) %>'); return false;"><%= t('course.preview_pdf') %></a>
+                    <% else %>
+                      <p><%= t('course.preview_pdf') %></p>
+                    <% end %>
                   <% else %>
                     <%= t('courses.show.none') %>
                   <% end %>
