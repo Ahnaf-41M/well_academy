@@ -9,7 +9,7 @@ class HomeController < ApplicationController
         @categories = Category.where(id: @courses.pluck(:category_id).uniq).page(params[:page]).per(3)
       else
         @categories = Category.order(:name).page(params[:page]).per(3)
-        flash.now[:alert] = "No courses found!"
+        flash[:notice] = t('no_courses_found')
         redirect_to root_path
       end
     else
