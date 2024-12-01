@@ -17,7 +17,7 @@ class User < ApplicationRecord
 
   enum role: { student: 0, teacher: 1, admin: 2 }
 
-  validates :name, presence: true
+  validates :name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, uniqueness: true
   validates :phone, length: { is: 11 }, allow_blank: true
 
