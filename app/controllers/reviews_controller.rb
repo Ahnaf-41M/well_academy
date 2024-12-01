@@ -5,7 +5,7 @@ class ReviewsController < ApplicationController
   before_action :set_course, only: %i[new create edit update destroy]
 
   def index
-    @reviews = Review.where(course_id: params[:course_id])
+    @reviews = Review.where(course_id: params[:course_id]).page(params[:page]).per(5)
     @course = Course.find(params[:course_id])
     @teacher = @course.teacher
   end
