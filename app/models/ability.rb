@@ -15,6 +15,7 @@ class Ability
       can :manage, Course, teacher_id: user.id
 
       can :manage, Lesson, course: { teacher_id: user.id }
+      can :mark_as_watched, Lesson, course: { payments: { user_id: user.id } }
 
       can :manage, Quiz, course: { teacher_id: user.id }
       can :dashboard, Quiz, course: { teacher_id: user.id }
