@@ -1,65 +1,64 @@
 <div class="container mb-4">
 
-  <% @categories && @categories.each do |tmp_category| %>
-    <% @tmp_courses = Course.where(category_id: tmp_category.id).order(:title).limit(3) %>
+  <% if @categories %>
+    <% @categories && @categories.each do |tmp_category| %>
+      <% @tmp_courses = Course.where(category_id: tmp_category.id).order(:title).limit(3) %>
 
-    <% if @tmp_courses.exists? %>
+      <% if @tmp_courses.exists? %>
 
-      <div class="card mt-2 mb-3">
-        <div class="card-header bg-secondary text-white">
-          <h3><%= tmp_category.name %></h3>
+        <div class="card mt-2 mb-3">
+          <div class="card-header bg-secondary text-white">
+            <h3><%= tmp_category.name %></h3>
+          </div>
         </div>
-      </div>
 
-      <div class="row mb-4">
-        <% @tmp_courses.each do |tmp_course| %>
-          <div class="col col-lg-4">
-            <div class="card">
-              <img src="<%= url_for(tmp_course.display_picture) %>" class="card-img-top" alt="..." width="300" height="200">
-              <h5 class="card-header" style="height: 60px"><%= tmp_course.title %></h5>
-              <div class="card-body">
-                <p><%= User.find(tmp_course.teacher_id).name %></p>
-                <p><span class="fw-bold"><%= tmp_course.total_duration %></p>
+        <div class="row mb-4">
+          <% @tmp_courses.each do |tmp_course| %>
+            <div class="col col-lg-4">
+              <div class="card">
+                <img src="<%= url_for(tmp_course.display_picture) %>" class="card-img-top" alt="..." width="300" height="200">
+                <h5 class="card-header" style="height: 60px"><%= tmp_course.title %></h5>
+                <div class="card-body">
+                  <p><%= User.find(tmp_course.teacher_id).name %></p>
+                  <p><span class="fw-bold"><%= tmp_course.total_duration %></p>
 
-                <% average_rating = (Review.where(course_id: tmp_course.id).average(:rating) || 0.0).round(1) %>
-                <h6 class="fw-bold"><%= average_rating %> ⭐&nbsp;</h6>
+                  <% average_rating = (Review.where(course_id: tmp_course.id).average(:rating) || 0.0).round(1) %>
+                  <h6 class="fw-bold"><%= average_rating %> ⭐&nbsp;</h6>
 
-                <h5><span class="badge rounded-pill text-bg-success text-light">$<%= tmp_course.price %></span></h5>
+                  <h5><span class="badge rounded-pill text-bg-success text-light">$<%= tmp_course.price %></span></h5>
 
-                <% if @user %>
-                  <% if Payment.exists?(user_id: @user.id, course_id: tmp_course.id) %>
-                    <% @lesson_count = tmp_course.lessons.count %>
-                    <% @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: tmp_course.id }).count %>
+                  <% if @user %>
+                    <% if Payment.exists?(user_id: @user.id, course_id: tmp_course.id) %>
+                      <% @lesson_count = tmp_course.lessons.count %>
+                      <% @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: tmp_course.id }).count %>
 
-                    <% if @lesson_count == @lesson_completed && @lesson_count > 0 %>
-                      <div class="d-flex gap-2">
-                        <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
-                        <span class="badge bg-success p-2"><%= t('courses.course_completed') %></span>
-                      </div>
+                      <% if @lesson_count == @lesson_completed && @lesson_count > 0 %>
+                        <div class="d-flex gap-2">
+                          <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
+                          <span class="badge bg-success p-2"><%= t('courses.course_completed') %></span>
+                        </div>
+                      <% else %>
+                        <%= link_to t('courses.continue_course'), course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
+                      <% end %>
                     <% else %>
-                      <%= link_to t('courses.continue_course'), course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
+                      <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
+                      <%= link_to t('courses.enroll_course'), new_course_payment_path(course_id: tmp_course.id), class: "btn btn-success btn-sm" %>
                     <% end %>
                   <% else %>
                     <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
-                    <%= link_to t('courses.enroll_course'), new_course_payment_path(course_id: tmp_course.id), class: "btn btn-success btn-sm" %>
                   <% end %>
-                <% else %>
-                  <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
-                <% end %>
+                </div>
               </div>
             </div>
-          </div>
-        <% end %>
-      </div>
+          <% end %>
+        </div>
 
-      <%= link_to t('courses.show_all_courses', category_name: tmp_category.name),
-                  index_by_category_courses_path(category_id: tmp_category.id),
-                  class: "btn btn-outline-dark mb-3" %>
-
+        <%= link_to t('courses.show_all_courses', category_name: tmp_category.name),
+                    index_by_category_courses_path(category_id: tmp_category.id),
+                    class: "btn btn-outline-dark mb-3"
+        %>
+      <% end %>
     <% end %>
-  <% end %>
-
-  <% if @categories.present? %>
     <nav aria-label="Page navigation">
       <%= paginate @categories, theme: 'bootstrap4' %>
     </nav>
