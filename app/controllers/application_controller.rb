@@ -17,6 +17,9 @@ class ApplicationController < ActionController::Base
     { locale: I18n.locale }
   end
 
+  rescue_from NoMethodError do |exception|
+    redirect_to not_found_errors_path
+  end
   rescue_from CanCan::AccessDenied do |exception|
     @error_message = exception.message
     redirect_to unauthorized_path, alert: exception.message
