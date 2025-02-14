@@ -1,0 +1,2 @@
+module QuizParticipationsHelper
+end

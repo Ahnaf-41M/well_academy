@@ -1,0 +1,59 @@
+<div class="container">
+  <!--  <div class="d-flex justify-content-center mt-2">-->
+  <div class="fw-bold h1 text-center mb-3 card card-header">
+    <%= t('pending_teachers') %>
+  </div>
+  <!--  </div>-->
+  <div class="d-flex justify-content-center mt-2">
+
+    <div class="row" style="width: 80rem;">
+
+      <% if @users.present? %>
+
+        <div class="row">
+          <div class="col"><h6 class="fw-bold"><%= t('picture') %></h6></div>
+          <div class="col"><h6 class="fw-bold"><%= t('email') %></h6></div>
+          <div class="col"><h6 class="fw-bold"><%= t('graduation_certificate') %></h6></div>
+          <div class="col"><h6 class="fw-bold"><%= t('post_graduation_certificate') %></h6></div>
+          <div class="col"><h6 class="fw-bold"><%= t('action') %></h6></div>
+        </div>
+
+        <% @users.each do |tmp_user| %>
+
+          <div class="row mb-3">
+            <hr>
+            <div class="col">
+              <%= image_tag tmp_user.profile_picture.attached? ? url_for(tmp_user.profile_picture) : asset_path('no-image-available.jpg'), alt: "Profile picture", style: "width: 50px; height: 50px; border-radius: 50%;", title: "Profile picture" %>
+            </div>
+            <!--            <div class="col mt-2"> <%#= tmp_user.name %> </div>-->
+            <div class="col mt-2"> <%= tmp_user.email %><br></div>
+            <div class="col mt-2"> <%= link_to t('view'), url_for(tmp_user.grad_certificate), target: "_blank" %></div>
+            <div class="col mt-2"> <%= link_to t('view'), url_for(tmp_user.postgrad_certificate), target: "_blank" %></div>
+
+            <div class="col mt-2">
+              <div class="d-flex">
+                <%= button_to t('approve'),
+                              approve_teacher_user_path(tmp_user),
+                              method: :post,
+                              class: "btn btn-sm btn-outline-success me-2",
+                              onclick: "return confirm('#{t('confirm_message')}');"
+                %>
+                <%= button_to t('reject'),
+                              reject_teacher_user_path(tmp_user),
+                              method: :post,
+                              class: "btn btn-sm btn-outline-danger",
+                              onclick: "return confirm('#{t('confirm_message')}');"
+                %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="alert alert-warning" role="alert">
+          <h1 class="text-center text-danger"><%= t('no_users_found') %></h1>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>

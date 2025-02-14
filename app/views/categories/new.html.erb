@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row d-flex justify-content-center align-items-center mt-5">
+    <div class="col-lg-12 col-xl-11">
+      <div class="card text-black" style="border-radius: 25px;">
+        <div class="card-body p-md-5">
+
+          <div class="row justify-content-center">
+            <h1 class="text-center mb-5 fw-bold"><%= t('categories.new.title') %></h1>
+            <%= form_with(model: @category, class: "mx-1 mx-md-4", method: :post) do |f| %>
+              <h6><%= t('categories.new.form.name') %> <span style="color: red;">*</span></h6>
+              <div class="d-flex flex-row align-items-center mb-4">
+
+                <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                  <%= f.text_field :name, class: "form-control", placeholder: t('categories.new.form.name'), required: true %>
+                </div>
+              </div>
+
+              <h6><%= t('categories.new.form.description') %> <span style="color: red;">*</span></h6>
+              <div class="d-flex flex-row align-items-center mb-4">
+                <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                  <%= f.text_area :description,
+                                  class: "form-control",
+                                  placeholder: t('categories.new.form.description'),
+                                  style: "height: 150px",
+                                  required: true %>
+                </div>
+              </div>
+
+              <div class="d-grid mb-3 mb-lg-4">
+                <%= f.submit t('submit_button'), class: "btn btn-primary btn-lg", disable_with: 'Submitting...' %>
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

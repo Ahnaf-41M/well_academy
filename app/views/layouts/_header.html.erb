@@ -1,0 +1,111 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow rounded">
+  <div class="container">
+    <%= link_to t('navbar.brand'), root_path, class: "navbar-brand fw-bold" %>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <%= form_with(url: root_path, method: :get, local: true, html: { class: "d-flex", role: "search" }) do |form| %>
+          <%= form.text_field :search,
+                              class: "form-control me-2",
+                              type: "search",
+                              placeholder: t('navbar.search_placeholder'),
+                              aria: { label: "Search" } %>
+          <%= form.submit t('navbar.search_button'), class: "btn btn-outline-success" %>
+        <% end %>
+      </ul>
+
+      <% if logged_in? == false %>
+        <ul class="d-flex" role="search">
+          <%= link_to t('navbar.login'), login_sessions_path, class: "btn btn-outline-primary" %>&nbsp;&nbsp;
+          <%= link_to t('navbar.signup'), new_user_path, class: "btn btn-outline-success" %>
+        </ul>
+      <% else %>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle rounded-pill me-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= t('activities_button') %>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>
+              <%= link_to t('courses.enrollments.title'),
+                          enrollments_courses_path,
+                          class: "dropdown-item"
+              %>
+            </li>
+            <li>
+              <%= link_to t('quiz_participations.index.title'),
+                          quiz_participations_path,
+                          class: "dropdown-item"
+              %>
+            </li>
+          </ul>
+        </div>
+        <% if @user&.student? %>
+          <ul class="navbar-nav">
+            <%= link_to t('navbar.become_teacher'),
+                        become_teacher_user_path(id: @user.id),
+                        class: "btn btn-outline-dark rounded-pill fw-bold"
+            %>
+          </ul>
+        <% end %>
+
+        <% if @user&.teacher? || @user&.admin? %>
+          <div class="dropdown me-2">
+            <button class="btn btn-secondary dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <%= t('navbar.courses') %>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li> <%= link_to t('navbar.manage_courses'), courses_path, class: "dropdown-item" %> </li>
+              <li> <%= link_to t('navbar.create_course'), new_course_path, class: "dropdown-item" %> </li>
+            </ul>
+          </div>
+        <% end %>
+
+        <% if @user&.admin? %>
+          <div class="dropdown me-2">
+            <button class="btn btn-secondary dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <%= t('navbar.course_categories') %>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li> <%= link_to t('navbar.manage_categories'), categories_path, class: "dropdown-item" %> </li>
+              <li> <%= link_to t('navbar.create_category'), new_category_path, class: "dropdown-item" %> </li>
+            </ul>
+          </div>
+
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <%= t('navbar.users') %>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li> <%= link_to t('navbar.manage_users'), users_path, class: "dropdown-item" %> </li>
+              <li> <%= link_to t('navbar.pending_teachers'), pending_users_path, class: "dropdown-item" %> </li>
+            </ul>
+          </div>
+        <% end %>
+
+
+        <ul class="d-flex me-5 mt-2" role="search">
+          <div class="collapse navbar-collapse me-5" id="navbarNavDropdown">
+            <ul class="nav-item dropdown d-flex">
+              <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <% if @user && @user.profile_picture.attached? %>
+                  <img src="<%= url_for(@user.profile_picture) %>" alt="" style="width: 50px; height: 50px; border-radius: 50%;" title="<%= t('navbar.profile_picture') %>">
+                <% else %>
+                  <i class="fa-solid fa-user-slash" style="border-radius: 50%;" title="<%= t('navbar.no_profile_picture') %>"></i>
+                <% end %>
+              </a>
+              <ul class="dropdown-menu">
+                <li> <%= link_to t('navbar.profile'), user_path(id: @user.id), class: "dropdown-item" %> </li>
+                <li> <%= link_to t('navbar.edit_profile'), edit_user_path(id: @user.id), class: "dropdown-item" %> </li>
+                <li> <%= link_to t('navbar.logout'), attempt_logout_sessions_path,
+                                 class: "dropdown-item",
+                                 onclick: "return confirm('#{t('confirm_message')}');",
+                                 method: :delete %>
+                </li>
+              </ul>
+            </ul>
+          </div>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</nav>

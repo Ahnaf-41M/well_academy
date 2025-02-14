@@ -1,0 +1,16 @@
+<div class="container">
+
+  <div class="row justify-content-center">
+    <h1 class="text-center mb-3 fw-bold mt-4"><%= t('quizzes.edit.title') %></h1>
+    <h4 class="text-center mb-4"><%= t('quizzes.edit.title') %>:
+      <strong class="text-danger"><%= @course.title %></strong></h4>
+
+    <%= form_with model: [@course, @quiz], local: true do |f| %>
+      <div class="fw-bold h5"><%= t('courses.show.title') %> <span class="text-danger">*</span></div>
+      <div class="bd-highlight"><%= f.text_field :title, class: "form-control mb-3", placeholder: "Quiz title", required: true %></div>
+      <div class="d-grid">
+        <%= f.submit t('update_button'), class: "btn btn-primary btn-lg", disable_with: 'Submitting...' %>
+      </div>
+    <% end %>
+  </div>
+</div>

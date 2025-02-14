@@ -1,0 +1,151 @@
+<section style="background-color: #eee;" class="min-vh-100">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col">
+        <nav class="bg-body-tertiary rounded-3 p-3 mb-4 justify-content-right">
+          <h2 class="fw-bold"><%= t('profile.title') %></h2>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+
+          <div class="card-body text-center">
+            <% if @user.profile_picture.attached? %>
+              <img src="<%= url_for(@user.profile_picture) %>" alt="" style="width: 300px; height: 300px;" title="<%= t('profile.profile_picture') %>">
+              <%= button_to t('profile.remove_picture'),
+                            remove_profile_picture_user_path(@user),
+                            method: :post,
+                            class: "btn btn-outline-danger btn-sm mt-3",
+                            onclick: "return confirm('#{t('confirm_message')}');"
+              %>
+            <% else %>
+              <img src="<%= asset_path("no-image-available.jpg") %>" class="card-img-top" alt="" title="<%= t('profile.profile_picture') %>">
+
+              <%= form_with(model: @user, url: user_path(@user), class: "mx-1 mx-md-4", method: :patch) do |f| %>
+                <%= f.file_field :profile_picture, accept: "image/*", class: "form-control mb-2" %>
+                <div class="d-grid gap-2">
+                  <%= f.submit t('profile.upload'), class: "btn btn-outline-success btn-sm", disable_with: 'Submitting...' %>
+                </div>
+              <% end %>
+
+            <% end %>
+
+            <h5 class="my-3"><%= @user.name %></h5>
+            <p class="text-muted mb-1"><%= @user.bio %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0"><%= t('profile.full_name') %></p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @user.name %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0"><%= t('profile.email') %></p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @user.email %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0"><%= t('profile.phone') %></p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @user.phone %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0"><%= t('profile.role') %></p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">
+                  <% if @user.role == "admin" %>
+                    <span class="badge rounded-pill text-bg-success"><%= @user.role.capitalize %></span>
+                  <% elsif @user.role == "teacher" %>
+                    <span class="badge rounded-pill text-bg-primary"><%= @user.role.capitalize %></span>
+                  <% else %>
+                    <span class="badge rounded-pill text-bg-secondary"><%= @user.role.capitalize %></span>
+                  <% end %>
+                </p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0"><%= t('profile.date_joined') %></p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">
+                  <%= "#{@user.created_at.day} #{I18n.t("date.month_names")[@user.created_at.month]} #{@user.created_at.year}" %>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card mb-4 mb-md-0">
+              <div class="card-body">
+
+                <p class="fw-bold h5 text-primary"><%= t('profile.certificates.completion') %></p>
+                <hr>
+                <% @enrollments = Enrollment.where(student_id: @user.id) %>
+                <% @enrollments.each do |enrollment| %>
+                  <% @course = Course.find(enrollment.course_id) %>
+                  <% if @user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count == @course.lessons.count %>
+                    <%= link_to @course.title, url_for(@course.completion_certificate), class: "fw-bold text-dark", target: "_blank" %>
+                    <hr>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card mb-4 mb-md-0">
+              <div class="card-body">
+
+                <p class="fw-bold h5 text-primary"><%= t('profile.certificates.achievement') %></p>
+                <hr>
+                <% @enrollments = Enrollment.where(student_id: @user.id) %>
+                <% @enrollments.each do |enrollment| %>
+                  <% @course = Course.find(enrollment.course_id) %>
+                  <% if @course.quiz.present? %>
+                    <% @quiz_participation = QuizParticipation.find_by(student_id: @user.id, quiz_id: @course.quiz.id) %>
+                    <% if @quiz_participation %>
+                      <% marks_obtained = @quiz_participation.marks_obtained %>
+                      <% total_marks = @quiz_participation.total_marks %>
+                      <% percentage = (marks_obtained / total_marks.to_f) * 100 %>
+                      <% if percentage >= 30 %>
+                        <%= link_to @course.title, url_for(@course.achievement_certificate), class: "fw-bold text-dark", target: "_blank" %>
+                        <hr>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

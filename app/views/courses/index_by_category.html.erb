@@ -1,0 +1,96 @@
+<div class="container">
+  <% @tmp_courses = @courses.order(:title) %>
+  <% if @tmp_courses.exists? %>
+
+    <div class="card mt-4 mb-2">
+      <div class="card-header bg-secondary text-white">
+        <h3 class="text-center"><%= @category.name %></h3>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <% @tmp_courses.each do |tmp_course| %>
+        <div class="col col-4 mb-3">
+          <div class="card">
+
+            <img src="<%= url_for(tmp_course.display_picture) %>" class="card-img-top" alt="..." width="300" height="200">
+            <h5 class="card-header" style="height: 60px"><%= tmp_course.title %></h5>
+            <div class="card-body">
+              <p><%= User.find(tmp_course.teacher_id).name %></p>
+              <p><span class="fw-bold"><%= tmp_course.total_duration %></span></p>
+
+              <% average_rating = Review.where(course_id: tmp_course.id).average(:rating) || 0.0 %>
+              <h6 class="fw-bold"><%= average_rating.round(1) %> ⭐&nbsp;</h6>
+
+              <h5><span class="badge rounded-pill text-bg-success text-light">$<%= tmp_course.price %></span></h5>
+
+              <% if @user %>
+                <% if Payment.exists?(user_id: @user.id, course_id: tmp_course.id) %>
+                  <% @lesson_count = tmp_course.lessons.count %>
+                  <% @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: tmp_course.id }).count %>
+
+                  <% if @lesson_count == @lesson_completed %>
+                    <div class="d-flex gap-2">
+                      <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
+                      <span class="badge bg-success p-2"><%= t('courses.course_completed') %></span>
+                    </div>
+                  <% else %>
+                    <%= link_to t('courses.continue_course'), course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
+                  <% end %>
+
+                <% else %>
+                  <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
+                  <%= link_to t('courses.enroll_course'), new_course_payment_path(tmp_course), class: "btn btn-success btn-sm" %>
+                <% end %>
+              <% else %>
+                <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!--    Paginator-->
+    <nav aria-label="Page navigation">
+      <%= paginate @tmp_courses, theme: 'bootstrap4' %>
+    </nav>
+
+  <% else %>
+    <h1 class="text-center text-danger"><%= t('courses.index.no_courses') %></h1>
+  <% end %>
+</div>
+
+<div id="pdfModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); align-items: center; justify-content: center;">
+  <div style="background: white; padding: 20px; border-radius: 8px; max-width: 90%; max-height: 90%; position: relative;">
+    <span onclick="closePdfModal()" style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 24px; color: black;">&times;</span>
+    <iframe id="modalPdf" src="" width="1000px" height="700px" style="border: none;"></iframe>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('turbolinks:load', function () {
+        const ratingElements = document.querySelectorAll('[data-coreui-toggle="rating"]');
+        ratingElements.forEach(function (ratingElement) {
+            // Re-initialize the CoreUI rating component
+            new Coreui.Rating(ratingElement);
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        if (!sessionStorage.getItem('reloaded')) {
+            sessionStorage.setItem('reloaded', 'true');
+            location.reload();
+        }
+    });
+
+    function showPdfModal(pdfUrl) {
+        document.getElementById('modalPdf').src = pdfUrl;
+        document.getElementById('pdfModal').style.display = 'flex';
+    }
+
+    function closePdfModal() {
+        document.getElementById('pdfModal').style.display = 'none';
+        document.getElementById('modalPdf').src = '';
+    }
+</script>

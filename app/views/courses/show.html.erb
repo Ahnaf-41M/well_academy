@@ -1,0 +1,247 @@
+<div class="container">
+  <div class="col">
+    <div class="card mb-2">
+      <div class="row g-0">
+
+        <div class="col-md-5">
+          <img src="<%= url_for(@course.display_picture) %>" class="card-img-top" alt="..." width="300" height="545">
+        </div>
+
+        <div class="col-md-7">
+
+          <h5 class="card-header fw-bold"><%= @course.title %></h5>
+
+          <div class="card-body">
+            <p>
+              <strong><%= t('courses.index.teacher') %>:</strong> </span>
+              <span><%= User.find(@course.teacher_id).name %>
+            </p>
+            <p><strong><%= t('courses.new.form.level') %>: </strong></span> <span><%= @course.level.titleize %></p>
+            <p><strong><%= t('courses.new.form.language') %>: </strong></span> <span><%= @course.language %></p>
+            <p><strong><%= t('courses.new.form.duration') %>:</strong> </span>
+              <span><%= @course.total_duration %> </span>
+            </p>
+            <p class="card-text fw-bold text-success"></p>
+            <p><strong><%= t('courses.index.price') %>: </strong>
+              <span class="badge rounded-pill text-bg-success text-light">$<%= @course.price %></span>
+            </p>
+
+            <% @lesson_count = @course.lessons.count %>
+            <p><strong><%= t('courses.show.total_lessons') %>: </strong> <span class=""><%= @lesson_count %></span></p>
+            <% if @user %>
+
+              <% @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count %>
+              <p>
+                <strong><%= t('courses.show.lessons_completed') %>:</strong> <%= @lesson_completed %>
+              </p>
+
+              <div class="d-flex gap-3">
+
+                <% if @lesson_completed == @lesson_count && @lesson_count > 0 %>
+                  <p>
+                    <a href="#" class="btn btn-outline-primary btn-sm" onclick="showPdfModal('<%= url_for(@course.completion_certificate) %>'); return false;">
+                      <%= t('courses.new.form.completion_certificate_download') %>
+                    </a>
+                  </p>
+                <% end %>
+
+                <% if @course.quiz.present? %>
+                  <% @quiz_participation = QuizParticipation.find_by(student_id: @user.id, quiz_id: @course.quiz.id) %>
+                  <% if @quiz_participation %>
+                    <% marks_obtained = @quiz_participation.marks_obtained %>
+                    <% total_marks = @quiz_participation.total_marks %>
+                    <% percentage = (marks_obtained / total_marks.to_f) * 100 %>
+                    <% if percentage >= 30 %>
+                      <p>
+                        <a href="#" class="btn btn-outline-primary btn-sm" onclick="showPdfModal('<%= url_for(@course.achievement_certificate) %>'); return false;">
+                          <%= t('courses.new.form.achievement_certificate_download') %>
+                        </a>
+                      </p>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+
+              <% if @lesson_count > 0 %>
+                <% @progress = ((@lesson_completed / @lesson_count.to_f) * 100).round %>
+              <% else %>
+                <% @progress = 0 %>
+              <% end %>
+
+              <p class="fw-bold"><%= t('courses.progress.title') %>: </p>
+              <div class="progress mb-2" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 40px;">
+                <div class="progress-bar progress-bar-striped bg-success" style="width: <%= @progress %>%;">
+                  <strong class="fs-5"><%= @progress %>%</strong>
+                </div>
+              </div>
+            <% end %>
+
+            <p>
+              <% if @course.syllabus.attached? %>
+                <a href="#" class="btn btn-outline-success btn-sm mt-2" onclick="showPdfModal('<%= url_for(@course.syllabus) %>'); return false;">
+                  <%= t('courses.new.form.syllabus') %>
+                </a>
+              <% end %>
+            </p>
+
+            <div class="d-flex">
+              <% if @course.quiz.present? %>
+                <% quiz_participation = QuizParticipation.find_by(student_id: @user.id, quiz_id: @course.quiz.id) %>
+                <% if quiz_participation.nil? && @course.quiz.questions.present? && Payment.find_by(user_id: @user.id, course_id: @course.id).present? %>
+                  <%= link_to "Start Quiz",
+                              start_course_quiz_path(@course, @course.quiz),
+                              class: "btn btn-warning btn-sm" %>
+                <% elsif quiz_participation %>
+                  <p><strong>Quiz Marks: </strong><%= quiz_participation.marks_obtained %></p>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            <%= t('courses.show.contents') %>
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="row">
+              <div class="col h6 fw-bold"><%= t('courses.show.lesson') %></div>
+              <div class="col h6 fw-bold"><%= t('courses.show.video') %></div>
+              <div class="col h6 fw-bold"><%= t('courses.show.content') %></div>
+              <div class="col h6 fw-bold"><%= t('courses.show.duration') %></div>
+              <div class="col h6 fw-bold"><%= t('courses.show.watched') %></div>
+            </div>
+            <% @course.lessons.sort_by(&:order).each do |lesson| %>
+              <hr>
+              <div class="row">
+                <div class="col"><%= lesson.title %></div>
+                <div class="col">
+                  <% if @user && Payment.exists?(user_id: @user.id, course_id: @course.id) %>
+                    <a href="#" onclick="markAsWatched(<%= @course.id %>, <%= lesson.id %>, '<%= url_for(lesson.video) %>', '<%= lesson.video.content_type %>'); return false;">
+                      <%= t('courses.show.watch') %>
+                    </a>
+                  <% else %>
+                    <p><%= t('courses.show.watch') %></p>
+                  <% end %>
+                </div>
+                <div class="col">
+                  <% if lesson.content.attached? %>
+                    <% if @user && Payment.exists?(user_id: @user.id, course_id: @course.id) %>
+                      <a href="#" onclick="showPdfModal('<%= url_for(lesson.content) %>'); return false;"><%= t('course.preview_pdf') %></a>
+                    <% else %>
+                      <p><%= t('course.preview_pdf') %></p>
+                    <% end %>
+                  <% else %>
+                    <%= t('courses.show.none') %>
+                  <% end %>
+                </div>
+                <div class="col"><%= lesson.video_duration %></div>
+                <div class="col">
+                  <% if @user && @user.video_watches.exists?(lesson: lesson) %>
+                    <span class="badge text-bg-success"><%= t('courses.show.yes') %></span>
+                  <% else %>
+                    <span class="badge text-bg-danger"><%= t('courses.show.no') %></span>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="d-flex gap-2 mt-3">
+    <% if @user && Enrollment.exists?(student_id: @user.id, course_id: @course.id) %>
+      <% @review = Review.find_by(course_id: @course.id, student_id: @user.id) %>
+      <% if @review.present? %>
+        <%= link_to t('courses.show.edit_review'),
+                    edit_course_review_path(@course, @review),
+                    class: "btn btn-warning btn-sm"
+        %>
+      <% else %>
+        <%= link_to t('courses.show.review_course'),
+                    new_course_review_path(@course),
+                    class: "btn btn-outline-dark btn-sm"
+        %>
+      <% end %>
+    <% elsif @user %>
+      <%= link_to t('courses.enroll_course'), new_course_payment_path(@course), class: "btn btn-success btn-sm" %>
+    <% end %>
+
+    <%= link_to t('reviews.index.title'),
+                course_reviews_path(@course),
+                class: "btn btn-primary btn-sm"
+    %>
+  </div>
+
+</div>
+
+<!-- Modal structure (hidden by default) -->
+<div id="videoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); align-items: center; justify-content: center;">
+  <div style="background: white; padding: 20px; border-radius: 8px; max-width: 90%; max-height: 90%; position: relative;">
+    <span onclick="closeVideoModal()" style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 24px; color: black;">&times;</span>
+    <video id="modalVideo" width="800" controls>
+      <source id="videoSource" src="" type="">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+
+<div id="pdfModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); align-items: center; justify-content: center;">
+  <div style="background: white; padding: 20px; border-radius: 8px; max-width: 90%; max-height: 90%; position: relative;">
+    <span onclick="closePdfModal()" style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 24px; color: black;">&times;</span>
+    <iframe id="modalPdf" src="" width="1000px" height="700px" style="border: none;"></iframe>
+  </div>
+</div>
+
+<script>
+    function showVideoModal(videoUrl, contentType) {
+        document.getElementById('videoSource').src = videoUrl;
+        document.getElementById('videoSource').type = contentType;
+        document.getElementById('modalVideo').load();
+        document.getElementById('videoModal').style.display = 'flex';
+    }
+
+    function closeVideoModal() {
+        document.getElementById('videoModal').style.display = 'none';
+        document.getElementById('modalVideo').pause();
+    }
+
+    function showPdfModal(pdfUrl) {
+        document.getElementById('modalPdf').src = pdfUrl;
+        document.getElementById('pdfModal').style.display = 'flex';
+    }
+
+    function closePdfModal() {
+        document.getElementById('pdfModal').style.display = 'none';
+        document.getElementById('modalPdf').src = '';
+    }
+
+    function markAsWatched(courseId, lessonId, videoUrl, contentType) {
+        showVideoModal(videoUrl, contentType);
+
+        fetch(`/courses/${courseId}/lessons/${lessonId}/mark_as_watched`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        }).then(response => {
+            if (response.ok) {
+                console.log("Marked as watched");
+            } else {
+                console.error("Failed to mark as watched");
+            }
+        });
+    }
+</script>

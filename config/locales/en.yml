@@ -1,0 +1,526 @@
+en:
+  pending_teachers: "Pending Teachers"
+  picture: "Picture"
+  name: "Name"
+  email: "Email"
+  graduation_certificate: "Graduation Certificate"
+  post_graduation_certificate: "Post Graduation Certificate"
+  action: "Action"
+  view: "View"
+  approve: "Approve"
+  reject: "Reject"
+  no_users_found: "No users found."
+  update_button: "Update"
+  login_button: "Login"
+  logout_button: "Logout"
+  delete_button: "Delete"
+  submit_button: "Submit"
+  edit_button: "Edit"
+  goto_button: "Go to"
+  view_button: "View"
+  activities_button: "Activities"
+  continue_button: "Continue"
+  back_button: "<< Back"
+  confirm_message: "Are you sure?"
+  teacher_applied_notice: "Applied for teacher successfully!"
+  no_courses_found: "No courses found!"
+
+  navbar:
+    users: "Users"
+    brand: "WellAcademy"
+    search_placeholder: "Search"
+    search_button: "Search"
+    login: "Login"
+    signup: "Signup"
+    become_teacher: "Become a Teacher"
+    courses: "Courses"
+    manage_courses: "Manage Courses"
+    course_categories: "Course Categories"
+    create_course: "Create a new course"
+    manage_categories: "Manage Categories"
+    create_category: "Create a new category"
+    manage_users: "Manage Users"
+    pending_teachers: "Pending Teachers"
+    profile: "Profile"
+    edit_profile: "Edit Profile"
+    logout: "Logout"
+    no_profile_picture: "No profile picture"
+    profile_picture: "Profile picture"
+
+  profile:
+    title: "User Profile"
+    remove_picture: "Remove Picture"
+    upload: "Upload"
+    profile_picture: "Profile picture"
+    full_name: "Full Name"
+    email: "Email"
+    phone: "Phone"
+    role: "Role"
+    date_joined: "Date Joined"
+    certificates:
+      completion: "Completion Certificates"
+      achievement: "Achievement Certificates"
+
+  login:
+    title: "Login"
+    email: "Your email"
+    password: "Your password"
+    login_button: "Login"
+    register_link: "Don't have an account? Register"
+    forgot_password_link: "Forgot password?"
+
+  signup:
+    title: "Sign up"
+    register_button: "Register"
+
+  form:
+    name: "Name"
+    email: "Email"
+    role: "Role"
+    phone: "Phone No"
+    bio: "Bio"
+    profile_picture: "Profile Picture"
+    password: "Password"
+    password_confirmation: "Repeat password"
+    placeholder:
+      name: "Your name"
+      email: "Your email"
+      phone: "Your phone no"
+      bio: "Your bio"
+    required: "*"
+
+  # categories
+  categories:
+    index:
+      title: "Categories"
+      empty: "No categories available"
+      actions: "Actions"
+    show:
+      title: "Category Details"
+    new:
+      title: "New Category"
+      form:
+        name: "Category Name"
+        description: "Category Description"
+    edit:
+      title: "Edit Category"
+    create:
+      success: "Category was successfully created."
+      failure: "There was an issue creating the category."
+    update:
+      success: "Category was successfully updated."
+      failure: "There was an issue updating the category."
+    destroy:
+      success: "Category was successfully destroyed."
+    errors:
+      name: "Name can't be blank"
+      description: "Description can't be blank"
+
+  #courses
+  courses:
+    name: "Course Name"
+    course_completed: "Course Completed"
+    view_course: "View Course"
+    continue_course: "Continue Course"
+    enroll_course: "Enroll in Course"
+    show_all_courses: "Show all on %{category_name} courses >>"
+
+    enrollments:
+      title: "Enrollments"
+    index:
+      title: "Courses"
+      teacher: "Teacher"
+      category: "Category"
+      price: "Price"
+      actions: "Actions"
+      no_courses: "No courses available"
+    show:
+      title: "Course Details"
+      total_lessons: "Total Lessons"
+      lessons_completed: "Lessons Completed"
+      contents: "Course Contents"
+      lesson: "Lesson"
+      video: "Video"
+      content: "Content"
+      duration: "Duration"
+      watched: "Watched"
+      watch: "Watch"
+      preview_pdf: "Preview PDF"
+      none: "None"
+      yes: "Yes"
+      no: "No"
+      review_course: "Review Course"
+      edit_review: "Edit Review"
+    new:
+      title: "New Course"
+      form:
+        add_lessons: "Add Lessons"
+        view_lessons: "View Lessons"
+        quiz_dashboard: "Quiz Dashboard"
+        title: "Course Title"
+        description: "Course Description"
+        teacher: "Teacher"
+        category: "Category"
+        price: "Price"
+        level: "Level"
+        language: "Language"
+        duration: "Duration"
+        syllabus: "Syllabus"
+        completion_certificate: "Completion Certificate"
+        completion_certificate_download: "Download Completion Certificate"
+        achievement_certificate: "Achievement Certificate"
+        achievement_certificate_download: "Download Achievement Certificate"
+        display_picture: "Display Picture"
+    edit:
+      title: "Edit Course"
+    create:
+      success: "Course was successfully created."
+      failure: "There was an issue creating the course."
+    update:
+      success: "Course was successfully updated."
+      failure: "There was an issue updating the course."
+    destroy:
+      success: "Course was successfully deleted."
+      failure: "There was an issue deleting the course."
+    errors:
+      title: "Title can't be blank"
+      description: "Description can't be blank"
+      teacher_id: "Teacher must be assigned"
+      category_id: "Category must be selected"
+      price: "Price must be provided"
+    progress:
+      title: "Progress"
+      incomplete: "You have not completed any lessons in this course."
+
+  #enrollments
+  enrollments:
+    index:
+      title: "Enrollments"
+      empty: "No enrollments found"
+    show:
+      title: "Enrollment Details"
+    new:
+      title: "New Enrollment"
+    edit:
+      title: "Edit Enrollment"
+    create:
+      success: "Enrollment was successfully created."
+      failure: "There was an issue creating the enrollment."
+    update:
+      success: "Enrollment was successfully updated."
+      failure: "There was an issue updating the enrollment."
+    destroy:
+      success: "Enrollment was successfully deleted."
+      failure: "There was an issue deleting the enrollment."
+    errors:
+      course_id: "Course must be selected"
+      student_id: "Student must be assigned"
+
+  #lessons
+  lessons:
+    index:
+      title: "Lessons"
+      no_lessons: "No lessons available for this course."
+    show:
+      title: "Lesson Details"
+    new:
+      title: "New Lesson"
+      form:
+        title: "Title"
+        order: "Order"
+        video: "Video"
+        content: "Content"
+      submit: "Add Lesson"
+    edit:
+      title: "Edit Lesson"
+      form:
+        title: "Title"
+        order: "Order"
+        video: "Video"
+        content: "Content"
+      submit: "Update Lesson"
+    create:
+      success: "Lesson was added successfully."
+      failure: "There was an issue adding the lesson."
+    update:
+      success: "Lesson was successfully updated."
+      failure: "There was an issue updating the lesson."
+    destroy:
+      success: "Lesson was successfully deleted."
+      failure: "There was an issue deleting the lesson."
+    mark_as_watched:
+      success: "Marked as watched."
+      already_watched: "You have already marked this video as watched."
+    errors:
+      title: "Title can't be blank"
+      order: "Order must be a number"
+      video: "Video must be attached"
+      content: "Content can't be blank"
+
+  #password_resets
+  password_resets:
+    enter_new_password: "Enter New Password"
+    enter_email: "Enter your email"
+    password: "New password"
+    password_confirmation: "Repeat new password"
+    update_password: "Update Password"
+    new:
+      title: "Password Reset"
+      instructions: "Please enter your email address to receive password reset instructions."
+    create:
+      success: "Password reset instructions have been sent to your email."
+      failure: "Email not found."
+    edit:
+      title: "Reset Your Password"
+      instructions: "Please enter a new password."
+      expired_link: "Password reset link has expired. Please request a new one."
+    update:
+      success: "Password has been reset successfully."
+      failure: "There was an error resetting your password. Please try again."
+    errors:
+      password_blank: "Password can't be blank"
+      password_confirmation_mismatch: "Password confirmation doesn't match Password"
+      password_invalid: "Password is too weak"
+
+  #payments
+  payments:
+    index:
+      title: "Payments"
+      no_payments: "No payments found."
+    show:
+      title: "Payment Details"
+    new:
+      title: "To enroll this course, you have to pay first"
+      instructions: "Price: "
+      bank_account_number: "Enter Bank Account Number"
+      routing_number: "Enter Routing Number"
+      proceed_to_pay: "Proceed to pay"
+    create:
+      success: "Payment was done successfully."
+      failure: "There was an error processing your payment. Please try again."
+    edit:
+      title: "Edit Payment"
+    update:
+      success: "Payment updated successfully."
+      failure: "There was an error updating the payment. Please try again."
+    destroy:
+      success: "Payment deleted successfully."
+      failure: "There was an error deleting the payment. Please try again."
+    errors:
+      payment_invalid: "Invalid payment details."
+      payment_not_found: "Payment not found."
+
+  #question
+  questions:
+    content: "Question"
+    marks: "Marks"
+    options:
+      option_text: "Option"
+      is_correct: "Correct?"
+      add_option: "Add Option"
+      remove_option: "Remove Option"
+    submit_button: "Create Question"
+    update_button: "Update Question"
+
+    index:
+      title: "Questions"
+      no_questions: "No questions found for this quiz."
+    show:
+      title: "Question Details"
+    new:
+      title: "New Question"
+      instructions: "Please add a new question below."
+    create:
+      success: "Question was successfully created."
+      failure: "There was an error creating the question. Please try again."
+    edit:
+      title: "Edit Question"
+    update:
+      success: "Question was successfully updated."
+      failure: "There was an error updating the question. Please try again."
+    destroy:
+      success: "Question was successfully deleted."
+      failure: "There was an error deleting the question. Please try again."
+    errors:
+      question_invalid: "Invalid question details."
+      question_not_found: "Question not found."
+
+  #quiz_participations
+  quiz_participations:
+    marks_obtained: "Marks Obtained"
+    total_marks: "Total Marks"
+    percentage: "Percentage"
+    index:
+      title: "Quiz Participations"
+      no_participations: "No quiz participations found."
+    show:
+      title: "Quiz Participation Details"
+    new:
+      title: "New Participation"
+      instructions: "Please select a quiz to participate in."
+    create:
+      success: "Quiz participation was successfully created."
+      failure: "There was an error creating the quiz participation. Please try again."
+    edit:
+      title: "Edit Participation"
+    update:
+      success: "Quiz participation was successfully updated."
+      failure: "There was an error updating the quiz participation. Please try again."
+    destroy:
+      success: "Quiz participation was successfully deleted."
+      failure: "There was an error deleting the quiz participation. Please try again."
+    errors:
+      participation_invalid: "Invalid participation details."
+      participation_not_found: "Participation not found."
+
+  #quizzes
+  quizzes:
+    quiz: "Quiz"
+    title: "Title"
+    question: "Question"
+    marks: "Marks"
+    total_marks: "Total Marks"
+    total_questions: "Total Questions"
+    options: "Options"
+    option: "Option"
+    correct: "Correct?"
+    remove: "Remove"
+    add_option: "Add Option"
+    add_questions: "Add Questions"
+    delete_quiz: "Delete Quiz"
+
+    dashboard:
+      title: "Quiz Dashboard"
+    start:
+      title: "Start Quiz"
+      instructions: "Please answer all questions before submitting your quiz."
+      submit_button: "Submit Quiz"
+      error: "There was an issue starting the quiz. Please try again."
+    submit:
+      success: "Quiz submission successful."
+      error: "An error occurred while submitting your quiz. Please try again."
+    index:
+      title: "Quiz List"
+      no_quizzes: "No quizzes available for this course."
+    show:
+      title: "View Quiz"
+    new:
+      title: "Create New Quiz"
+      instructions: "Fill in the quiz details to create a new quiz."
+    create:
+      success: "Quiz was successfully created."
+      failure: "There was an error creating the quiz. Please try again."
+    edit:
+      title: "Edit Quiz"
+    update:
+      success: "Quiz was successfully updated."
+      failure: "There was an error updating the quiz. Please try again."
+    destroy:
+      success: "Quiz was successfully deleted."
+      failure: "There was an error deleting the quiz. Please try again."
+    errors:
+      missing_title: "Title is required."
+      invalid_marks: "Total marks must be a valid number."
+
+  #reviews
+  reviews:
+    average_rating: "Average Rating"
+    rating: "Rating"
+    comment: "Comment"
+    update_review: "Update Review"
+    submit_review: "Submit Review"
+    index:
+      title: "Show all reviews"
+      no_reviews: "No reviews available for this course."
+    show:
+      title: "Review Details"
+    new:
+      title: "Submit a Review"
+      instructions: "Please provide a rating and comment for the course."
+    create:
+      success: "Review was successfully submitted."
+      failure: "There was an error submitting your review. Please try again."
+    edit:
+      title: "Edit Review"
+    update:
+      success: "Review was successfully updated."
+      failure: "There was an error updating your review. Please try again."
+    destroy:
+      success: "Review was successfully deleted."
+      failure: "There was an error deleting your review. Please try again."
+    errors:
+      missing_rating: "Rating is required."
+      invalid_rating: "Rating must be between 1 and 5."
+      missing_comment: "Comment is required."
+
+  #sessions
+  sessions:
+    confirmed_account: "Your account has been confirmed!"
+    login:
+      title: "Login"
+      instructions: "Please enter your email and password to log in."
+    create:
+      success: "Logged in successfully."
+      failure: "Invalid email or password."
+    logout:
+      success: "Logged out successfully."
+    errors:
+      invalid_credentials: "Invalid email or password."
+      unconfirmed_account: "Your account is unconfirmed. Please check your email for the confirmation link."
+
+  #users
+  users:
+    teacher_name: "Teacher Name"
+    required_fields: "* indicates required fields"
+    index:
+      title: "User Management"
+      no_users: "No users found."
+      email: "Email"
+      joined_on: "Joined on"
+      role: "Role"
+      edit_profile: "Edit Profile"
+      delete_profile: "Delete Profile"
+    show:
+      title: "View Profile"
+    create:
+      success: "User created successfully."
+      failure: "There were some errors creating the user."
+    edit:
+      title: "Edit Profile"
+    update:
+      success: "User updated successfully."
+      failure: "Empty/Invalid fields!"
+    destroy:
+      success: "User deleted successfully."
+      failure: "There was some error deleting the user."
+    confirm:
+      success: "Your email has been confirmed successfully!"
+      failure: "Invalid confirmation token or email already confirmed."
+    approve_teacher:
+      success: "Teacher approved."
+      failure: "Couldn't approve teacher."
+    reject_teacher:
+      success: "User rejected successfully!"
+    remove_profile_picture:
+      success: "Profile picture removed successfully!"
+    errors:
+      invalid_fields: "Empty/Invalid fields!"
+      approval_error: "Couldn't approve teacher."
+
+  #user_mailer
+  user_mailer:
+    hello: "Hello %{name}!"
+    reset_password: "Please click the link below to enter your new password"
+    reset_link_text: "Click here to enter new password"
+    welcome: "Welcome to WellAcademy, %{name}!"
+    confirm_account: "Please confirm your account by clicking the link below"
+    confirm_button_text: "Confirm My Account"
+
+  #certificates
+  certificates:
+    title: "Upload your certificates"
+    already_applied: "You have already applied. Your request is in process. Thank you!"
+    instructions: "* Please upload your Graduation or Post Graduation Certificates"
+    grad_certificate: "Graduation Certificate"
+    postgrad_certificate: "Post Graduation Certificate"
+    submit_button: "Submit"

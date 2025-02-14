@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-lg-12 col-xl-11">
+      <div class="card text-black" style="border-radius: 25px;">
+        <div class="card-body p-md-5">
+          <div class="row justify-content-center">
+
+            <h1 class="text-center mb-3 fw-bold"><%= t('courses.edit.title') %></h1>
+
+            <%= form_with(model: @course, class: "mx-1 mx-md-4", method: :patch) do |f| %>
+              <div class="d-grid mb-3 mb-lg-4">
+                <%= link_to t('courses.new.form.add_lessons'), new_course_lesson_path(@course), class: "btn btn-outline-success btn-sm mb-1" %>
+                <%= link_to t('courses.new.form.view_lessons'), course_lessons_path(@course), class: "btn btn-outline-success btn-sm mb-1" %>
+                <%= link_to t('courses.new.form.quiz_dashboard'), dashboard_course_quizzes_path(@course), class: "btn btn-outline-success btn-sm mb-1" %>
+              </div>
+              <%= render 'form', course: @course, user: @user.id, f: f %>
+              <div class="d-grid mb-3 mb-lg-4">
+                <%= f.submit t('update_button'), class: "btn btn-primary btn-lg", disable_with: t('courses.update.failure') %>
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

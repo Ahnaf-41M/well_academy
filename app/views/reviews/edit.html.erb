@@ -1,0 +1,31 @@
+<div class="container mt-4 min-vh-100">
+  <div class="card mb-3">
+    <div class="card-header">
+      <h4 class="text-center"><%= @course.title %></h4>
+    </div>
+  </div>
+  <%= form_with(model: @review, url: course_review_path, local: true) do |form| %>
+    <%= form.hidden_field :course_id, value: @course.id %>
+    <%= form.hidden_field :student_id, value: @user.id %>
+
+    <div class="mb-5">
+      <label class="h4"><%= t('reviews.rating') %>:</label>
+      <%= form.select :rating,
+                      options_for_select(1..5, selected: @review.rating),
+                      {},
+                      { class: "form-select" }
+      %>
+    </div>
+
+    <div class="mb-3">
+      <label class="h4"><%= t('reviews.comment') %>:</label>
+
+      <%= form.text_area :comment,
+                         class: 'form-control',
+                         style: "height: 250px"
+      %>
+    </div>
+
+    <%= form.submit t('reviews.update_review'), class: "btn btn-primary" %>
+  <% end %>
+</div>

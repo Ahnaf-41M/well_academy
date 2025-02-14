@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="card card-header mb-3">
+    <h1 class="text-center fw-bold"><span class="text-danger"><%= t('quizzes.quiz') %></span>
+    </h1>
+    <h4 class="text-center fw-bold"><span class="badge bg-success"><%= @course.title %></span></h4>
+  </div>
+
+  <%= form_with model: @exam_quiz_questions, url: submit_course_quiz_path, local: true do |form| %>
+    <% @exam_quiz_questions.each_with_index do |question, q_index| %>
+
+      <div>
+        <%= form.fields_for "exam_quiz_questions[#{q_index}]", question do |question_form| %>
+          <div class="card mb-3">
+            <div class="card-header">
+              <% question.content.split("\n").each do |line| %>
+                <h5><%= line %></h5>
+              <% end %>
+              <%= question_form.hidden_field :id, name: "exam_quiz_questions[#{q_index}][id]", value: question.id %>
+            </div>
+
+            <% question.options.each_with_index do |option, o_index| %>
+              <%= question_form.fields_for "options[#{o_index}]", option do |option_form| %>
+                <div class="card-body">
+                  <div class="form-check">
+                    <%= option_form.check_box :is_correct,
+                                              name: "exam_quiz_questions[#{q_index}][options][#{o_index}][is_correct]",
+                                              class: "form-check-input" %>
+
+                    <label for="exampleFormControlInput1" class="form-label"><%= option["option_text"] %></label>
+
+                    <%= option_form.hidden_field :option_text,
+                                                 name: "exam_quiz_questions[#{q_index}][options][#{o_index}][option_text]",
+                                                 value: option["option_text"],
+                                                 required: true %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="d-flex justify-content-center mt-3">
+      <%= form.submit t('submit_button'), class: "btn btn-success btn-lg" %>
+    </div>
+  <% end %>
+</div>

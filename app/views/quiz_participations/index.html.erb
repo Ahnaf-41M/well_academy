@@ -1,0 +1,45 @@
+<div class="container">
+  <p class="fw-bold h1 text-center mb-4 card card-header"> <%= t('quiz_participations.index.title') %> </p>
+  <div class="d-flex justify-content-center mt-2">
+
+    <div class="row" style="width: 80rem;">
+
+      <% if @quiz_participations.present? %>
+
+        <div class="row">
+          <div class="col">
+            <h6 class="fw-bold"><%= t('courses.name') %></h6>
+          </div>
+          <div class="col"><h6 class="fw-bold"><%= t('quiz_participations.marks_obtained') %></h6></div>
+          <div class="col"><h6 class="fw-bold"><%= t('quiz_participations.total_marks') %></h6></div>
+          <div class="col"><h6 class="fw-bold"><%= t('quiz_participations.percentage') %></h6></div>
+        </div>
+        <hr>
+        <% @quiz_participations.each do |quiz_participation| %>
+
+          <div class="row mb-3">
+            <div class="col">
+              <h6>
+                <% tmp_course = Quiz.find(quiz_participation.quiz_id).course %>
+                <%= link_to tmp_course.title,
+                            course_path(tmp_course)
+                %>
+              </h6>
+            </div>
+            <div class="col"><h6><%= quiz_participation.marks_obtained %></h6></div>
+            <div class="col"><h6><%= quiz_participation.total_marks %></h6></div>
+            <div class="col">
+              <h6>
+                <%= number_to_percentage((quiz_participation.marks_obtained.to_f / quiz_participation.total_marks * 100).round, precision: 0) %>
+              </h6>
+            </div>
+          </div>
+          <hr>
+        <% end %>
+      <% else %>
+        <h1 class="alert alert-warning text-center text-danger"><%= t('quiz_participations.index.no_participations') %></h1>
+      <% end %>
+    </div>
+  </div>
+
+</div>

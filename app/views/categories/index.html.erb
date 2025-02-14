@@ -1,0 +1,40 @@
+<div class="container">
+  <p class="fw-bold h1 text-center card card-header mb-3"> <%= t('categories.index.title') %> </p>
+
+  <div class="d-flex justify-content-center mt-2">
+    <div class="row" style="width: 70rem;">
+      <% if @categories.any? %>
+
+        <div class="row">
+          <div class="col text-center"><h5 class="fw-bold"><%= t('categories.new.form.name') %></h5></div>
+          <div class="col text-center"><h5 class="fw-bold"><%= t('categories.index.actions') %></h5></div>
+        </div>
+
+        <% @categories.each do |tmp_category| %>
+
+          <div class="row mb-3">
+            <hr>
+            <div class="col mt-2 text-center"> <%= tmp_category.name %> </div>
+            <div class="col mt-2 text-center">
+              <div class="d-flex justify-content-center">
+                <%= link_to t('categories.edit.title'),
+                            edit_category_path(tmp_category),
+                            class: "btn btn-sm btn-warning me-2" %>
+                <%= button_to t('delete_button'),
+                              category_path(tmp_category),
+                              method: :delete,
+                              class: "btn btn-sm btn-danger",
+                              onclick: "return confirm('#{t('confirm_message')}');"
+                %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <h1 class="text-center text-danger"><%= t('categories.index.empty') %></h1>
+      <% end %>
+
+    </div>
+  </div>
+
+</div>
