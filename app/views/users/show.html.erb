@@ -101,18 +101,26 @@
 
         <div class="row">
           <div class="col-md-6">
-            <div class="card mb-4 mb-md-0">
+            <div class="card mb-2 mb-md-0">
               <div class="card-body">
 
+                <% should_paginate = false %>
                 <p class="fw-bold h5 text-primary"><%= t('profile.certificates.completion') %></p>
                 <hr>
-                <% @enrollments = Enrollment.where(student_id: @user.id) %>
                 <% @enrollments.each do |enrollment| %>
                   <% @course = Course.find(enrollment.course_id) %>
                   <% if @user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count == @course.lessons.count %>
-                    <%= link_to @course.title, url_for(@course.completion_certificate), class: "fw-bold text-dark", target: "_blank" %>
+                    <%= link_to @course.title,
+                                url_for(@course.completion_certificate),
+                                class: "fw-bold text-dark",
+                                target: "_blank"
+                    %>
+                    <% should_paginate = true %>
                     <hr>
                   <% end %>
+                <% end %>
+                <% if should_paginate %>
+                  <%= paginate @enrollments, theme: 'bootstrap4' %>
                 <% end %>
               </div>
             </div>
@@ -121,10 +129,9 @@
           <div class="col-md-6">
             <div class="card mb-4 mb-md-0">
               <div class="card-body">
-
                 <p class="fw-bold h5 text-primary"><%= t('profile.certificates.achievement') %></p>
                 <hr>
-                <% @enrollments = Enrollment.where(student_id: @user.id) %>
+                <% should_paginate = false %>
                 <% @enrollments.each do |enrollment| %>
                   <% @course = Course.find(enrollment.course_id) %>
                   <% if @course.quiz.present? %>
@@ -139,6 +146,9 @@
                       <% end %>
                     <% end %>
                   <% end %>
+                <% end %>
+                <% if should_paginate %>
+                  <%= paginate @enrollments, theme: 'bootstrap4' %>
                 <% end %>
               </div>
             </div>
