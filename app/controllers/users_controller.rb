@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @enrollments = Enrollment.where(student_id: @user.id).page(params[:page]).per(2)
   end
 
   def new
@@ -60,7 +61,7 @@ class UsersController < ApplicationController
     @tmp_user = User.find(params[:id])
     @tmp_user.courses.destroy_all if @tmp_user.courses
     @tmp_user.quiz_participations.destroy_all if @tmp_user.courses
-    
+
     if @tmp_user.destroy
       flash[:notice] = t('users.destroy.success')
       redirect_to users_path
@@ -115,10 +116,10 @@ class UsersController < ApplicationController
 
   def remove_profile_picture
     @tmp_user = User.find(params[:id])
-    @tmp_user.profile_picture.purge
+    @tmp_user.profile_picture&.destroy && @tmp_user.profile_picture.purge
 
-    flash.now[:alert] = t('users.remove_profile_picture.success')
-    render :show, status: :unprocessable_entity
+    flash[:notice] = t('users.remove_profile_picture.success')
+    redirect_to user_path
   end
 
   private
