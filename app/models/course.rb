@@ -32,17 +32,19 @@ class Course < ApplicationRecord
     return if destroyed? || frozen?
     new_duration = 0
 
+    binding.pry
     lessons.each do |lesson|
       if lesson.video.attached?
         video_path = ActiveStorage::Blob.service.path_for(lesson.video.key)
 
         if File.exist?(video_path)
+          puts "File exists: #{video_path}"
           movie = FFMPEG::Movie.new(video_path)
           new_duration += movie.duration
         end
       end
     end
 
-    update_column(:duration, new_duration) if duration
+    update_column(:duration, new_duration) if new_duration
   end
 end

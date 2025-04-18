@@ -11,7 +11,7 @@ class Lesson < ApplicationRecord
   validate :correct_video_format
 
   before_save :adjust_order_within_course, if: :will_save_change_to_order?
-  after_commit :update_course_duration, on: [:create, :update, :destroy]
+  after_commit :update_course_duration, on: [ :create, :update, :destroy ]
 
   def video_duration
     return unless video.attached?
@@ -43,5 +43,4 @@ class Lesson < ApplicationRecord
   def update_course_duration
     course.set_course_duration unless course.destroyed?
   end
-
 end

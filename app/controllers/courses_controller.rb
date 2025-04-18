@@ -1,5 +1,4 @@
 class CoursesController < ApplicationController
-
   before_action :set_user
   before_action :set_course, only: %i[show edit update destroy]
   before_action :set_categories, only: %i[create new show edit update destroy]
@@ -40,7 +39,7 @@ class CoursesController < ApplicationController
     if @course.save
       redirect_to courses_path, notice: t('courses.create.success')
     else
-      flash.now[:alert] = @course.errors.full_messages.join(", ")
+      flash.now[:alert] = @course.errors.full_messages.join(', ')
       # flash.now[:alert] = t('courses.create.failure')
       render :new, status: :unprocessable_entity
     end
