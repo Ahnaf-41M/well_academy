@@ -1,2 +1,11 @@
 # Omakase Ruby styling for Rails
+require:
+  - rubocop-gemfile
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Gemfile/OrderedGems:
+  Enabled: true
+
 inherit_gem: { rubocop-rails-omakase: rubocop.yml }
