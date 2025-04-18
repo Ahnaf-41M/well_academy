@@ -32,7 +32,6 @@ class Course < ApplicationRecord
     return if destroyed? || frozen?
     new_duration = 0
 
-    binding.pry
     lessons.each do |lesson|
       if lesson.video.attached?
         video_path = ActiveStorage::Blob.service.path_for(lesson.video.key)
