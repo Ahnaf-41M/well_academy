@@ -41,4 +41,7 @@
 - Backend: Ruby on Rails
 - Database: PostgreSQL
 
-## ER Diagram: [WellAcademy ER Diagram](https://lucid.app/users/registerOrLogin/free?showLogin=false&invitationId=inv_0df5610d-7135-4ec9-8287-bac78b72bb1d&productOpt=chart&invitationType=documentAcceptance&returnUrlOverride=%2Flucidchart%2F0245ef05-fdf8-4220-a013-0c29b8df646f%2Fedit%3Fviewport_loc%3D-1902%252C-436%252C3758%252C1438%252C0_0%26invitationId%3Dinv_0df5610d-7135-4ec9-8287-bac78b72bb1d)
+## [ER Diagram](https://lucid.app/users/registerOrLogin/free?showLogin=false&invitationId=inv_0df5610d-7135-4ec9-8287-bac78b72bb1d&productOpt=chart&invitationType=documentAcceptance&returnUrlOverride=%2Flucidchart%2F0245ef05-fdf8-4220-a013-0c29b8df646f%2Fedit%3Fviewport_loc%3D-1902%252C-436%252C3758%252C1438%252C0_0%26invitationId%3Dinv_0df5610d-7135-4ec9-8287-bac78b72bb1d)
+
+![WellAcadamy - ER Diagram](https://github.com/user-attachments/assets/7de03d97-b4ce-49b4-8153-d24a97879cba)
+
