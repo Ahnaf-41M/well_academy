@@ -8,12 +8,12 @@ class HomeController < ApplicationController
       if @courses.present?
         @categories = Category.where(id: @courses.pluck(:category_id).uniq).page(params[:page]).per(5)
       else
-        @categories = Category.order(:name).page(params[:page]).per(5)
-        flash[:notice] = t('no_courses_found')
+        @categories = Category.joins(:courses).distinct.order(:name).page(params[:page]).per(5)
+        flash[:notice] = t("no_courses_found")
         redirect_to root_path
       end
     else
-      @categories = Category.order(:name).page(params[:page]).per(5)
+      @categories = Category.joins(:courses).distinct.order(:name).page(params[:page]).per(5)
     end
   end
 end
