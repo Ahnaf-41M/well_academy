@@ -55,4 +55,6 @@ Rails.application.configure do
   config.assets.digest = true
   config.assets.css_compressor = nil
   config.assets.js_compressor = nil
+
+  config.hosts << "well_academy.local"
 end
