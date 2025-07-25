@@ -17,9 +17,6 @@ class ApplicationController < ActionController::Base
     { locale: I18n.locale }
   end
 
-  rescue_from NoMethodError do |exception|
-    redirect_to not_found_errors_path
-  end
   rescue_from CanCan::AccessDenied do |exception|
     @error_message = exception.message
     redirect_to unauthorized_path, alert: exception.message
@@ -37,7 +34,7 @@ class ApplicationController < ActionController::Base
           redirect_to root_path
         end
       end
-      format.json { render json: { error: 'Record not found' }, status: :not_found }
+      format.json { render json: { error: "Record not found" }, status: :not_found }
     end
   end
 
@@ -46,5 +43,4 @@ class ApplicationController < ActionController::Base
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
   end
-
 end
