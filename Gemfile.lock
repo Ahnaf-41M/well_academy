@@ -85,6 +85,9 @@ GEM
     brakeman (6.2.2)
       racc
     builder (3.3.0)
+    bullet (8.0.8)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     cancancan (3.6.1)
     childprocess (5.1.0)
       logger (~> 1.5)
@@ -338,6 +341,7 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode (0.4.4.5)
     unicode-display_width (2.6.0)
+    uniform_notifier (1.17.0)
     useragent (0.16.10)
     web-console (4.2.1)
       actionview (>= 6.0.0)
@@ -367,6 +371,7 @@ DEPENDENCIES
   benchmark
   bootsnap
   brakeman
+  bullet
   cancancan (~> 3.3)
   debug
   dotenv-rails

@@ -57,4 +57,11 @@ Rails.application.configure do
   config.assets.js_compressor = nil
 
   config.hosts << "well_academy.local"
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true     # log to bullet.log
+    Bullet.rails_logger = true      # add warnings to Rails log
+    Bullet.add_footer = true        # adds bullet info to the bottom of each page
+  end
 end
