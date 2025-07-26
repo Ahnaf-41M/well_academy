@@ -34,7 +34,7 @@
   <div class="d-flex flex-row align-items-center mb-4">
     <div data-mdb-input-init class="form-outline flex-fill mb-0">
 
-      <% if @user.admin? && !@tmp_user.admin? %>
+      <% if current_user.admin? && !@tmp_user.admin? %>
         <% if @tmp_user.grad_certificate.attached? %>
           <%= f.select :role, User.roles.keys.map { |r| [r.humanize, r] }, { selected: @tmp_user.role }, { class: "form-control", required: true } %>
         <% else %>

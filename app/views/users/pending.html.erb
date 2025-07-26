@@ -8,7 +8,7 @@
 
     <div class="row" style="width: 80rem;">
 
-      <% if @users.present? %>
+      <% if @pending_teachers.present? %>
 
         <div class="row">
           <div class="col"><h6 class="fw-bold"><%= t('picture') %></h6></div>
@@ -18,7 +18,7 @@
           <div class="col"><h6 class="fw-bold"><%= t('action') %></h6></div>
         </div>
 
-        <% @users.each do |tmp_user| %>
+        <% @pending_teachers.each do |tmp_user| %>
 
           <div class="row mb-3">
             <hr>

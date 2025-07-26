@@ -6,13 +6,14 @@
         <% @users.each do |tmp_user| %>
           <div class="col-lg-4 mb-3">
             <div class="card">
+              
               <% if tmp_user.profile_picture.attached? %>
                 <img src="<%= url_for(tmp_user.profile_picture) %>" class="card-img-top" alt="" title="<%= t('users.index.role') %>">
               <% else %>
                 <img src="<%= asset_path("no-image-available.jpg") %>" class="card-img-top" alt="" title="<%= t('users.index.role') %>">
               <% end %>
-              <div class="card-body">
 
+              <div class="card-body">
                 <h5 class="card-title"><%= tmp_user.name %></h5>
                 <p class="card"></p>
                 <p class="card-text">
@@ -31,12 +32,17 @@
                   %>
                 </div>
               </div>
+
             </div>
           </div>
         <% end %>
       <% else %>
         <h1><%= t('users.index.no_users') %></h1>
       <% end %>
+
+      <nav class="d-flex justify-content-center">
+        <%= paginate @users, theme: 'bootstrap4' %>
+      </nav>
     </div>
   </div>
 
