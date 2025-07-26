@@ -24,6 +24,7 @@ en:
   confirm_message: "Are you sure?"
   teacher_applied_notice: "Applied for teacher successfully!"
   no_courses_found: "No courses found!"
+  search_results: "Search Results"
 
   navbar:
     users: "Users"

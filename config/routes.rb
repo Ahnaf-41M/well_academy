@@ -1,16 +1,17 @@
 Rails.application.routes.draw do
-
   match "/404", to: "errors#not_found", via: :all
   match "/500", to: "errors#internal_server_error", via: :all
   match "/422", to: "errors#unprocessable_entity", via: :all
 
-  get '/assets/*path', to: lambda { |_| [404, {}, []] }
+  get "/assets/*path", to: lambda { |_| [ 404, {}, [] ] }
   # get '/packs/*path', to: lambda { |_| [404, {}, []] } # if using webpacker
 
   scope "(:locale)", locale: /en|bn/ do
     root "home#index"
-    get "home/index"
-    get 'unauthorized', to: 'errors#unauthorized'
+    scope controller: :home do
+      get :search
+    end
+    get "unauthorized", to: "errors#unauthorized"
 
     resources :categories
     resources :enrollments
@@ -52,7 +53,7 @@ Rails.application.routes.draw do
         get "pending"
       end
       member do
-        get 'confirmation/:token', to: 'users#confirm', as: 'confirmation'
+        get "confirmation/:token", to: "users#confirm", as: "confirmation"
         get "become_teacher"
         post "approve_teacher"
         post "reject_teacher"
@@ -68,7 +69,7 @@ Rails.application.routes.draw do
         get "attempt_logout"
       end
     end
-    resources :password_resets, only: [:new, :create, :edit, :update], param: :reset_password_token
+    resources :password_resets, only: [ :new, :create, :edit, :update ], param: :reset_password_token
 
     get "up" => "rails/health#show", as: :rails_health_check
     get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
@@ -83,13 +84,13 @@ Rails.application.routes.draw do
         constraints: lambda { |req|
           path = req.path
           !path.starts_with?("/#{I18n.default_locale}/") &&
-            !path.starts_with?('/404') &&
-            !path.starts_with?('/500') &&
-            !path.starts_with?('/422') &&
-            !path.start_with?('/rails/active_storage') &&
-            !path.start_with?('/rails/blobs') &&
-            !path.start_with?('/rails/representations') &&
-            !path.start_with?('/rails/disk') &&
+            !path.starts_with?("/404") &&
+            !path.starts_with?("/500") &&
+            !path.starts_with?("/422") &&
+            !path.start_with?("/rails/active_storage") &&
+            !path.start_with?("/rails/blobs") &&
+            !path.start_with?("/rails/representations") &&
+            !path.start_with?("/rails/disk") &&
             !path.match?(/\A\/assets\/.*/) &&
             !path.match?(/\A\/packs\/.*/)
         },
