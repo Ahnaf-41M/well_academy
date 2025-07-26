@@ -14,7 +14,6 @@ class HomeController < ApplicationController
       @courses[category.id] = category.courses
                                       .includes(
                                         :teacher,
-                                        :lessons,
                                         :display_picture_attachment
                                       )
                                       .order(:title)
@@ -25,7 +24,10 @@ class HomeController < ApplicationController
   def search
     pattern = params[:search]
     @courses = Course.where("title ILIKE ? OR description ILIKE ?", "%#{pattern}%", "%#{pattern}%")
-                     .includes(:teacher, :lessons, :display_picture_attachment)
+                     .includes(
+                        :teacher,
+                        :display_picture_attachment
+                      )
                      .order(:title)
                      .page(params[:page])
                      .per(COURSES_IN_SEARCH_PAGE)
