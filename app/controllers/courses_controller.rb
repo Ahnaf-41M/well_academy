@@ -89,7 +89,7 @@ class CoursesController < ApplicationController
 
   def update_enrollment
     if current_user
-      @lesson_count = @course.lessons.count
+      @lesson_count = @course.lessons_count
       @lesson_completed = current_user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count
       @progress = 0
       if @lesson_count > 0

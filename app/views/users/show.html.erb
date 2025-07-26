@@ -133,7 +133,7 @@
                 <hr>
                 <% should_paginate = false %>
                 <% @enrollments.each do |enrollment| %>
-                  <% @course = Course.find(enrollment.course_id) %>
+                  <% @course = enrollment.course %>
                   <% if @course.quiz.present? %>
                     <% @quiz_participation = QuizParticipation.find_by(student_id: current_user.id, quiz_id: @course.quiz.id) %>
                     <% if @quiz_participation %>

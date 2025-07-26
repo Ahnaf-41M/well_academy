@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_31_084048) do
+ActiveRecord::Schema[7.2].define(version: 2025_07_26_150503) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,6 +61,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_31_084048) do
     t.interval "duration", default: "PT0S"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "lessons_count", default: 0, null: false
     t.index ["category_id"], name: "index_courses_on_category_id"
     t.index ["teacher_id"], name: "index_courses_on_teacher_id"
   end

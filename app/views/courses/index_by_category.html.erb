@@ -28,7 +28,7 @@
 
               <% if current_user %>
                 <% if Payment.exists?(user_id: current_user.id, course_id: tmp_course.id) %>
-                  <% @lesson_count = tmp_course.lessons.count %>
+                  <% @lesson_count = tmp_course.lessons_count %>
                   <% @lesson_completed = current_user.video_watches.joins(:lesson).where(lessons: { course_id: tmp_course.id }).count %>
 
                   <% if @lesson_count == @lesson_completed && @lesson_count > 0 %>

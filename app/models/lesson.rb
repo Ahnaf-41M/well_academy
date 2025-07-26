@@ -1,5 +1,5 @@
 class Lesson < ApplicationRecord
-  belongs_to :course
+  belongs_to :course, counter_cache: true
 
   has_many :video_watches, dependent: :destroy
 
@@ -11,7 +11,7 @@ class Lesson < ApplicationRecord
   validate :correct_video_format
 
   before_save :adjust_order_within_course, if: :will_save_change_to_order?
-  after_commit :update_course_duration, on: [:create, :update, :destroy]
+  after_commit :update_course_duration, on: [ :create, :update, :destroy ]
 
   def video_duration
     return unless video.attached?
@@ -36,12 +36,11 @@ class Lesson < ApplicationRecord
 
   def correct_video_format
     if video.attached? && !video.content_type.in?(%w[video/mp4 video/webm video/ogg])
-      errors.add(:video, 'must be a video file (MP4, WebM, or Ogg)')
+      errors.add(:video, "must be a video file (MP4, WebM, or Ogg)")
     end
   end
 
   def update_course_duration
     course.set_course_duration unless course.destroyed?
   end
-
 end

@@ -26,11 +26,14 @@
               <span class="badge rounded-pill text-bg-success text-light">$<%= @course.price %></span>
             </p>
 
-            <% @lesson_count = @course.lessons.count %>
+            <% @lesson_count = @course.lessons_count %>
             <p><strong><%= t('courses.show.total_lessons') %>: </strong> <span class=""><%= @lesson_count %></span></p>
             <% if current_user %>
 
-              <% @lesson_completed = current_user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count %>
+              <% @lesson_completed = current_user.video_watches
+                                                 .joins(:lesson)
+                                                 .where(lessons: { course_id: @course.id })
+                                                 .count %>
               <p>
                 <strong><%= t('courses.show.lessons_completed') %>:</strong> <%= @lesson_completed %>
               </p>
