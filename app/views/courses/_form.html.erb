@@ -79,4 +79,4 @@
   <%= f.file_field :achievement_certificate, class: "form-control", accept: "application/pdf", required: !course.achievement_certificate.attached? %>
 </div>
 
-<%= f.hidden_field :teacher_id, value: @user.id %>
+<%= f.hidden_field :teacher_id, value: current_user.id %>
