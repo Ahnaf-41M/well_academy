@@ -13,7 +13,7 @@
                 <%= link_to t('courses.new.form.view_lessons'), course_lessons_path(@course), class: "btn btn-outline-success btn-sm mb-1" %>
                 <%= link_to t('courses.new.form.quiz_dashboard'), dashboard_course_quizzes_path(@course), class: "btn btn-outline-success btn-sm mb-1" %>
               </div>
-              <%= render 'form', course: @course, user: @user.id, f: f %>
+              <%= render 'form', course: @course, user: current_user.id, f: f %>
               <div class="d-grid mb-3 mb-lg-4">
                 <%= f.submit t('update_button'), class: "btn btn-primary btn-lg", disable_with: t('courses.update.failure') %>
               </div>

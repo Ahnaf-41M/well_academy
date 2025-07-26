@@ -11,44 +11,44 @@
 
       <div class="row mb-4">
         <% @courses[category.id].each do |tmp_course| %>
-            <div class="col col-lg-4">
-              <div class="card" 
-                    onmouseover="this.classList.add('shadow-lg')"
-						        onmouseout="this.classList.remove('shadow-lg')">
-                <img src="<%= url_for(tmp_course.display_picture) %>" class="card-img-top" alt="..." width="300" height="200">
-                <h5 class="card-header" style="height: 60px"><%= tmp_course.title %></h5>
-                <div class="card-body">
-                  <p><%= tmp_course.teacher.name %></p>
-                  <p><span class="fw-bold"><%= tmp_course.total_duration %></p>
+          <div class="col col-12 col-lg-4">
+            <div class="card mb-2" 
+                  onmouseover="this.classList.add('shadow-lg')"
+                  onmouseout="this.classList.remove('shadow-lg')">
+              <img src="<%= url_for(tmp_course.display_picture) %>" class="card-img-top" alt="..." width="300" height="200">
+              <h5 class="card-header" style="height: 60px"><%= tmp_course.title %></h5>
+              <div class="card-body">
+                <p><%= tmp_course.teacher.name %></p>
+                <p><span class="fw-bold"><%= tmp_course.total_duration %></p>
 
-                  <% average_rating = (Review.where(course_id: tmp_course.id).average(:rating) || 0.0).round(1) %>
-                  <h6 class="fw-bold"><%= average_rating %> ⭐&nbsp;</h6>
+                <% average_rating = (Review.where(course_id: tmp_course.id).average(:rating) || 0.0).round(1) %>
+                <h6 class="fw-bold"><%= average_rating %> ⭐&nbsp;</h6>
 
-                  <h5><span class="badge rounded-pill text-bg-success text-light">$<%= tmp_course.price %></span></h5>
+                <h5><span class="badge rounded-pill text-bg-success text-light">$<%= tmp_course.price %></span></h5>
 
-                  <% if current_user %>
-                    <% if Payment.exists?(user_id: current_user.id, course_id: tmp_course.id) %>
-                      <% @lesson_count = tmp_course.lessons.count %>
-                      <% @lesson_completed = current_user.video_watches.joins(:lesson).where(lessons: { course_id: tmp_course.id }).count %>
+                <% if current_user %>
+                  <% if Payment.exists?(user_id: current_user.id, course_id: tmp_course.id) %>
+                    <% @lesson_count = tmp_course.lessons.count %>
+                    <% @lesson_completed = current_user.video_watches.joins(:lesson).where(lessons: { course_id: tmp_course.id }).count %>
 
-                      <% if @lesson_count == @lesson_completed && @lesson_count > 0 %>
-                        <div class="d-flex gap-2">
-                          <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
-                          <span class="badge bg-success p-2"><%= t('courses.course_completed') %></span>
-                        </div>
-                      <% else %>
-                        <%= link_to t('courses.continue_course'), course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
-                      <% end %>
+                    <% if @lesson_count == @lesson_completed && @lesson_count > 0 %>
+                      <div class="d-flex gap-2">
+                        <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
+                        <span class="badge bg-success p-2"><%= t('courses.course_completed') %></span>
+                      </div>
                     <% else %>
-                      <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
-                      <%= link_to t('courses.enroll_course'), new_course_payment_path(course_id: tmp_course.id), class: "btn btn-success btn-sm" %>
+                      <%= link_to t('courses.continue_course'), course_path(tmp_course), class: "btn btn-secondary btn-sm" %>
                     <% end %>
                   <% else %>
                     <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
+                    <%= link_to t('courses.enroll_course'), new_course_payment_path(course_id: tmp_course.id), class: "btn btn-success btn-sm" %>
                   <% end %>
-                </div>
+                <% else %>
+                  <%= link_to t('courses.view_course'), course_path(id: tmp_course.id), class: "btn btn-primary btn-sm" %>
+                <% end %>
               </div>
             </div>
+          </div>
         <% end %>
       </div>
 

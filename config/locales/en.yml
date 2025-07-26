@@ -176,13 +176,13 @@ en:
       title: "Edit Course"
     create:
       success: "Course was successfully created."
-      failure: "There was an issue creating the course."
+      failure: "Failed to create course: %{errors}"
     update:
       success: "Course was successfully updated."
-      failure: "There was an issue updating the course."
+      failure: "Failed to update course: %{errors}"
     destroy:
       success: "Course was successfully deleted."
-      failure: "There was an issue deleting the course."
+      failure: "Failed to delete course: %{errors}"
     errors:
       title: "Title can't be blank"
       description: "Description can't be blank"

@@ -28,9 +28,9 @@
 
             <% @lesson_count = @course.lessons.count %>
             <p><strong><%= t('courses.show.total_lessons') %>: </strong> <span class=""><%= @lesson_count %></span></p>
-            <% if @user %>
+            <% if current_user %>
 
-              <% @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count %>
+              <% @lesson_completed = current_user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count %>
               <p>
                 <strong><%= t('courses.show.lessons_completed') %>:</strong> <%= @lesson_completed %>
               </p>
@@ -46,7 +46,7 @@
                 <% end %>
 
                 <% if @course.quiz.present? %>
-                  <% @quiz_participation = QuizParticipation.find_by(student_id: @user.id, quiz_id: @course.quiz.id) %>
+                  <% @quiz_participation = QuizParticipation.find_by(student_id: current_user.id, quiz_id: @course.quiz.id) %>
                   <% if @quiz_participation %>
                     <% marks_obtained = @quiz_participation.marks_obtained %>
                     <% total_marks = @quiz_participation.total_marks %>
@@ -86,8 +86,8 @@
 
             <div class="d-flex">
               <% if @course.quiz.present? %>
-                <% quiz_participation = QuizParticipation.find_by(student_id: @user.id, quiz_id: @course.quiz.id) %>
-                <% if quiz_participation.nil? && @course.quiz.questions.present? && Payment.find_by(user_id: @user.id, course_id: @course.id).present? %>
+                <% quiz_participation = QuizParticipation.find_by(student_id: current_user.id, quiz_id: @course.quiz.id) %>
+                <% if quiz_participation.nil? && @course.quiz.questions.present? && Payment.find_by(user_id: current_user.id, course_id: @course.id).present? %>
                   <%= link_to "Start Quiz",
                               start_course_quiz_path(@course, @course.quiz),
                               class: "btn btn-warning btn-sm" %>
@@ -124,7 +124,7 @@
               <div class="row">
                 <div class="col"><%= lesson.title %></div>
                 <div class="col">
-                  <% if @user && Payment.exists?(user_id: @user.id, course_id: @course.id) %>
+                  <% if current_user && Payment.exists?(user_id: current_user.id, course_id: @course.id) %>
                     <a href="#" onclick="markAsWatched(<%= @course.id %>, <%= lesson.id %>, '<%= url_for(lesson.video) %>', '<%= lesson.video.content_type %>'); return false;">
                       <%= t('courses.show.watch') %>
                     </a>
@@ -134,7 +134,7 @@
                 </div>
                 <div class="col">
                   <% if lesson.content.attached? %>
-                    <% if @user && Payment.exists?(user_id: @user.id, course_id: @course.id) %>
+                    <% if current_user && Payment.exists?(user_id: current_user.id, course_id: @course.id) %>
                       <a href="#" onclick="showPdfModal('<%= url_for(lesson.content) %>'); return false;"><%= t('course.preview_pdf') %></a>
                     <% else %>
                       <p><%= t('course.preview_pdf') %></p>
@@ -145,7 +145,7 @@
                 </div>
                 <div class="col"><%= lesson.video_duration %></div>
                 <div class="col">
-                  <% if @user && @user.video_watches.exists?(lesson: lesson) %>
+                  <% if current_user && current_user.video_watches.exists?(lesson: lesson) %>
                     <span class="badge text-bg-success"><%= t('courses.show.yes') %></span>
                   <% else %>
                     <span class="badge text-bg-danger"><%= t('courses.show.no') %></span>
@@ -162,8 +162,8 @@
 
 
   <div class="d-flex gap-2 mt-3">
-    <% if @user && Enrollment.exists?(student_id: @user.id, course_id: @course.id) %>
-      <% @review = Review.find_by(course_id: @course.id, student_id: @user.id) %>
+    <% if current_user && Enrollment.exists?(student_id: current_user.id, course_id: @course.id) %>
+      <% @review = Review.find_by(course_id: @course.id, student_id: current_user.id) %>
       <% if @review.present? %>
         <%= link_to t('courses.show.edit_review'),
                     edit_course_review_path(@course, @review),
@@ -175,7 +175,7 @@
                     class: "btn btn-outline-dark btn-sm"
         %>
       <% end %>
-    <% elsif @user %>
+    <% elsif current_user %>
       <%= link_to t('courses.enroll_course'), new_course_payment_path(@course), class: "btn btn-success btn-sm" %>
     <% end %>
 

@@ -16,8 +16,8 @@
       <% @courses.each do |tmp_course| %>
         <tr>
           <td class="h6"><%= tmp_course.title.titleize %></td>
-          <td class="h6"><%= User.find(tmp_course.teacher_id).name %></td>
-          <td class="h6"><%= Category.find(tmp_course.category_id).name %></td>
+          <td class="h6"><%= tmp_course.teacher.name %></td>
+          <td class="h6"><%= tmp_course.category.name %></td>
           <td class="h6"><%= tmp_course.price %> $</td>
           <td class="h6">
             <%= link_to t('courses.view_course'), course_path(tmp_course), class: "btn btn-sm btn-primary me-2" %>
