@@ -24,10 +24,10 @@
 
               <h5><span class="badge rounded-pill text-bg-success text-light">$<%= tmp_course.price %></span></h5>
 
-              <% if @user %>
-                <% if Payment.exists?(user_id: @user.id, course_id: tmp_course.id) %>
+              <% if current_user %>
+                <% if Payment.exists?(user_id: @current_user.id, course_id: tmp_course.id) %>
                   <% @lesson_count = tmp_course.lessons.count %>
-                  <% @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: tmp_course.id }).count %>
+                  <% @lesson_completed = @current_user.video_watches.joins(:lesson).where(lessons: { course_id: tmp_course.id }).count %>
 
                   <% if @lesson_count == @lesson_completed %>
                     <div class="d-flex gap-2">
@@ -51,7 +51,7 @@
       <% end %>
     </div>
 
-    <!--    Paginator-->
+    <!-- Paginator-->
     <nav aria-label="Page navigation">
       <%= paginate @tmp_courses, theme: 'bootstrap4' %>
     </nav>
