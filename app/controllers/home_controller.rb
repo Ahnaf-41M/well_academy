@@ -2,39 +2,31 @@ class HomeController < ApplicationController
   ITEMS_PER_PAGE = 5
 
   def index
-    @user = current_user
+    @categories = Category.select("DISTINCT categories.*")
+                          .joins(:courses)
+                          .includes(courses: [
+                            :teacher,
+                            :display_picture_attachment
+                          ])
+                          .order(:name)
+                          .page(params[:page])
+                          .per(ITEMS_PER_PAGE)
+    @courses = @categories.flat_map(&:courses)
+                          .sort_by(&:title)
+                          .group_by(&:category_id)
+  end
 
-    if params[:search].present?
-      search_pattern = params[:search]
-      @courses = Course.where("title ILIKE ? OR description ILIKE ?",
-                              "%#{search_pattern}%", "%#{search_pattern}%")
-      if @courses.present?
-        @categories = Category.where(id: @courses.pluck(:category_id).uniq).page(params[:page]).per(5)
-        @courses = Course.where(category_id: @categories.pluck(:id))
-                         .order(:title)
-                         .group_by(&:category_id)
-        render :index
-      else
-        @categories = Category.select("DISTINCT categories.*")
-                              .joins(:courses)
-                              .order(:name)
-                              .page(params[:page])
-                              .per(ITEMS_PER_PAGE)
-        @courses = Course.where(category_id: @categories.pluck(:id))
-                         .order(:title)
-                         .group_by(&:category_id)
-        flash[:notice] = t("no_courses_found")
-        render :index
-      end
-    else
-      @categories = Category.select("DISTINCT categories.*")
-                            .joins(:courses)
-                            .order(:name)
-                            .page(params[:page])
-                            .per(ITEMS_PER_PAGE)
-      @courses = Course.where(category_id: @categories.pluck(:id))
-                       .order(:title)
-                       .group_by(&:category_id)
+  def search
+    pattern = params[:search]
+    @courses = Course.where("title ILIKE ? OR description ILIKE ?", "%#{pattern}%", "%#{pattern}%")
+                     .includes(:teacher, :display_picture_attachment)
+                     .order(:title)
+                     .page(params[:page])
+                     .per(ITEMS_PER_PAGE)
+
+    if @courses.empty?
+      flash[:notice] = t("no_courses_found")
+      redirect_to root_path
     end
   end
 end

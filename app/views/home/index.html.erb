@@ -1,22 +1,24 @@
 <div class="container mb-4">
 
   <% if @categories %>
-    <% @categories.pluck(:id, :name).each do |category_id, category_name| %>
+    <% @categories.each do |category| %>
 
       <div class="card mt-2 mb-3">
         <div class="card-header bg-secondary text-white">
-          <h3><%= category_name %></h3>
+          <h3><%= category.name %></h3>
         </div>
       </div>
 
       <div class="row mb-4">
-        <% @courses[category_id].each do |tmp_course| %>
+        <% @courses[category.id].each do |tmp_course| %>
             <div class="col col-lg-4">
-              <div class="card">
+              <div class="card" 
+                    onmouseover="this.classList.add('shadow-lg')"
+						        onmouseout="this.classList.remove('shadow-lg')">
                 <img src="<%= url_for(tmp_course.display_picture) %>" class="card-img-top" alt="..." width="300" height="200">
                 <h5 class="card-header" style="height: 60px"><%= tmp_course.title %></h5>
                 <div class="card-body">
-                  <p><%= User.find(tmp_course.teacher_id).name %></p>
+                  <p><%= tmp_course.teacher.name %></p>
                   <p><span class="fw-bold"><%= tmp_course.total_duration %></p>
 
                   <% average_rating = (Review.where(course_id: tmp_course.id).average(:rating) || 0.0).round(1) %>
@@ -24,10 +26,10 @@
 
                   <h5><span class="badge rounded-pill text-bg-success text-light">$<%= tmp_course.price %></span></h5>
 
-                  <% if @user %>
-                    <% if Payment.exists?(user_id: @user.id, course_id: tmp_course.id) %>
+                  <% if current_user %>
+                    <% if Payment.exists?(user_id: current_user.id, course_id: tmp_course.id) %>
                       <% @lesson_count = tmp_course.lessons.count %>
-                      <% @lesson_completed = @user.video_watches.joins(:lesson).where(lessons: { course_id: tmp_course.id }).count %>
+                      <% @lesson_completed = current_user.video_watches.joins(:lesson).where(lessons: { course_id: tmp_course.id }).count %>
 
                       <% if @lesson_count == @lesson_completed && @lesson_count > 0 %>
                         <div class="d-flex gap-2">
@@ -50,8 +52,8 @@
         <% end %>
       </div>
 
-      <%= link_to t('courses.show_all_courses', category_name: category_name),
-                  index_by_category_courses_path(category_id: category_id),
+      <%= link_to t('courses.show_all_courses', category_name: category.name),
+                  index_by_category_courses_path(category_id: category.id),
                   class: "btn btn-outline-dark mb-3"
       %>
     <% end %>
