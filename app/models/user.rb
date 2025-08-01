@@ -38,7 +38,7 @@ class User < ApplicationRecord
   end
 
   def courses_with_quiz_participation
-    enrolled_courses.joins(quizzes: :quiz_participations)
+    enrolled_courses.joins(quiz: :quiz_participations)
                     .where(quiz_participations: { student_id: id })
                     .where("(quiz_participations.marks_obtained::float / quiz_participations.total_marks) >= 0.3")
   end

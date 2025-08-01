@@ -1,5 +1,4 @@
 class LessonsController < ApplicationController
-  before_action :set_user
   before_action :set_course
   before_action :set_lesson, only: %i[show edit update destroy]
 
@@ -19,10 +18,11 @@ class LessonsController < ApplicationController
 
   def create
     @lesson = @course.lessons.build(lesson_params)
+
     if @lesson.save
-      redirect_to edit_course_path(@course), notice: t('lessons.create.success')
+      redirect_to edit_course_path(@course), notice: t("lessons.create.success")
     else
-      flash.now[:alert] = t('lessons.create.failure')
+      flash.now[:alert] = t("lessons.create.failure")
       render :new, status: :unprocessable_entity
     end
   end
@@ -32,16 +32,16 @@ class LessonsController < ApplicationController
 
   def update
     if @lesson.update(lesson_params)
-      redirect_to course_lessons_path(@course), notice: t('lessons.update.success')
+      redirect_to course_lessons_path(@course), notice: t("lessons.update.success")
     else
-      flash.now[:alert] = t('lessons.update.failure')
+      flash.now[:alert] = t("lessons.update.failure")
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @lesson.destroy
-    redirect_to course_lessons_path(@course), notice: t('lessons.destroy.success')
+    redirect_to course_lessons_path(@course), notice: t("lessons.destroy.success")
   end
 
   def mark_as_watched
@@ -53,10 +53,6 @@ class LessonsController < ApplicationController
   end
 
   private
-
-  def set_user
-    @user = current_user
-  end
 
   def set_course
     @course = Course.find(params[:course_id])
