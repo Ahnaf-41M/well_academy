@@ -440,12 +440,12 @@ en:
       instructions: "Please provide a rating and comment for the course."
     create:
       success: "Review was successfully submitted."
-      failure: "There was an error submitting your review. Please try again."
+      failure: "There was an error submitting your review: %{error}"
     edit:
       title: "Edit Review"
     update:
       success: "Review was successfully updated."
-      failure: "There was an error updating your review. Please try again."
+      failure: "There was an error updating your review: %{error}"
     destroy:
       success: "Review was successfully deleted."
       failure: "There was an error deleting your review. Please try again."

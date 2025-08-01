@@ -6,7 +6,7 @@
   </div>
   <%= form_with(model: @review, url: course_reviews_path, local: true) do |form| %>
     <%= form.hidden_field :course_id, value: @course.id %>
-    <%= form.hidden_field :student_id, value: @user.id %>
+    <%= form.hidden_field :student_id, value: current_user.id %>
 
     <div class="mb-5">
       <label class="h4"><%= t('reviews.rating') %>:</label>

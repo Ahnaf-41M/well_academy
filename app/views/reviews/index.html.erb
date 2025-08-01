@@ -36,8 +36,8 @@
         </div>
       </div>
     <% end %>
-    <%= paginate @reviews, theme: 'bootstrap4' %>
-  <% else %>
-
+    <nav class="d-flex justify-content-center">
+      <%= paginate @reviews, theme: 'bootstrap4' %>
+    </nav>
   <% end %>
 </div>
