@@ -485,7 +485,7 @@ en:
       title: "View Profile"
     create:
       success: "User created successfully."
-      failure: "There were some errors creating the user."
+      failure: "User could not be created: %{error}"
     edit:
       title: "Edit Profile"
     update:

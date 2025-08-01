@@ -15,9 +15,10 @@ class UsersController < ApplicationController
   end
 
   def show
-    @enrollments = Enrollment.where(student_id: current_user.id)
-                             .includes(:course)
-                             .page(params[:page]).per(ENROLLMENTS_PER_PAGE)
+    @completed_courses = current_user.completed_courses
+                                     .page(params[:page]).per(ENROLLMENTS_PER_PAGE)
+    @participated_courses = current_user.courses_with_quiz_participation
+                                        .page(params[:page]).per(ENROLLMENTS_PER_PAGE)
   end
 
   def new
@@ -33,8 +34,7 @@ class UsersController < ApplicationController
       flash[:notice] = t("users.create.success")
       redirect_to root_path
     else
-      # flash.now[:alert] = @user.errors.full_messages.to_sentence
-      flash.now[:alert] = t("users.create.failure")
+      flash.now[:alert] = t("users.create.failure", error: @user.errors.full_messages.join(","))
       render :new, status: :unprocessable_entity
     end
   end

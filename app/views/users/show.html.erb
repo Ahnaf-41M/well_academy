@@ -1,8 +1,8 @@
 <section style="background-color: #eee;" class="min-vh-100">
-  <div class="container py-5">
+  <div class="container py-2">
     <div class="row">
       <div class="col">
-        <nav class="bg-body-tertiary rounded-3 p-3 mb-4 justify-content-right">
+        <nav class="bg-body-tertiary rounded-3 p-3 mb-2 justify-content-right">
           <h2 class="fw-bold"><%= t('profile.title') %></h2>
         </nav>
       </div>
@@ -10,7 +10,10 @@
 
     <div class="row">
       <div class="col-lg-4">
-        <div class="card mb-4">
+        <div class="card mb-4"
+              onmouseover="this.classList.add('shadow-lg')"
+              onmouseout="this.classList.remove('shadow-lg')"
+        >
 
           <div class="card-body text-center">
             <% if current_user.profile_picture.attached? %>
@@ -103,25 +106,19 @@
           <div class="col-md-6">
             <div class="card mb-2 mb-md-0">
               <div class="card-body">
-
-                <% should_paginate = false %>
-                <p class="fw-bold h5 text-primary"><%= t('profile.certificates.completion') %></p>
+                <p class="fw-bold h6 text-primary"><%= t('profile.certificates.completion') %></p>
                 <hr>
-                <% @enrollments.each do |enrollment| %>
-                  <% @course = enrollment.course %>
-                  <% if current_user.video_watches.joins(:lesson).where(lessons: { course_id: @course.id }).count == @course.lessons.count %>
-                    <%= link_to @course.title,
-                                url_for(@course.completion_certificate),
+                <% if @completed_courses.present? %>
+                  <% @completed_courses.each do |course| %>
+                    <%= link_to course.title,
+                                url_for(course.completion_certificate),
                                 class: "fw-bold text-dark",
                                 target: "_blank"
                     %>
-                    <% should_paginate = true %>
                     <hr>
                   <% end %>
                 <% end %>
-                <% if should_paginate %>
-                  <%= paginate @enrollments, theme: 'bootstrap4' %>
-                <% end %>
+                <%= paginate @completed_courses, theme: 'bootstrap4' %>
               </div>
             </div>
           </div>
@@ -131,25 +128,14 @@
               <div class="card-body">
                 <p class="fw-bold h5 text-primary"><%= t('profile.certificates.achievement') %></p>
                 <hr>
-                <% should_paginate = false %>
-                <% @enrollments.each do |enrollment| %>
-                  <% @course = enrollment.course %>
-                  <% if @course.quiz.present? %>
-                    <% @quiz_participation = QuizParticipation.find_by(student_id: current_user.id, quiz_id: @course.quiz.id) %>
-                    <% if @quiz_participation %>
-                      <% marks_obtained = @quiz_participation.marks_obtained %>
-                      <% total_marks = @quiz_participation.total_marks %>
-                      <% percentage = (marks_obtained / total_marks.to_f) * 100 %>
-                      <% if percentage >= 30 %>
-                        <%= link_to @course.title, url_for(@course.achievement_certificate), class: "fw-bold text-dark", target: "_blank" %>
-                        <hr>
-                      <% end %>
-                    <% end %>
-                  <% end %>
+                <% @participated_courses.each do |course| %>
+                  <%= link_to course.title, 
+                              url_for(course.achievement_certificate), 
+                              class: "fw-bold text-dark", 
+                              target: "_blank" %>
+                  <hr>
                 <% end %>
-                <% if should_paginate %>
-                  <%= paginate @enrollments, theme: 'bootstrap4' %>
-                <% end %>
+                <%= paginate @participated_courses, theme: 'bootstrap4' %>
               </div>
             </div>
           </div>
