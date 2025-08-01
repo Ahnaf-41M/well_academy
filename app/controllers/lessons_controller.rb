@@ -6,7 +6,7 @@ class LessonsController < ApplicationController
   load_and_authorize_resource :lesson, through: :course
 
   def index
-    @lessons = @course.lessons.order(:order)
+    @lessons = @course.lessons.includes(:video_attachment)
   end
 
   def show

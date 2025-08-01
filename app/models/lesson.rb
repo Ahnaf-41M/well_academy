@@ -13,6 +13,8 @@ class Lesson < ApplicationRecord
   before_save :adjust_order_within_course, if: :will_save_change_to_order?
   after_commit :update_course_duration, on: [ :create, :update, :destroy ]
 
+  default_scope { order(:order) }
+
   def video_duration
     return unless video.attached?
     video_path = ActiveStorage::Blob.service.send(:path_for, video.key)

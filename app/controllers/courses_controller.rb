@@ -22,6 +22,7 @@ class CoursesController < ApplicationController
   end
 
   def show
+    set_show_variables if current_user.present?
   end
 
   def new
@@ -80,7 +81,27 @@ class CoursesController < ApplicationController
   private
 
   def set_course
-    @course = Course.find(params[:id])
+    @course = Course.includes(lessons: [
+                        :video_attachment,
+                        :content_attachment
+                      ]
+                    )
+                    .find(params[:id])
+  end
+
+  def set_show_variables
+    @lesson_completed = current_user.video_watches
+                                    .joins(:lesson)
+                                    .where(lessons: { course_id: @course.id })
+                                    .count
+    @quiz_participation = @course&.quiz
+                                 &.quiz_participations
+                                 &.find_by(student_id: current_user.id)
+    if @quiz_participation.present?
+      @percentage = (@quiz_participation.marks_obtained.to_f / @quiz_participation.total_marks) * 100
+    end
+    @payment_completed = Payment.exists?(user_id: current_user&.id, course_id: @course.id)
+    @review = Review.find_by(course_id: @course.id, student_id: current_user.id)
   end
 
   def set_categories

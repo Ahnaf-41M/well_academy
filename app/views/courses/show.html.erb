@@ -14,7 +14,7 @@
           <div class="card-body">
             <p>
               <strong><%= t('courses.index.teacher') %>:</strong> </span>
-              <span><%= User.find(@course.teacher_id).name %>
+              <span><%= @course.teacher.name %>
             </p>
             <p><strong><%= t('courses.new.form.level') %>: </strong></span> <span><%= @course.level.titleize %></p>
             <p><strong><%= t('courses.new.form.language') %>: </strong></span> <span><%= @course.language %></p>
@@ -25,42 +25,35 @@
             <p><strong><%= t('courses.index.price') %>: </strong>
               <span class="badge rounded-pill text-bg-success text-light">$<%= @course.price %></span>
             </p>
-
-            <% @lesson_count = @course.lessons_count %>
-            <p><strong><%= t('courses.show.total_lessons') %>: </strong> <span class=""><%= @lesson_count %></span></p>
+            <p>
+              <strong><%= t('courses.show.total_lessons') %>: </strong> <span><%= @course.lessons_count %></span>
+            </p>
+          
+          
+            <!-- if user is logged in -->
             <% if current_user %>
-
-              <% @lesson_completed = current_user.video_watches
-                                                 .joins(:lesson)
-                                                 .where(lessons: { course_id: @course.id })
-                                                 .count %>
               <p>
                 <strong><%= t('courses.show.lessons_completed') %>:</strong> <%= @lesson_completed %>
               </p>
 
               <div class="d-flex gap-3">
 
-                <% if @lesson_completed == @lesson_count && @lesson_count > 0 %>
+                <% if @lesson_completed == @course.lessons_count && @course.lessons_count > 0 %>
                   <p>
-                    <a href="#" class="btn btn-outline-primary btn-sm" onclick="showPdfModal('<%= url_for(@course.completion_certificate) %>'); return false;">
+                    <a href="#" class="btn btn-outline-primary btn-sm" 
+                       onclick="showPdfModal('<%= url_for(@course.completion_certificate) %>'); return false;">
                       <%= t('courses.new.form.completion_certificate_download') %>
                     </a>
                   </p>
                 <% end %>
 
-                <% if @course.quiz.present? %>
-                  <% @quiz_participation = QuizParticipation.find_by(student_id: current_user.id, quiz_id: @course.quiz.id) %>
-                  <% if @quiz_participation %>
-                    <% marks_obtained = @quiz_participation.marks_obtained %>
-                    <% total_marks = @quiz_participation.total_marks %>
-                    <% percentage = (marks_obtained / total_marks.to_f) * 100 %>
-                    <% if percentage >= 30 %>
-                      <p>
-                        <a href="#" class="btn btn-outline-primary btn-sm" onclick="showPdfModal('<%= url_for(@course.achievement_certificate) %>'); return false;">
-                          <%= t('courses.new.form.achievement_certificate_download') %>
-                        </a>
-                      </p>
-                    <% end %>
+                <% if @quiz_participation %>
+                  <% if @percentage >= 30 %>
+                    <p>
+                      <a href="#" class="btn btn-outline-primary btn-sm" onclick="showPdfModal('<%= url_for(@course.achievement_certificate) %>'); return false;">
+                        <%= t('courses.new.form.achievement_certificate_download') %>
+                      </a>
+                    </p>
                   <% end %>
                 <% end %>
               </div>
@@ -88,19 +81,15 @@
             </p>
 
             <div class="d-flex">
-              <% if @course.quiz.present? %>
-                <% quiz_participation = QuizParticipation.find_by(student_id: current_user.id, quiz_id: @course.quiz.id) %>
-                <% if quiz_participation.nil? && @course.quiz.questions.present? && Payment.find_by(user_id: current_user.id, course_id: @course.id).present? %>
-                  <%= link_to "Start Quiz",
-                              start_course_quiz_path(@course, @course.quiz),
-                              class: "btn btn-warning btn-sm" %>
-                <% elsif quiz_participation %>
-                  <p><strong>Quiz Marks: </strong><%= quiz_participation.marks_obtained %></p>
-                <% end %>
+              <% if @quiz_participation.blank? && @course&.quiz&.questions.present? && @payment_completed %>
+                <%= link_to "Start Quiz",
+                            start_course_quiz_path(@course, @course.quiz),
+                            class: "btn btn-warning btn-sm" %>
+              <% elsif @quiz_participation %>
+                <p><strong>Quiz Marks: </strong><%= @quiz_participation.marks_obtained %></p>
               <% end %>
             </div>
           </div>
-
 
         </div>
       </div>
@@ -122,12 +111,12 @@
               <div class="col h6 fw-bold"><%= t('courses.show.duration') %></div>
               <div class="col h6 fw-bold"><%= t('courses.show.watched') %></div>
             </div>
-            <% @course.lessons.sort_by(&:order).each do |lesson| %>
+            <% @course.lessons.each do |lesson| %>
               <hr>
               <div class="row">
                 <div class="col"><%= lesson.title %></div>
                 <div class="col">
-                  <% if current_user && Payment.exists?(user_id: current_user.id, course_id: @course.id) %>
+                  <% if @payment_completed %>
                     <a href="#" onclick="markAsWatched(<%= @course.id %>, <%= lesson.id %>, '<%= url_for(lesson.video) %>', '<%= lesson.video.content_type %>'); return false;">
                       <%= t('courses.show.watch') %>
                     </a>
@@ -137,7 +126,7 @@
                 </div>
                 <div class="col">
                   <% if lesson.content.attached? %>
-                    <% if current_user && Payment.exists?(user_id: current_user.id, course_id: @course.id) %>
+                    <% if @payment_completed %>
                       <a href="#" onclick="showPdfModal('<%= url_for(lesson.content) %>'); return false;"><%= t('course.preview_pdf') %></a>
                     <% else %>
                       <p><%= t('course.preview_pdf') %></p>
@@ -165,8 +154,7 @@
 
 
   <div class="d-flex gap-2 mt-3">
-    <% if current_user && Enrollment.exists?(student_id: current_user.id, course_id: @course.id) %>
-      <% @review = Review.find_by(course_id: @course.id, student_id: current_user.id) %>
+    <% if @payment_completed %>
       <% if @review.present? %>
         <%= link_to t('courses.show.edit_review'),
                     edit_course_review_path(@course, @review),
@@ -178,7 +166,7 @@
                     class: "btn btn-outline-dark btn-sm"
         %>
       <% end %>
-    <% elsif current_user %>
+    <% else %>
       <%= link_to t('courses.enroll_course'), new_course_payment_path(@course), class: "btn btn-success btn-sm" %>
     <% end %>
 
