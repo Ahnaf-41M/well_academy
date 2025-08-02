@@ -21,15 +21,15 @@ class SessionsController < ApplicationController
           user.generate_confirmation_token
           user.save
         end
-        UserMailerJob.new.perform(user.id)
-        redirect_to login_sessions_path, notice: t('sessions.confirmed_account')
+        UserMailerJob.perform_async(user.id)
+        redirect_to login_sessions_path, notice: t("sessions.confirmed_account")
       else
         session[:user_id] = user.id
         session[:email] = user.email
-        redirect_to root_path, notice: t('sessions.create.success')
+        redirect_to root_path, notice: t("sessions.create.success")
       end
     else
-      flash.now[:alert] = t('sessions.errors.invalid_credentials')
+      flash.now[:alert] = t("sessions.errors.invalid_credentials")
       render :login, status: :unprocessable_entity
     end
   end
@@ -37,7 +37,7 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     session[:email] = nil
-    redirect_to root_path, notice: t('sessions.logout.success')
+    redirect_to root_path, notice: t("sessions.logout.success")
   end
 
   def attempt_logout

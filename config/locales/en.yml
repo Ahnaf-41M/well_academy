@@ -277,7 +277,7 @@ en:
       expired_link: "Password reset link has expired. Please request a new one."
     update:
       success: "Password has been reset successfully."
-      failure: "There was an error resetting your password. Please try again."
+      failure: "There was an error resetting your password. %{error}"
     errors:
       password_blank: "Password can't be blank"
       password_confirmation_mismatch: "Password confirmation doesn't match Password"
@@ -484,7 +484,7 @@ en:
     show:
       title: "View Profile"
     create:
-      success: "User created successfully."
+      success: "Account created successfully. A confirmation email has been sent."
       failure: "User could not be created: %{error}"
     edit:
       title: "Edit Profile"
