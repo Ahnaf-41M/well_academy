@@ -1,7 +1,11 @@
+require "sidekiq/web"
+
 Rails.application.routes.draw do
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
+
+  mount Sidekiq::Web => "/sidekiq"
 
   match "/404", to: "errors#not_found", via: :all
   match "/500", to: "errors#internal_server_error", via: :all
