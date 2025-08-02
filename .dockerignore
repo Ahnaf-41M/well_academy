@@ -1,0 +1,42 @@
+# Ignore bundler config and installed gems
+.bundle
+vendor/bundle
+
+.env
+
+# Ignore application logs and temp files
+log/*
+tmp/*
+!log/.keep
+!tmp/.keep
+
+# Ignore database and local storage
+storage/*
+public/assets
+public/packs
+public/packs-test
+
+# Ignore test coverage reports
+coverage/
+spec/examples.txt
+
+# Ignore OS and editor files
+*.swp
+*.bak
+*.tmp
+*.log
+*.pid
+.DS_Store
+.idea/
+.vscode/
+
+# Ignore node/npm/webpack files
+node_modules/
+yarn-error.log
+
+# Ignore byebug history
+.byebug_history
+
+# Ignore compiled JS and map files
+*.js.map
+*.css.map
