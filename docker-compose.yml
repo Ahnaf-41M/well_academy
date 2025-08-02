@@ -1,0 +1,77 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: db_user
+      POSTGRES_PASSWORD: db_password
+      POSTGRES_DB: well_academy_development
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U db_user -d well_academy_development"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:8.0.3
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bundle exec sidekiq
+    depends_on:
+      - db
+      - redis
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USERNAME: db_user
+      DATABASE_PASSWORD: db_password
+      RAILS_ENV: development
+      RACK_ENV: development
+      REDIS_URL: redis://redis:6379
+    volumes:
+      - .:/app
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f sidekiq || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3005"
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USERNAME: db_user
+      DATABASE_PASSWORD: db_password
+      RAILS_ENV: development
+      RACK_ENV: development
+      REDIS_URL: redis://redis:6379
+    volumes:
+      - .:/app # bind mounting local code for live change reflections
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: >
+      sh -c "rm -f tmp/pids/server.pid &&
+             bundle exec rails db:create db:migrate db:seed &&
+             bundle exec rails server -b 0.0.0.0 -p 3005"
+
+volumes:
+  pg_data:
