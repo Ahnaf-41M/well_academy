@@ -1,6 +1,6 @@
 <h1 class="d-flex justify-content-center fw-bold mt-2"><%= t('password_resets.new.title') %></h1>
 <div class="min-vh-100">
-  <div class="d-flex justify-content-center mt-5">
+  <div class="d-flex justify-content-center mt-3">
     <%= form_with url: password_resets_path, class: "form-control w-25", local: true do |f| %>
       <p class="fw-bold"> <%= t('password_resets.enter_email') %> <span class="text-danger">*</span></p>
       <%= f.text_field :email, value: params[:email], class: "form-control mb-2", required: true %>

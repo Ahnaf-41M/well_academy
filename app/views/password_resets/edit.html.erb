@@ -1,7 +1,9 @@
-<h1 class="d-flex justify-content-center fw-bold mt-2"><%= t('password_resets.enter_new_password') %></h1>
+<h1 class="d-flex justify-content-center fw-bold mt-3">
+  <%= t('password_resets.enter_new_password') %>
+</h1>
 
 <div class="min-vh-100">
-  <div class="d-flex justify-content-center mt-5">
+  <div class="d-flex justify-content-center mt-2">
     <%= form_with model: @user, url: password_reset_path(params[:reset_password_token]), class: "form-control w-25", local: true do |f| %>
       <p class="fw-bold"> <%= t('password_resets.password') %><span class="text-danger">*</span></p>
       <%= f.password_field :password, value: @user.password, class: "form-control mb-3", required: true %>
