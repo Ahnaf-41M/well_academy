@@ -153,6 +153,11 @@ GEM
       childprocess (~> 5.0)
     letter_opener (1.10.0)
       launchy (>= 2.2, < 4)
+    letter_opener_web (3.0.0)
+      actionmailer (>= 6.1)
+      letter_opener (~> 1.9)
+      railties (>= 6.1)
+      rexml
     logger (1.6.1)
     loofah (2.23.1)
       crass (~> 1.0.2)
@@ -260,6 +265,7 @@ GEM
     regexp_parser (2.9.2)
     reline (0.5.11)
       io-console (~> 0.5)
+    rexml (3.4.1)
     rspec-core (3.13.2)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.3)
@@ -380,6 +386,7 @@ DEPENDENCIES
   jbuilder
   kaminari
   letter_opener
+  letter_opener_web
   ostruct
   pg (~> 1.1)
   pry
