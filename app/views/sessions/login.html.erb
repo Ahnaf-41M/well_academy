@@ -1,8 +1,8 @@
 <%= stylesheet_link_tag 'login', media: 'all' %>
 
-<section class="vh-100">
+<section>
   <div class="container-fluid h-custom">
-    <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="row d-flex justify-content-center align-items-center">
 
       <div class="col-md-9 col-lg-6 col-xl-5">
         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
@@ -23,8 +23,13 @@
             <%= form.password_field :password, value: params[:password], class: "form-control form-control-lg", placeholder: t('login.password'), required: true %>
           </div>
 
-          <div class="text-center text-lg-start mt-4 pt-2">
-            <%= form.submit t('login.login_button'), class: "btn btn-primary btn-lg", style: "padding-left: 2.5rem; padding-right: 2.5rem;" %>
+          <div class="text-center text-lg-start pt-2">
+            <div class="d-grid gap-2 col-12 mx-auto">
+
+              <%= form.submit t('login.login_button'), 
+                            class: "btn btn-primary btn-lg", 
+                            style: "padding-left: 2.5rem; padding-right: 2.5rem;" %>
+            </div>
 
             <p class="small fw-bold mt-2 pt-1 mb-0">
               <%= link_to t('login.register_link'), new_user_path, class: 'link-success' %>
