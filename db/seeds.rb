@@ -21,13 +21,13 @@ def attach_local_image(record, attachment_name, local_path)
   file = File.open(file_path)
   extension = File.extname(local_path).downcase
   content_type = case extension
-                 when '.jpg', '.jpeg'
+  when '.jpg', '.jpeg'
                    'image/jpeg'
-                 when '.png'
+  when '.png'
                    'image/png'
-                 else
+  else
                    'application/octet-stream' # Fallback if file is not recognized
-                 end
+  end
 
   # Attach the file to the record
   record.send(attachment_name).attach(
@@ -59,7 +59,7 @@ users_data = [
   { name: "Mohammad Ashikul Islam", email: "ashik@welldev.io", phone: "12345678997", bio: "Demo user", role: "student", image: "app/assets/images/ashik-bhai.jpeg" },
   { name: "Radoan Sharkar", email: "radoan@welldev.io", phone: "12345678998", bio: "Demo user", role: "student", image: "app/assets/images/richi.jpeg" },
   { name: "Tahsin Turab", email: "turab@welldev.io", phone: "12345678999", bio: "Demo user", role: "student", image: "app/assets/images/turab.jpeg" },
-  { name: "Imtiaz Rafi", email: "rafi@welldev.io", phone: "12345678991", bio: "Demo user", role: "teacher", image: "app/assets/images/rafi-bhai.jpeg" },
+  { name: "Imtiaz Rafi", email: "rafi@welldev.io", phone: "12345678991", bio: "Demo user", role: "teacher", image: "app/assets/images/rafi-bhai.jpeg" }
 ]
 
 users_data.each do |user_data|
@@ -71,7 +71,6 @@ users_data.each do |user_data|
     bio: user_data[:bio],
     role: user_data[:role]
   )
-  attach_local_image(user, :profile_picture, user_data[:image])
 end
 
 puts "*** User table seeded successfully. ***"
