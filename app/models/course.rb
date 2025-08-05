@@ -8,10 +8,22 @@ class Course < ApplicationRecord
   has_many :payments, dependent: :destroy
   has_many :enrollments, dependent: :destroy
 
-  has_one_attached :display_picture
-  has_one_attached :syllabus
-  has_one_attached :completion_certificate
-  has_one_attached :achievement_certificate
+  has_one_attached :display_picture do |attachable|
+    attachable.analyze(false)
+  end
+
+  has_one_attached :syllabus do |attachable|
+    attachable.analyze(false)
+  end
+
+  has_one_attached :completion_certificate do |attachable|
+    attachable.analyze(false)
+  end
+
+  has_one_attached :achievement_certificate do |attachable|
+    attachable.analyze(false)
+  end
+
 
   enum level: { beginner: 1, intermediate: 2, advanced: 3 }
 

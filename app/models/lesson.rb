@@ -3,8 +3,14 @@ class Lesson < ApplicationRecord
 
   has_many :video_watches, dependent: :destroy
 
-  has_one_attached :video, dependent: :purge
-  has_one_attached :content
+  has_one_attached :video, dependent: :purge do |attachable|
+    attachable.analyze(false)
+  end
+
+  has_one_attached :content do |attachable|
+    attachable.analyze(false)
+  end
+
 
   validates :title, presence: true
   validates :order, presence: true, numericality: { greater_than_or_equal_to: 1 }
