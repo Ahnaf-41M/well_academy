@@ -45,7 +45,9 @@ admin = User.create!(
   password: "1234",
   phone: "12345678991",
   bio: "Admin",
-  role: "admin"
+  role: "admin",
+  confirmation_token: SecureRandom.hex(10),
+  confirmed_at: Time.now,
 )
 
 # Create users and assign roles
@@ -69,7 +71,9 @@ users_data.each do |user_data|
     password: "1234",
     phone: user_data[:phone],
     bio: user_data[:bio],
-    role: user_data[:role]
+    role: user_data[:role],
+    confirmation_token: SecureRandom.hex(10),
+    confirmed_at: Time.now,
   )
 end
 
