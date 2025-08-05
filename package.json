@@ -1,0 +1,8 @@
+{
+  "name": "well_academy",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Ahnaf-41M/well_academy.git",
+  "author": "Md. Ahnaf Muttaqi Chowdhury <mdahnaf7@gmail.com>",
+  "license": "MIT"
+}
