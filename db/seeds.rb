@@ -107,31 +107,31 @@ def attach_file(record, attachment_name, file_path)
 end
 
 # Create courses
-courses_data = [
-  { title: "Learn Ruby on Rails", description: "A comprehensive course on Ruby on Rails framework.", teacher: User.find_by(email: "hasib@welldev.io"), category: Category.find_by(name: "Ruby on Rails"), price: 49.99, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/ruby1.jpg", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
-  { title: "Spring Boot 3", description: "Java Programming.", teacher: User.find_by(email: "hasib@welldev.io"), category: Category.find_by(name: "Java"), price: 84.99, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/spring-boot.png", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
-  { title: "Learn Spring", description: "Java Programming.", teacher: User.find_by(email: "arnab@welldev.io"), category: Category.find_by(name: "Java"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/spring-boot.png", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
-  { title: "Mastering Ruby", description: "Ruby Programming.", teacher: User.find_by(email: "arnab@welldev.io"), category: Category.find_by(name: "Ruby"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/ruby1.jpg", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
-  { title: "Ruby on Rails", description: "Ruby Programming.", teacher: User.find_by(email: "redwan@welldev.io"), category: Category.find_by(name: "Ruby on Rails"), price: 99.99, level: 2, language: "English", duration: 0, display_picture: "app/assets/images/Ruby_On_Rails_Logo.png", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
-  { title: "Mastering Java", description: "Java Programming.", teacher: User.find_by(email: "redwan@welldev.io"), category: Category.find_by(name: "Java"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/Ruby_On_Rails_Logo.png", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" }
-]
+# courses_data = [
+#   { title: "Learn Ruby on Rails", description: "A comprehensive course on Ruby on Rails framework.", teacher: User.find_by(email: "hasib@welldev.io"), category: Category.find_by(name: "Ruby on Rails"), price: 49.99, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/ruby1.jpg", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
+#   { title: "Spring Boot 3", description: "Java Programming.", teacher: User.find_by(email: "hasib@welldev.io"), category: Category.find_by(name: "Java"), price: 84.99, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/spring-boot.png", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
+#   { title: "Learn Spring", description: "Java Programming.", teacher: User.find_by(email: "arnab@welldev.io"), category: Category.find_by(name: "Java"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/spring-boot.png", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
+#   { title: "Mastering Ruby", description: "Ruby Programming.", teacher: User.find_by(email: "arnab@welldev.io"), category: Category.find_by(name: "Ruby"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/ruby1.jpg", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
+#   { title: "Ruby on Rails", description: "Ruby Programming.", teacher: User.find_by(email: "redwan@welldev.io"), category: Category.find_by(name: "Ruby on Rails"), price: 99.99, level: 2, language: "English", duration: 0, display_picture: "app/assets/images/Ruby_On_Rails_Logo.png", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
+#   { title: "Mastering Java", description: "Java Programming.", teacher: User.find_by(email: "redwan@welldev.io"), category: Category.find_by(name: "Java"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/Ruby_On_Rails_Logo.png", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" }
+# ]
 
-courses_data.each do |course_data|
-  course = Course.create!(
-    title: course_data[:title],
-    description: course_data[:description],
-    teacher: course_data[:teacher],
-    category: course_data[:category],
-    price: course_data[:price],
-    level: course_data[:level],
-    language: course_data[:language],
-    duration: course_data[:duration]
-  )
+# courses_data.each do |course_data|
+#   course = Course.create!(
+#     title: course_data[:title],
+#     description: course_data[:description],
+#     teacher: course_data[:teacher],
+#     category: course_data[:category],
+#     price: course_data[:price],
+#     level: course_data[:level],
+#     language: course_data[:language],
+#     duration: course_data[:duration]
+#   )
 
-  attach_file(course, :display_picture, course_data[:display_picture])
-  attach_file(course, :syllabus, course_data[:syllabus])
-  attach_file(course, :completion_certificate, course_data[:completion_certificate])
-  attach_file(course, :achievement_certificate, course_data[:achievement_certificate])
-end
+#   attach_file(course, :display_picture, course_data[:display_picture])
+#   attach_file(course, :syllabus, course_data[:syllabus])
+#   attach_file(course, :completion_certificate, course_data[:completion_certificate])
+#   attach_file(course, :achievement_certificate, course_data[:achievement_certificate])
+# end
 
-puts "*** Courses seeded successfully! ***"
+# puts "*** Courses seeded successfully! ***"
