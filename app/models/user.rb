@@ -15,22 +15,10 @@ class User < ApplicationRecord
   has_many :quiz_participations, foreign_key: :student_id, dependent: :destroy
   has_many :payments, dependent: :destroy
 
-  has_one_attached :profile_picture do |attachable|
-    attachable.analyze(false)
-  end
-
-  has_many_attached :student_certificates do |attachable|
-    attachable.analyze(false)
-  end
-
-  has_one_attached :grad_certificate do |attachable|
-    attachable.analyze(false)
-  end
-
-  has_one_attached :postgrad_certificate do |attachable|
-    attachable.analyze(false)
-  end
-
+  has_one_attached :profile_picture
+  has_many_attached :student_certificates
+  has_one_attached :grad_certificate
+  has_one_attached :postgrad_certificate
 
   enum role: { student: 0, teacher: 1, admin: 2 }
 
