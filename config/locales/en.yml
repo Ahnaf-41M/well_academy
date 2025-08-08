@@ -26,6 +26,9 @@ en:
   no_courses_found: "No courses found!"
   search_results: "Search Results"
 
+  dropdown:
+    options:
+      title: "Options"
   navbar:
     users: "Users"
     brand: "WellAcademy"
@@ -125,11 +128,13 @@ en:
     continue_course: "Continue Course"
     enroll_course: "Enroll in Course"
     show_all_courses: "Show all on %{category_name} courses >>"
+    header:
+      title: "Courses"
 
     enrollments:
       title: "Enrollments"
     index:
-      title: "Courses"
+      title: "Course"
       teacher: "Teacher"
       category: "Category"
       price: "Price"
