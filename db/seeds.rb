@@ -89,21 +89,43 @@ def attach_file(record, attachment_name, file_path)
   )
 end
 
-courses_data = [
-  { title: "Learn Ruby on Rails", description: "A comprehensive course on Ruby on Rails framework.", teacher: User.find_by(email: "hasib@welldev.io"), category: Category.find_by(name: "Ruby on Rails"), price: 49.99, level: 1, language: "English", duration: 0, display_picture: "#{IMG_PATH}ruby1.jpg", syllabus: "#{DOC_PATH}ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "#{DOC_PATH}ruby-completion.pdf", achievement_certificate: "#{DOC_PATH}ruby-achievement.pdf" },
-  { title: "React JS for Beginners", description: "A comprehensive course on Ruby on Rails framework.", teacher: User.find_by(email: "hasib@welldev.io"), category: Category.find_by(name: "React"), price: 49.99, level: 1, language: "English", duration: 0, display_picture: "#{IMG_PATH}react.png", syllabus: "#{DOC_PATH}ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "#{DOC_PATH}ruby-completion.pdf", achievement_certificate: "#{DOC_PATH}ruby-achievement.pdf" },
-  { title: "Mastering Rails", description: "A comprehensive course on Ruby on Rails framework.", teacher: User.find_by(email: "sadman@welldev.io"), category: Category.find_by(name: "Ruby on Rails"), price: 49.99, level: 1, language: "English", duration: 0, display_picture: "#{IMG_PATH}ruby1.jpg", syllabus: "#{DOC_PATH}ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "#{DOC_PATH}ruby-completion.pdf", achievement_certificate: "#{DOC_PATH}ruby-achievement.pdf" },
-  { title: "Spring Boot 3", description: "Java Programming.", teacher: User.find_by(email: "hasib@welldev.io"), category: Category.find_by(name: "Java"), price: 84.99, level: 1, language: "English", duration: 0, display_picture: "#{IMG_PATH}spring-boot.png", syllabus: "#{DOC_PATH}ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "#{DOC_PATH}ruby-completion.pdf", achievement_certificate: "#{DOC_PATH}ruby-achievement.pdf" },
-  { title: "Learn Spring", description: "Java Programming.", teacher: User.find_by(email: "arnab@welldev.io"), category: Category.find_by(name: "Java"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "#{IMG_PATH}spring-boot.png", syllabus: "#{DOC_PATH}ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "#{DOC_PATH}ruby-completion.pdf", achievement_certificate: "#{DOC_PATH}ruby-achievement.pdf" },
-  { title: "Mastering Ruby", description: "Ruby Programming.", teacher: User.find_by(email: "arnab@welldev.io"), category: Category.find_by(name: "Ruby"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "#{IMG_PATH}ruby1.jpg", syllabus: "#{DOC_PATH}ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "#{DOC_PATH}ruby-completion.pdf", achievement_certificate: "#{DOC_PATH}ruby-achievement.pdf" },
-  { title: "Ruby on Rails", description: "Ruby Programming.", teacher: User.find_by(email: "redwan@welldev.io"), category: Category.find_by(name: "Ruby on Rails"), price: 99.99, level: 2, language: "English", duration: 0, display_picture: "#{IMG_PATH}Ruby_On_Rails_Logo.png", syllabus: "#{DOC_PATH}ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "#{DOC_PATH}ruby-completion.pdf", achievement_certificate: "#{DOC_PATH}ruby-achievement.pdf" },
-  { title: "Mastering Java", description: "Java Programming.", teacher: User.find_by(email: "redwan@welldev.io"), category: Category.find_by(name: "Java"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "#{IMG_PATH}Ruby_On_Rails_Logo.png", syllabus: "#{DOC_PATH}ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "#{DOC_PATH}ruby-completion.pdf", achievement_certificate: "#{DOC_PATH}ruby-achievement.pdf" },
-  { title: "Java Advanced", description: "Java Programming.", teacher: User.find_by(email: "rafi@welldev.io"), category: Category.find_by(name: "Java"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "#{IMG_PATH}spring-boot.png", syllabus: "#{DOC_PATH}ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "#{DOC_PATH}ruby-completion.pdf", achievement_certificate: "#{DOC_PATH}ruby-achievement.pdf" },
-  { title: "Spring Framework", description: "Spring Framework", teacher: User.find_by(email: "rafi@welldev.io"), category: Category.find_by(name: "Spring Framework"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "#{IMG_PATH}spring-boot.png", syllabus: "#{DOC_PATH}ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "#{DOC_PATH}ruby-completion.pdf", achievement_certificate: "#{DOC_PATH}ruby-achievement.pdf" },
-  { title: "Elixir for Everyone", description: "Elixir", teacher: User.find_by(email: "wasee@welldev.io"), category: Category.find_by(name: "Elixir"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "#{IMG_PATH}elixir.jpeg", syllabus: "#{DOC_PATH}ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "#{DOC_PATH}ruby-completion.pdf", achievement_certificate: "#{DOC_PATH}ruby-achievement.pdf" },
-  { title: "Mastering Angular", description: "Angular", teacher: User.find_by(email: "wasee@welldev.io"), category: Category.find_by(name: "Angular"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "#{IMG_PATH}angular.png", syllabus: "#{DOC_PATH}ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "#{DOC_PATH}ruby-completion.pdf", achievement_certificate: "#{DOC_PATH}ruby-achievement.pdf" }
+sample_courses = [
+  { title: "Learn Ruby on Rails", description: "A comprehensive course on Ruby on Rails framework.", teacher_email: "hasib@welldev.io", category_name: "Ruby on Rails", display_picture: "#{IMG_PATH}ruby1.jpg" },
+  { title: "React JS for Beginners", description: "A comprehensive course on ReactJS", teacher_email: "hasib@welldev.io", category_name: "React", display_picture: "#{IMG_PATH}react.png" },
+  { title: "Mastering Rails", description: "A comprehensive course on Ruby on Rails framework.", teacher_email: "sadman@welldev.io", category_name: "Ruby on Rails", display_picture: "#{IMG_PATH}ruby1.jpg" },
+  { title: "Spring Boot 3", description: "Java Programming.", teacher_email: "hasib@welldev.io", category_name: "Java", display_picture: "#{IMG_PATH}spring-boot.png" },
+  { title: "Learn Spring", description: "Java Programming.", teacher_email: "arnab@welldev.io", category_name: "Java", display_picture: "#{IMG_PATH}spring-boot.png" },
+  { title: "Mastering Ruby", description: "Ruby Programming.", teacher_email: "arnab@welldev.io", category_name: "Ruby", display_picture: "#{IMG_PATH}ruby1.jpg" },
+  { title: "Ruby on Rails", description: "Ruby Programming.", teacher_email: "redwan@welldev.io", category_name: "Ruby on Rails", display_picture: "#{IMG_PATH}Ruby_On_Rails_Logo.png" },
+  { title: "Mastering Java", description: "Java Programming.", teacher_email: "redwan@welldev.io", category_name: "Java", display_picture: "#{IMG_PATH}Ruby_On_Rails_Logo.png" },
+  { title: "Java Advanced", description: "Java Programming.", teacher_email: "rafi@welldev.io", category_name: "Java", display_picture: "#{IMG_PATH}spring-boot.png" },
+  { title: "Spring Framework", description: "Spring Framework", teacher_email: "rafi@welldev.io", category_name: "Spring Framework", display_picture: "#{IMG_PATH}spring-boot.png" },
+  { title: "Elixir for Everyone", description: "Elixir", teacher_email: "wasee@welldev.io", category_name: "Elixir", display_picture: "#{IMG_PATH}elixir.jpeg" },
+  { title: "Mastering Angular", description: "Angular", teacher_email: "wasee@welldev.io", category_name: "Angular", display_picture: "#{IMG_PATH}angular.png" }
 ]
 
+courses_data = []
+
+300.times do |i|
+  sample = sample_courses[i % sample_courses.length]
+  teacher = User.find_by(email: sample[:teacher_email])
+  category = Category.find_by(name: sample[:category_name])
+
+  courses_data << {
+    title: "#{sample[:title]} #{i + 1}",
+    description: sample[:description],
+    teacher: teacher,
+    category: category,
+    price: (30 + rand * 70).round(2),  # Random price between 30 and 100
+    level: [ 1, 2, 3 ].sample,
+    duration: 0,
+    language: "English",
+    display_picture: sample[:display_picture],
+    syllabus: "#{DOC_PATH}ruby-on-rails-bootcamp-syllabus.pdf",
+    completion_certificate: "#{DOC_PATH}ruby-completion.pdf",
+    achievement_certificate: "#{DOC_PATH}ruby-achievement.pdf"
+  }
+end
 video_file_paths = Dir.glob("#{VID_PATH}**/*").select { |f| File.file?(f) }
 
 courses_data.each do |course_data|
