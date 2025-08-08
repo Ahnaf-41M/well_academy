@@ -29,8 +29,11 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.confirmation_token = SecureRandom.hex(10)
+    @user.confirmed_at = Time.now
     if @user.save
-      UserMailerJob.perform_async(@user.id)
+      # UserMailerJob.perform_async(@user.id)
+      @user.save!
       flash[:notice] = t("users.create.success")
       redirect_to root_path
     else

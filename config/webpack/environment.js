@@ -1,3 +1,5 @@
-const { environment } = require('@rails/webpacker')
+const { environment } = require("@rails/webpacker");
 
-module.exports = environment
+environment.config.set("node", false);
+
+module.exports = environment;
