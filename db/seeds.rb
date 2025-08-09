@@ -4,6 +4,14 @@ IMG_PATH = "app/assets/images/"
 DOC_PATH = "app/assets/documents/"
 VID_PATH = "app/assets/videos/"
 
+def attach_file(record, attachment_name, file_path)
+  record.public_send(attachment_name).attach(
+    io: File.open(file_path),
+    filename: File.basename(file_path),
+    content_type: Marcel::MimeType.for(Pathname.new(file_path))
+  )
+end
+
 User.destroy_all
 puts "*** User table cleared. ***"
 ActiveStorage::Attachment.all.each do |attachment|
@@ -35,17 +43,17 @@ users_data = [
   { name: "Hasib Chy", email: "hasib@welldev.io", phone: "12345678991", bio: "Demo user", role: "teacher", image: "#{IMG_PATH}hasib-bhai.jpeg" },
   { name: "Samin Al-Wasee", email: "wasee@welldev.io", phone: "12345678992", bio: "Demo user", role: "teacher", image: "#{IMG_PATH}wasee-bhai.jpeg" },
   { name: "Redwan Ahmed", email: "redwan@welldev.io", phone: "12345678993", bio: "Demo user", role: "teacher", image: "#{IMG_PATH}redwan-bhai.jpeg" },
-  { name: "Arnab Saha", email: "arnab@welldev.io", phone: "12345678994", bio: "Demo user", role: "teacher", image: "#{IMG_PATH}arnab-bhai.jpeg" },
   { name: "Sadman Ahmed", email: "sadman@welldev.io", phone: "12345678995", bio: "Demo user", role: "teacher", image: "#{IMG_PATH}sadman-bhai.jpeg" },
   { name: "Kaium Uddin", email: "kaium@welldev.io", phone: "12345678996", bio: "Demo user", role: "student", image: "#{IMG_PATH}kaium-bhai.jpeg" },
   { name: "Mohammad Ashikul Islam", email: "ashik@welldev.io", phone: "12345678997", bio: "Demo user", role: "student", image: "#{IMG_PATH}ashik-bhai.jpeg" },
   { name: "Radoan Sharkar", email: "radoan@welldev.io", phone: "12345678998", bio: "Demo user", role: "student", image: "#{IMG_PATH}richi.jpeg" },
   { name: "Tahsin Turab", email: "turab@welldev.io", phone: "12345678999", bio: "Demo user", role: "student", image: "#{IMG_PATH}turab.jpeg" },
-  { name: "Imtiaz Rafi", email: "rafi@welldev.io", phone: "12345678991", bio: "Demo user", role: "teacher", image: "#{IMG_PATH}rafi-bhai.jpeg" }
+  { name: "Imtiaz Rafi", email: "rafi@welldev.io", phone: "12345678991", bio: "Demo user", role: "teacher", image: "#{IMG_PATH}rafi-bhai.jpeg" },
+  { name: "Rakinul Haque", email: "rakin@welldev.io", phone: "12345678991", bio: "Demo user", role: "teacher", image: "#{IMG_PATH}wasee-bhai.jpeg" }
 ]
 
 users_data.each do |user_data|
-  User.create!(
+  user = User.create!(
     name: user_data[:name],
     email: user_data[:email],
     password: "1234",
@@ -55,9 +63,10 @@ users_data.each do |user_data|
     confirmation_token: SecureRandom.hex(10),
     confirmed_at: Time.now,
   )
+  attach_file(user, :profile_picture, user_data[:image])
 end
 
-puts "*** User table seeded successfully. ***"
+puts "*** User data seeded successfully. ***"
 
 # categories
 categories = [
@@ -71,7 +80,8 @@ categories = [
   { name: "Django", description: "Python Programming" },
   { name: "Elixir", description: "Elixir Programming" },
   { name: "React", description: "React Framework" },
-  { name: "Angular", description: "Angular Framework" }
+  { name: "Angular", description: "Angular Framework" },
+  { name: "DevOps", description: "DevOps" }
 ]
 
 categories.each do |cat|
@@ -81,21 +91,13 @@ puts "*** Categories table seeded successfully. ***"
 
 # Create courses
 
-def attach_file(record, attachment_name, file_path)
-  record.public_send(attachment_name).attach(
-    io: File.open(file_path),
-    filename: File.basename(file_path),
-    content_type: Marcel::MimeType.for(Pathname.new(file_path))
-  )
-end
-
 sample_courses = [
   { title: "Learn Ruby on Rails", description: "A comprehensive course on Ruby on Rails framework.", teacher_email: "hasib@welldev.io", category_name: "Ruby on Rails", display_picture: "#{IMG_PATH}ruby1.jpg" },
   { title: "React JS for Beginners", description: "A comprehensive course on ReactJS", teacher_email: "hasib@welldev.io", category_name: "React", display_picture: "#{IMG_PATH}react.png" },
   { title: "Mastering Rails", description: "A comprehensive course on Ruby on Rails framework.", teacher_email: "sadman@welldev.io", category_name: "Ruby on Rails", display_picture: "#{IMG_PATH}ruby1.jpg" },
   { title: "Spring Boot 3", description: "Java Programming.", teacher_email: "hasib@welldev.io", category_name: "Java", display_picture: "#{IMG_PATH}spring-boot.png" },
-  { title: "Learn Spring", description: "Java Programming.", teacher_email: "arnab@welldev.io", category_name: "Java", display_picture: "#{IMG_PATH}spring-boot.png" },
-  { title: "Mastering Ruby", description: "Ruby Programming.", teacher_email: "arnab@welldev.io", category_name: "Ruby", display_picture: "#{IMG_PATH}ruby1.jpg" },
+  { title: "Learn Spring", description: "Java Programming.", teacher_email: "sadman@welldev.io", category_name: "Java", display_picture: "#{IMG_PATH}spring-boot.png" },
+  { title: "Mastering Ruby", description: "Ruby Programming.", teacher_email: "sadman@welldev.io", category_name: "Ruby", display_picture: "#{IMG_PATH}ruby1.jpg" },
   { title: "Ruby on Rails", description: "Ruby Programming.", teacher_email: "redwan@welldev.io", category_name: "Ruby on Rails", display_picture: "#{IMG_PATH}Ruby_On_Rails_Logo.png" },
   { title: "Mastering Java", description: "Java Programming.", teacher_email: "redwan@welldev.io", category_name: "Java", display_picture: "#{IMG_PATH}Ruby_On_Rails_Logo.png" },
   { title: "Java Advanced", description: "Java Programming.", teacher_email: "rafi@welldev.io", category_name: "Java", display_picture: "#{IMG_PATH}spring-boot.png" },
@@ -105,10 +107,11 @@ sample_courses = [
 ]
 
 courses_data = []
+teacher_emails = users_data.map { |user| user[:email] if user[:role] == "teacher" }.compact
 
 300.times do |i|
   sample = sample_courses[i % sample_courses.length]
-  teacher = User.find_by(email: sample[:teacher_email])
+  teacher = User.find_by(email: teacher_emails.sample)
   category = Category.find_by(name: sample[:category_name])
 
   courses_data << {
