@@ -167,7 +167,9 @@
         %>
       <% end %>
     <% else %>
-      <%= link_to t('courses.enroll_course'), new_course_payment_path(@course), class: "btn btn-success btn-sm" %>
+      <% if current_user.present? %>
+        <%= link_to t('courses.enroll_course'), new_course_payment_path(@course), class: "btn btn-success btn-sm" %>
+      <% end %>
     <% end %>
 
     <%= link_to t('reviews.index.title'),
