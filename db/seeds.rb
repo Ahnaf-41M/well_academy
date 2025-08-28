@@ -1,8 +1,23 @@
+require "marcel"
+
+IMG_PATH = "app/assets/images/"
+DOC_PATH = "app/assets/documents/"
+VID_PATH = "app/assets/videos/"
+
+def attach_file(record, attachment_name, file_path)
+  record.public_send(attachment_name).attach(
+    io: File.open(file_path),
+    filename: File.basename(file_path),
+    content_type: Marcel::MimeType.for(Pathname.new(file_path))
+  )
+end
+
 User.destroy_all
 puts "*** User table cleared. ***"
 ActiveStorage::Attachment.all.each do |attachment|
   attachment.purge
 end
+
 ActiveStorage::Blob.find_each do |blob|
   blob.purge
 end
@@ -11,55 +26,30 @@ puts "*** All ActiveStorage attachments and blobs cleared. ***"
 Category.destroy_all
 puts "*** Categories table cleared. ***"
 
-# Attach local image helper
-def attach_local_image(record, attachment_name, local_path)
-  file_path = Rails.root.join(local_path)
-  unless File.exist?(file_path)
-    puts "Image not found: #{file_path}, skipping attachment."
-    return
-  end
-  file = File.open(file_path)
-  extension = File.extname(local_path).downcase
-  content_type = case extension
-                 when '.jpg', '.jpeg'
-                   'image/jpeg'
-                 when '.png'
-                   'image/png'
-                 else
-                   'application/octet-stream' # Fallback if file is not recognized
-                 end
-
-  # Attach the file to the record
-  record.send(attachment_name).attach(
-    io: file,
-    filename: File.basename(local_path),
-    content_type: content_type
-  )
-  file.close
-end
-
 # Create admin user
-admin = User.create!(
+User.create!(
   name: "Kaium Uddin",
   email: "admin@a.com",
   password: "1234",
   phone: "12345678991",
   bio: "Admin",
-  role: "admin"
+  role: "admin",
+  confirmation_token: SecureRandom.hex(10),
+  confirmed_at: Time.now,
 )
 
 # Create users and assign roles
 users_data = [
-  { name: "Hasib Chy", email: "hasib@welldev.io", phone: "12345678991", bio: "Demo user", role: "teacher", image: "app/assets/images/hasib-bhai.jpeg" },
-  { name: "Samin Al-Wasee", email: "wasee@welldev.io", phone: "12345678992", bio: "Demo user", role: "student", image: "app/assets/images/wasee-bhai.jpeg" },
-  { name: "Redwan Ahmed", email: "redwan@welldev.io", phone: "12345678993", bio: "Demo user", role: "teacher", image: "app/assets/images/redwan-bhai.jpeg" },
-  { name: "Arnab Saha", email: "arnab@welldev.io", phone: "12345678994", bio: "Demo user", role: "teacher", image: "app/assets/images/arnab-bhai.jpeg" },
-  { name: "Sadman Ahmed", email: "sadman@welldev.io", phone: "12345678995", bio: "Demo user", role: "student", image: "app/assets/images/sadman-bhai.jpeg" },
-  { name: "Kaium Uddin", email: "kaium@welldev.io", phone: "12345678996", bio: "Demo user", role: "student", image: "app/assets/images/kaium-bhai.jpeg" },
-  { name: "Mohammad Ashikul Islam", email: "ashik@welldev.io", phone: "12345678997", bio: "Demo user", role: "student", image: "app/assets/images/ashik-bhai.jpeg" },
-  { name: "Radoan Sharkar", email: "radoan@welldev.io", phone: "12345678998", bio: "Demo user", role: "student", image: "app/assets/images/richi.jpeg" },
-  { name: "Tahsin Turab", email: "turab@welldev.io", phone: "12345678999", bio: "Demo user", role: "student", image: "app/assets/images/turab.jpeg" },
-  { name: "Imtiaz Rafi", email: "rafi@welldev.io", phone: "12345678991", bio: "Demo user", role: "teacher", image: "app/assets/images/rafi-bhai.jpeg" },
+  { name: "Hasib Chy", email: "hasib@welldev.io", phone: "12345678991", bio: "Demo user", role: "teacher", image: "#{IMG_PATH}hasib-bhai.jpeg" },
+  { name: "Samin Al-Wasee", email: "wasee@welldev.io", phone: "12345678992", bio: "Demo user", role: "teacher", image: "#{IMG_PATH}wasee-bhai.jpeg" },
+  { name: "Redwan Ahmed", email: "redwan@welldev.io", phone: "12345678993", bio: "Demo user", role: "teacher", image: "#{IMG_PATH}redwan-bhai.jpeg" },
+  { name: "Sadman Ahmed", email: "sadman@welldev.io", phone: "12345678995", bio: "Demo user", role: "teacher", image: "#{IMG_PATH}sadman-bhai.jpeg" },
+  { name: "Kaium Uddin", email: "kaium@welldev.io", phone: "12345678996", bio: "Demo user", role: "student", image: "#{IMG_PATH}kaium-bhai.jpeg" },
+  { name: "Mohammad Ashikul Islam", email: "ashik@welldev.io", phone: "12345678997", bio: "Demo user", role: "student", image: "#{IMG_PATH}ashik-bhai.jpeg" },
+  { name: "Radoan Sharkar", email: "radoan@welldev.io", phone: "12345678998", bio: "Demo user", role: "student", image: "#{IMG_PATH}richi.jpeg" },
+  { name: "Tahsin Turab", email: "turab@welldev.io", phone: "12345678999", bio: "Demo user", role: "student", image: "#{IMG_PATH}turab.jpeg" },
+  { name: "Imtiaz Rafi", email: "rafi@welldev.io", phone: "12345678991", bio: "Demo user", role: "teacher", image: "#{IMG_PATH}rafi-bhai.jpeg" },
+  { name: "Rakinul Haque", email: "rakin@welldev.io", phone: "12345678991", bio: "Demo user", role: "teacher", image: "#{IMG_PATH}wasee-bhai.jpeg" }
 ]
 
 users_data.each do |user_data|
@@ -69,12 +59,14 @@ users_data.each do |user_data|
     password: "1234",
     phone: user_data[:phone],
     bio: user_data[:bio],
-    role: user_data[:role]
+    role: user_data[:role],
+    confirmation_token: SecureRandom.hex(10),
+    confirmed_at: Time.now,
   )
-  attach_local_image(user, :profile_picture, user_data[:image])
+  attach_file(user, :profile_picture, user_data[:image])
 end
 
-puts "*** User table seeded successfully. ***"
+puts "*** User data seeded successfully. ***"
 
 # categories
 categories = [
@@ -85,7 +77,11 @@ categories = [
   { name: "C#", description: "C# Programming" },
   { name: ".NET with C#", description: "C# Programming" },
   { name: "Python", description: "Python Programming" },
-  { name: "Django", description: "Python Programming" }
+  { name: "Django", description: "Python Programming" },
+  { name: "Elixir", description: "Elixir Programming" },
+  { name: "React", description: "React Framework" },
+  { name: "Angular", description: "Angular Framework" },
+  { name: "DevOps", description: "DevOps" }
 ]
 
 categories.each do |cat|
@@ -93,29 +89,47 @@ categories.each do |cat|
 end
 puts "*** Categories table seeded successfully. ***"
 
-# Attach files helper
-def attach_file(record, attachment_name, file_path)
-  file = Rails.root.join(file_path)
-  if File.exist?(file)
-    record.send(attachment_name).attach(
-      io: File.open(file),
-      filename: File.basename(file_path),
-      content_type: Mime::Type.lookup_by_extension(File.extname(file_path).delete('.')).to_s
-    )
-  else
-    puts "File not found: #{file_path}, skipping attachment."
-  end
-end
-
 # Create courses
-courses_data = [
-  { title: "Learn Ruby on Rails", description: "A comprehensive course on Ruby on Rails framework.", teacher: User.find_by(email: "hasib@welldev.io"), category: Category.find_by(name: "Ruby on Rails"), price: 49.99, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/ruby1.jpg", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
-  { title: "Spring Boot 3", description: "Java Programming.", teacher: User.find_by(email: "hasib@welldev.io"), category: Category.find_by(name: "Java"), price: 84.99, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/spring-boot.png", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
-  { title: "Learn Spring", description: "Java Programming.", teacher: User.find_by(email: "arnab@welldev.io"), category: Category.find_by(name: "Java"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/spring-boot.png", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
-  { title: "Mastering Ruby", description: "Ruby Programming.", teacher: User.find_by(email: "arnab@welldev.io"), category: Category.find_by(name: "Ruby"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/ruby1.jpg", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
-  { title: "Ruby on Rails", description: "Ruby Programming.", teacher: User.find_by(email: "redwan@welldev.io"), category: Category.find_by(name: "Ruby on Rails"), price: 99.99, level: 2, language: "English", duration: 0, display_picture: "app/assets/images/Ruby_On_Rails_Logo.png", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" },
-  { title: "Mastering Java", description: "Java Programming.", teacher: User.find_by(email: "redwan@welldev.io"), category: Category.find_by(name: "Java"), price: 75.00, level: 1, language: "English", duration: 0, display_picture: "app/assets/images/Ruby_On_Rails_Logo.png", syllabus: "app/assets/documents/ruby-on-rails-bootcamp-syllabus.pdf", completion_certificate: "app/assets/documents/ruby-completion.pdf", achievement_certificate: "app/assets/documents/ruby-achievement.pdf" }
+
+sample_courses = [
+  { title: "Learn Ruby on Rails", description: "A comprehensive course on Ruby on Rails framework.", teacher_email: "hasib@welldev.io", category_name: "Ruby on Rails", display_picture: "#{IMG_PATH}ruby1.jpg" },
+  { title: "React JS for Beginners", description: "A comprehensive course on ReactJS", teacher_email: "hasib@welldev.io", category_name: "React", display_picture: "#{IMG_PATH}react.png" },
+  { title: "Mastering Rails", description: "A comprehensive course on Ruby on Rails framework.", teacher_email: "sadman@welldev.io", category_name: "Ruby on Rails", display_picture: "#{IMG_PATH}ruby1.jpg" },
+  { title: "Spring Boot 3", description: "Java Programming.", teacher_email: "hasib@welldev.io", category_name: "Java", display_picture: "#{IMG_PATH}spring-boot.png" },
+  { title: "Learn Spring", description: "Java Programming.", teacher_email: "sadman@welldev.io", category_name: "Java", display_picture: "#{IMG_PATH}spring-boot.png" },
+  { title: "Mastering Ruby", description: "Ruby Programming.", teacher_email: "sadman@welldev.io", category_name: "Ruby", display_picture: "#{IMG_PATH}ruby1.jpg" },
+  { title: "Ruby on Rails", description: "Ruby Programming.", teacher_email: "redwan@welldev.io", category_name: "Ruby on Rails", display_picture: "#{IMG_PATH}Ruby_On_Rails_Logo.png" },
+  { title: "Mastering Java", description: "Java Programming.", teacher_email: "redwan@welldev.io", category_name: "Java", display_picture: "#{IMG_PATH}Ruby_On_Rails_Logo.png" },
+  { title: "Java Advanced", description: "Java Programming.", teacher_email: "rafi@welldev.io", category_name: "Java", display_picture: "#{IMG_PATH}spring-boot.png" },
+  { title: "Spring Framework", description: "Spring Framework", teacher_email: "rafi@welldev.io", category_name: "Spring Framework", display_picture: "#{IMG_PATH}spring-boot.png" },
+  { title: "Elixir for Everyone", description: "Elixir", teacher_email: "wasee@welldev.io", category_name: "Elixir", display_picture: "#{IMG_PATH}elixir.jpeg" },
+  { title: "Mastering Angular", description: "Angular", teacher_email: "wasee@welldev.io", category_name: "Angular", display_picture: "#{IMG_PATH}angular.png" }
 ]
+
+courses_data = []
+teacher_emails = users_data.map { |user| user[:email] if user[:role] == "teacher" }.compact
+
+300.times do |i|
+  sample = sample_courses[i % sample_courses.length]
+  teacher = User.find_by(email: teacher_emails.sample)
+  category = Category.find_by(name: sample[:category_name])
+
+  courses_data << {
+    title: "#{sample[:title]} #{i + 1}",
+    description: sample[:description],
+    teacher: teacher,
+    category: category,
+    price: (30 + rand * 70).round(2),  # Random price between 30 and 100
+    level: [ 1, 2, 3 ].sample,
+    duration: 0,
+    language: "English",
+    display_picture: sample[:display_picture],
+    syllabus: "#{DOC_PATH}ruby-on-rails-bootcamp-syllabus.pdf",
+    completion_certificate: "#{DOC_PATH}ruby-completion.pdf",
+    achievement_certificate: "#{DOC_PATH}ruby-achievement.pdf"
+  }
+end
+video_file_paths = Dir.glob("#{VID_PATH}**/*").select { |f| File.file?(f) }
 
 courses_data.each do |course_data|
   course = Course.create!(
@@ -133,6 +147,12 @@ courses_data.each do |course_data|
   attach_file(course, :syllabus, course_data[:syllabus])
   attach_file(course, :completion_certificate, course_data[:completion_certificate])
   attach_file(course, :achievement_certificate, course_data[:achievement_certificate])
+
+  lesson = course.lessons.create!(
+    title: "Lesson 1",
+    order: 1
+  )
+  attach_file(lesson, :video, video_file_paths.sample)
 end
 
 puts "*** Courses seeded successfully! ***"
