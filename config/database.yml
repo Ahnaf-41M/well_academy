@@ -1,7 +1,10 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  # The connection pool size should match Puma's max thread count.
+  # Each Puma worker manages its own pool, so pool = max threads (e.g. 8).
+  # With 4 workers × pool 8 = up to 32 DB connections in use.
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 8 } %>
   host: <%= ENV.fetch("DATABASE_HOST") %>
   username: <%= ENV.fetch("DATABASE_USERNAME") %>
   password: <%= ENV.fetch("DATABASE_PASSWORD") %>
