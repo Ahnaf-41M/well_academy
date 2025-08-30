@@ -6,8 +6,8 @@ class QuizzesController < ApplicationController
   before_action :set_exam_quiz, only: %i[start]
   before_action :update_quiz_marks, only: %i[show create update destroy]
 
-  load_and_authorize_resource :course, except: [:dashboard, :start, :submit]
-  load_and_authorize_resource :quizzes, through: :course, except: [:dashboard, :start, :submit]
+  load_and_authorize_resource :course, except: [ :dashboard, :start, :submit ]
+  load_and_authorize_resource :quizzes, through: :course, except: [ :dashboard, :start, :submit ]
 
   def dashboard
     authorize! :dashboard, @course
@@ -60,10 +60,10 @@ class QuizzesController < ApplicationController
     )
 
     if @quiz_participation.save
-      redirect_to course_path(@course), notice: t('quizzes.submit.success')
+      redirect_to course_path(@course), notice: t("quizzes.submit.success")
     else
       # flash.now[:alert] = @quiz_participation.errors.full_messages
-      flash.now[:alert] = t('quizzes.submit.error')
+      flash.now[:alert] = t("quizzes.submit.error")
       render :start, status: :unprocessable_entity
     end
   end
@@ -84,7 +84,7 @@ class QuizzesController < ApplicationController
 
     @quiz.total_marks ||= 0
     if @quiz.save
-      redirect_to dashboard_course_quizzes_path(@course), notice: t('quizzes.create.success')
+      redirect_to dashboard_course_quizzes_path(@course), notice: t("quizzes.create.success")
     else
       flash.now[:alert] = @quiz.errors.full_messages.join(", ")
       # flash.now[:alert] = t('quizzes.create.failure')
@@ -98,19 +98,19 @@ class QuizzesController < ApplicationController
 
   def update
     if @quiz.update(quiz_params)
-      redirect_to course_quiz_path(@course), notice: t('quizzes.update.success')
+      redirect_to course_quiz_path(@course), notice: t("quizzes.update.success")
     else
       # flash.now[:alert] = @quiz.errors.full_messages.join(", ")
-      flash.now[:alert] = t('quizzes.create.failure')
+      flash.now[:alert] = t("quizzes.create.failure")
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     if @quiz.destroy
-      redirect_to dashboard_course_quizzes_path(@course), notice: t('quizzes.destroy.success')
+      redirect_to dashboard_course_quizzes_path(@course), notice: t("quizzes.destroy.success")
     else
-      flash.now[:alert] = t('quizzes.destroy.failure')
+      flash.now[:alert] = t("quizzes.destroy.failure")
       render :show, status: :unprocessable_entity
     end
   end

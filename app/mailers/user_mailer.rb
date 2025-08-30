@@ -1,11 +1,11 @@
 class UserMailer < ApplicationMailer
   include Rails.application.routes.url_helpers
-  default from: 'no-reply@wellacademy.com'
+  default from: "no-reply@wellacademy.com"
 
   def welcome_email(user)
     @user = user
     @confirmation_url = confirmation_user_url(id: @user.id, token: @user.confirmation_token)
-    mail(to: @user.email, subject: 'Welcome to WellAcademy!')
+    mail(to: @user.email, subject: "Welcome to WellAcademy!")
   end
 
   def password_reset(user)

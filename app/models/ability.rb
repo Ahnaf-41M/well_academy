@@ -5,9 +5,9 @@ class Ability
     user ||= User.new(role: "student")
 
     case user.role
-    when 'admin'
+    when "admin"
       can :manage, :all
-    when 'teacher'
+    when "teacher"
       can :manage, User, id: user.id
 
       can :create, Course
@@ -29,7 +29,7 @@ class Ability
       can :manage, Review, student_id: user.id
 
       can :read, QuizParticipation, student_id: user.id
-    when 'student'
+    when "student"
       can :confirm, User
       can :manage, User, id: user.id
 

@@ -8,5 +8,5 @@ class Payment < ApplicationRecord
   STATUS_TYPES = { unpaid: 0, paid: 1 }.freeze
   enum status: STATUS_TYPES
 
-  validates :course_price, presence: true, numericality: { greater_than_or_equal_to: 0}
+  validates :course_price, presence: true, numericality: { greater_than_or_equal_to: 0 }
 end

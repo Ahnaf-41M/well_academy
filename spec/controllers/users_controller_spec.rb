@@ -91,5 +91,4 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to render_template(:new)
     end
   end
-
 end
