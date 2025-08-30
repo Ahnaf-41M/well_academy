@@ -12,7 +12,7 @@ RSpec.describe PaymentsController, type: :controller do
   describe "GET #index" do
     it "assigns @payments and renders the index template" do
       get :index, params: { course_id: course.id }
-      expect(assigns(:payments)).to eq([payment])  # Ensure @payments contains the expected payment
+      expect(assigns(:payments)).to eq([ payment ])  # Ensure @payments contains the expected payment
       expect(response).to render_template(:index)  # Ensure the correct template is rendered
     end
   end

@@ -19,10 +19,10 @@ class QuizParticipationsController < ApplicationController
     @quiz_participation = QuizParticipation.new(quiz_participation_params)
 
     if @quiz_participation.save
-      redirect_to @quiz_participation, notice: t('quiz_participations.create.success')
+      redirect_to @quiz_participation, notice: t("quiz_participations.create.success")
     else
       # flash.now[:alert] = @quiz_participation.errors.full_messages.to_sentence
-      flash.now[:alert] = t('quiz_participations.create.failure')
+      flash.now[:alert] = t("quiz_participations.create.failure")
       render :new, status: :unprocessable_entity
     end
   end
@@ -32,20 +32,20 @@ class QuizParticipationsController < ApplicationController
 
   def update
     if @quiz_participation.update(quiz_participation_params)
-      redirect_to @quiz_participation, notice: t('quiz_participations.update.success')
+      redirect_to @quiz_participation, notice: t("quiz_participations.update.success")
     else
       # flash.now[:alert] = @quiz_participation.errors.full_messages.to_sentence
-      flash.now[:alert] = t('quiz_participations.update.failure')
+      flash.now[:alert] = t("quiz_participations.update.failure")
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     if @quiz_participation.destroy
-      redirect_to quiz_participations_path, notice: t('quiz_participations.destroy.success')
+      redirect_to quiz_participations_path, notice: t("quiz_participations.destroy.success")
     else
       # flash.now[:alert] = @quiz_participation.errors.full_messages.to_sentence
-      flash.now[:alert] = t('quiz_participations.destroy.failure')
+      flash.now[:alert] = t("quiz_participations.destroy.failure")
       redirect_to quiz_participation_path(@quiz_participation), status: :unprocessable_entity
     end
   end

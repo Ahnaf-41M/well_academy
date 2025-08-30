@@ -81,7 +81,7 @@ RSpec.describe CoursesController, type: :controller do
       end
     end
   end
-  
+
   describe 'DELETE #destroy' do
     it 'redirects to the index with a success notice after deleting the course' do
       course = create(:course, teacher: teacher, category: category) # Create a valid course instance
@@ -90,5 +90,4 @@ RSpec.describe CoursesController, type: :controller do
       expect(flash[:notice]).to eq(I18n.t('courses.destroy.success'))
     end
   end
-
 end

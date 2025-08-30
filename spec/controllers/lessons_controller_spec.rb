@@ -12,7 +12,7 @@ RSpec.describe LessonsController, type: :controller do
   describe 'GET #index' do
     it 'assigns @lessons and renders index template' do
       get :index, params: { course_id: course.id }
-      expect(assigns(:lessons)).to eq([lesson])
+      expect(assigns(:lessons)).to eq([ lesson ])
       expect(response).to render_template(:index)
     end
   end

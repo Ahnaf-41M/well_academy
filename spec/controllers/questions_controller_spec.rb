@@ -18,7 +18,7 @@ RSpec.describe QuestionsController, type: :controller do
         get :index, params: { course_id: course.id, quiz_id: quiz.id }
 
 
-        expect(assigns(:questions)).to eq([question])
+        expect(assigns(:questions)).to eq([ question ])
         expect(response).to render_template(:index)
       end
     end

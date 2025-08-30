@@ -1,10 +1,9 @@
 class QuestionsController < ApplicationController
-
   before_action :set_user
   before_action :set_question, only: %i[show edit update destroy]
   before_action :set_quiz, except: %i[show edit update destroy]
   before_action :set_course, except: %i[show edit update destroy]
-  
+
   load_and_authorize_resource :course
   load_and_authorize_resource :quiz, through: :course
   load_and_authorize_resource :question, through: :quiz
@@ -42,12 +41,12 @@ class QuestionsController < ApplicationController
     end
 
     if !min_one_correct
-      flash.now[:alert] = t('questions.create.failure')
+      flash.now[:alert] = t("questions.create.failure")
       render :new, status: :unprocessable_entity
     elsif @question.save
-      redirect_to dashboard_course_quizzes_path(@course), notice: t('questions.create.success')
+      redirect_to dashboard_course_quizzes_path(@course), notice: t("questions.create.success")
     else
-      flash.now[:alert] = t('questions.create.failure')
+      flash.now[:alert] = t("questions.create.failure")
       render :new, status: :unprocessable_entity
     end
   end
@@ -77,22 +76,22 @@ class QuestionsController < ApplicationController
     end
 
     if !min_one_correct
-      flash.now[:alert] = t('questions.update.failure')
+      flash.now[:alert] = t("questions.update.failure")
       render :edit, status: :unprocessable_entity
     elsif @question.update(question_params.except(:options))
-      redirect_to course_quiz_path(@question.quiz.course, @question.quiz), notice: t('questions.update.success')
+      redirect_to course_quiz_path(@question.quiz.course, @question.quiz), notice: t("questions.update.success")
     else
       # flash.now[:alert] = @question.errors.full_messages.join(", ")
-      flash.now[:alert] = t('questions.update.failure')
+      flash.now[:alert] = t("questions.update.failure")
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     if @question.destroy
-      redirect_to course_quiz_path(@question.quiz.course, @question.quiz), notice: t('questions.destroy.success')
+      redirect_to course_quiz_path(@question.quiz.course, @question.quiz), notice: t("questions.destroy.success")
     else
-      flash.now[:alert] = t('questions.destroy.failure')
+      flash.now[:alert] = t("questions.destroy.failure")
       render :edit, status: :unprocessable_entity
     end
   end
@@ -116,6 +115,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:content, :marks, options: [:option_text, :is_correct])
+    params.require(:question).permit(:content, :marks, options: [ :option_text, :is_correct ])
   end
 end
