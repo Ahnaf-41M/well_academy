@@ -37,7 +37,7 @@ RSpec.describe PaymentsController, type: :controller do
     context "with valid attributes" do
       it "creates a new payment and redirects to course path" do
         expect {
-          post :create, params: { course_id: course.id, payment: { user_id: user.id, course_price: course.price, payment_type: 'mobile', status: 'paid' } }
+          post :create, params: { course_id: course.id, payment: { user_id: user.id, course_price: course.price, payment_type: 'bkash', status: 'paid' } }
         }.to change(Payment, :count).by(1)
 
         expect(flash[:notice]).to eq('Payment was done successfully.')  # Check flash notice
@@ -57,9 +57,9 @@ RSpec.describe PaymentsController, type: :controller do
   describe "PUT #update" do
     context "with valid attributes" do
       it "updates the payment and redirects to show page" do
-        put :update, params: { course_id: course.id, id: payment.id, payment: { payment_type: 'bank', status: 'paid' } }
+        put :update, params: { course_id: course.id, id: payment.id, payment: { payment_type: 'brac_bank', status: 'paid' } }
         payment.reload
-        expect(payment.payment_type).to eq('bank')
+        expect(payment.payment_type).to eq('brac_bank')
         expect(flash[:notice]).to eq('Payment updated successfully.')
         expect(response).to redirect_to(course_payment_path(payment))
       end

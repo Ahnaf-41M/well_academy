@@ -52,7 +52,9 @@ RSpec.describe CoursesController, type: :controller do
       it 'renders the new template with errors' do
         post :create, params: { course: { title: '', description: '', category_id: nil } }
         expect(response).to render_template(:new)
-        expect(flash.now[:alert]).to eq(I18n.t('courses.create.failure'))
+        # assigns(:course) = get the course instance from the controller
+        expected_alert = I18n.t('courses.create.failure', errors: assigns(:course).errors.full_messages.join(','))
+        expect(flash.now[:alert]).to eq(expected_alert)
       end
     end
   end
@@ -68,7 +70,7 @@ RSpec.describe CoursesController, type: :controller do
     context 'when the course updates successfully' do
       it 'redirects to the index with a success notice' do
         patch :update, params: { id: course.id, course: { title: 'Updated Title' } }
-        expect(response).to redirect_to(courses_path)
+        expect(response).to redirect_to(edit_course_path)
         expect(flash[:notice]).to eq(I18n.t('courses.update.success'))
       end
     end
@@ -77,7 +79,8 @@ RSpec.describe CoursesController, type: :controller do
       it 'renders the edit template with errors' do
         patch :update, params: { id: course.id, course: { title: '' } }
         expect(response).to render_template(:edit)
-        expect(flash.now[:alert]).to eq(I18n.t('courses.update.failure'))
+        expected_alert = I18n.t('courses.update.failure', errors: assigns(:course).errors.full_messages.join(','))
+        expect(flash.now[:alert]).to eq(expected_alert)
       end
     end
   end

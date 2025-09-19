@@ -44,7 +44,8 @@ RSpec.describe ReviewsController, type: :controller do
         post :create, params: { course_id: course.id, review: { rating: nil } }
         expect(response).to render_template(:new)
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(flash.now[:alert]).to eq(I18n.t('reviews.create.failure'))
+        expected_alert = I18n.t('reviews.create.failure', error: assigns(:review).errors.full_messages.join(', '))
+        expect(flash.now[:alert]).to eq(expected_alert)
       end
     end
   end
@@ -70,7 +71,8 @@ RSpec.describe ReviewsController, type: :controller do
         patch :update, params: { course_id: course.id, id: review.id, review: { rating: nil } }
         expect(response).to render_template(:edit)
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(flash.now[:alert]).to eq(I18n.t('reviews.update.failure'))
+        expected_alert = I18n.t('reviews.update.failure', error: assigns(:review).errors.full_messages.join(', '))
+        expect(flash.now[:alert]).to eq(expected_alert)
       end
     end
   end

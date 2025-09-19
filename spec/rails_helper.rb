@@ -3,11 +3,16 @@ ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require 'sidekiq/testing'
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
+# Run Sidekiq jobs in fake mode so the suite never needs a live Redis.
+Sidekiq::Testing.fake!
+
 RSpec.configure do |config|
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
@@ -17,4 +22,6 @@ RSpec.configure do |config|
 
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
+
+  config.before { Sidekiq::Worker.clear_all }
 end

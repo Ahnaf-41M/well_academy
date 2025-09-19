@@ -3,7 +3,7 @@ FactoryBot.define do
     user  # Assumes you have a user factory defined
     course  # Assumes you have a course factory defined
     course_price { 100.00 }
-    payment_type { :bank }
+    payment_type { :brac_bank }
     status { :unpaid }
 
     created_at { Time.current }

@@ -5,6 +5,7 @@ class QuizParticipationsController < ApplicationController
 
   def index
     @quiz_participations = QuizParticipation.where(student_id: current_user.id)
+    flash.now[:notice] = t("quiz_participations.index.no_participations") if @quiz_participations.empty?
   end
 
   def show

@@ -69,6 +69,7 @@ class QuizzesController < ApplicationController
 
   def index
     @quizzes = @course.quiz
+    flash.now[:notice] = t("quizzes.index.no_quizzes") if @quizzes.blank?
   end
 
   def show
@@ -85,8 +86,7 @@ class QuizzesController < ApplicationController
     if @quiz.save
       redirect_to dashboard_course_quizzes_path(@course), notice: t("quizzes.create.success")
     else
-      flash.now[:alert] = @quiz.errors.full_messages.join(", ")
-      # flash.now[:alert] = t('quizzes.create.failure')
+      flash.now[:alert] = t("quizzes.create.failure")
       render :new, status: :unprocessable_entity
     end
   end
