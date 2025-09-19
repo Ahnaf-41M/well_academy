@@ -48,7 +48,7 @@ class CoursesController < ApplicationController
     if @course.update(course_params.except(:teacher_id))
       redirect_to edit_course_path(@course), notice: t("courses.update.success")
     else
-      flash.now[:alert] = t("course.update.failure", errors: @course.errors.full_messages.join(","))
+      flash.now[:alert] = t("courses.update.failure", errors: @course.errors.full_messages.join(","))
       render :edit, status: :unprocessable_entity
     end
   end
