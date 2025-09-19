@@ -6,5 +6,5 @@ class Enrollment < ApplicationRecord
   enum completion_status: STATUS
 
   validates :enrolled_at, :completion_status, presence: true
-  validates :progress, numericality: { greater_than_or_equal_to: 0.0, less_than_or_equal_to: 100.0 }
+  validates :progress, numericality: { greater_than_or_equal_to: 0.0, less_than_or_equal_to: 1.0 }
 end

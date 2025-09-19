@@ -96,9 +96,20 @@ RSpec.describe QuizzesController, type: :controller do
   end
 
   describe "GET #start" do
-    it "renders the start template" do
-      get :start, params: { id: quiz.id, course_id: course.id }
-      expect(response).to render_template(:start)
+    context "when the user has paid for the course" do
+      before { create(:payment, user: user, course: course) }
+
+      it "renders the start template" do
+        get :start, params: { id: quiz.id, course_id: course.id }
+        expect(response).to render_template(:start)
+      end
+    end
+
+    context "when the user has not paid for the course" do
+      it "redirects to the unauthorized page" do
+        get :start, params: { id: quiz.id, course_id: course.id }
+        expect(response).to redirect_to(unauthorized_path)
+      end
     end
   end
 end

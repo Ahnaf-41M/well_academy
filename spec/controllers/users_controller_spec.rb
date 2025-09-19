@@ -84,11 +84,22 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "GET #new" do
-    it "renders the new template" do
-      get :new
+    context "when no user is signed in" do
+      before { allow(controller).to receive(:current_user).and_return(nil) }
 
-      # Ensure the 'new' template is rendered
-      expect(response).to render_template(:new)
+      it "renders the new template" do
+        get :new
+
+        expect(response).to render_template(:new)
+      end
+    end
+
+    context "when a user is already signed in" do
+      it "redirects to the root path" do
+        get :new
+
+        expect(response).to redirect_to(root_path)
+      end
     end
   end
 end
