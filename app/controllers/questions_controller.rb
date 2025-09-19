@@ -98,10 +98,6 @@ class QuestionsController < ApplicationController
 
   private
 
-  def set_user
-    @user = current_user
-  end
-
   def set_course
     @course = @quiz.course # Ensure course is set from the quiz before actions
   end

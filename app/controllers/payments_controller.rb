@@ -2,7 +2,6 @@ class PaymentsController < ApplicationController
   load_and_authorize_resource
   before_action :set_course, only: %i[index new show edit create update destroy]
   before_action :set_payment, only: %i[show edit update destroy]
-  before_action :set_user, only: %i[index new show edit create update destroy]
 
   def index
     @payments = Payment.all.order(created_at: :desc)
@@ -13,13 +12,13 @@ class PaymentsController < ApplicationController
   end
 
   def new
-    @payment = Payment.new(user_id: @user.id, course_id: @course.id)
+    @payment = Payment.new(user_id: current_user.id, course_id: @course.id)
   end
 
   def create
     @payment = Payment.new(payment_params)
 
-    @payment.user_id = @user.id
+    @payment.user_id = current_user.id
     @payment.course_id = @course.id
     @payment.course_price = @course.price
     @payment.status = "paid"
@@ -61,10 +60,6 @@ class PaymentsController < ApplicationController
   end
 
   private
-
-  def set_user
-    @user = current_user
-  end
 
   def set_course
     @course = Course.find(params[:course_id])

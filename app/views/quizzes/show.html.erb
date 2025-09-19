@@ -21,7 +21,7 @@
     <h5 class="text-center fw-bold mb-3 badge bg-secondary"></h5>
 
 
-    <% if @user.teacher? %>
+    <% if current_user.teacher? || current_user.admin? %>
       <div class="d-grid gap-2 d-md-block mb-3">
         <%= link_to "<< " + t('quizzes.dashboard.title'),
                     dashboard_course_quizzes_path(@course),
@@ -57,7 +57,7 @@
             </div>
           <% end %>
         </div>
-        <% if @user.teacher? %>
+        <% if current_user.teacher? || current_user.admin? %>
           <div class="card-footer">
             <div class="d-flex">
               <%= link_to t('edit_button'), edit_question_path(question), class: "btn btn-warning btn-sm me-2" %>

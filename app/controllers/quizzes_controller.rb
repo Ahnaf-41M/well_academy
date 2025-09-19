@@ -1,5 +1,4 @@
 class QuizzesController < ApplicationController
-  before_action :set_user
   before_action :set_course
   before_action :set_quiz, except: %i[dashboard index new create]
   before_action :set_question, only: %i[show submit]
@@ -52,7 +51,7 @@ class QuizzesController < ApplicationController
     end
 
     @quiz_participation = QuizParticipation.new(
-      student_id: @user.id,
+      student_id: current_user.id,
       quiz_id: @quiz.id,
       marks_obtained: @obtained_marks,
       total_marks: @quiz.total_marks,
@@ -116,10 +115,6 @@ class QuizzesController < ApplicationController
   end
 
   private
-
-  def set_user
-    @user = current_user
-  end
 
   def set_quiz
     @quiz = Quiz.find(params[:id])
