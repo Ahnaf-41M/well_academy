@@ -14,7 +14,11 @@ gem "ostruct"
 gem "pg", "~> 1.1"
 gem "pry"
 gem "puma", ">= 5.0"
-gem "rails", "~> 7.2.1"
+# Pinned to >= 7.2.3.2: CVE-2026-66066 (Active Storage arbitrary file read + RCE
+# in variant processing) is only fixed in 7.2.3.2; 7.2.3.1 is insufficient. The
+# same bump also clears the actionpack/actionview/activerecord/activesupport/
+# activestorage advisories fixed across 7.2.2.1 through 7.2.3.1.
+gem "rails", "~> 7.2.3", ">= 7.2.3.2"
 gem "rufus-scheduler"
 gem "sidekiq"
 gem "sidekiq-cron" # Optional for scheduling jobs
