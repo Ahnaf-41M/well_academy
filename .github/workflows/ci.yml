@@ -37,7 +37,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3.6
+          ruby-version: 3.4.10
           bundler-cache: true
 
       - name: Precompile assets
@@ -63,7 +63,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3.6 # Adjust to your Ruby version
+          ruby-version: 3.4.10
           bundler-cache: true # Installs gems and caches them
 
       - name: Run RuboCop
@@ -81,7 +81,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3.6
+          ruby-version: 3.4.10
           bundler-cache: true
 
       # Non-gating for now: the codebase has pre-existing warnings. Tighten by
@@ -123,7 +123,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3.6
+          ruby-version: 3.4.10
           bundler-cache: true
 
       - name: Download compiled assets
