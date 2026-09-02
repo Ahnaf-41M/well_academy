@@ -6,9 +6,97 @@ on:
   pull_request:
     branches: [main]
 
+# Cancel a running CI when a newer commit is pushed to the same branch/PR.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Shared by every job. config/database.yml reads the DATABASE_* vars
+# unconditionally, even for tasks that never open a connection.
+env:
+  RAILS_ENV: test
+  DATABASE_HOST: localhost
+  DATABASE_USERNAME: postgres
+  DATABASE_PASSWORD: password
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      SECRET_KEY_BASE_DUMMY: 1
+      # The app uses importmap/sprockets; the vestigial webpacker gem otherwise
+      # hooks assets:precompile and fails (no package.json / yarn deps).
+      WEBPACKER_PRECOMPILE: "false"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.6
+          bundler-cache: true
+
+      - name: Precompile assets
+        run: bundle exec rails assets:precompile
+
+      - name: Upload compiled assets
+        uses: actions/upload-artifact@v7
+        with:
+          name: compiled-assets
+          path: public/assets
+          if-no-files-found: error
+          retention-days: 7
+
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.6 # Adjust to your Ruby version
+          bundler-cache: true # Installs gems and caches them
+
+      - name: Run RuboCop
+        run: bundle exec rubocop --format github --parallel
+
+  security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.6
+          bundler-cache: true
+
+      # Non-gating for now: the codebase has pre-existing warnings. Tighten by
+      # committing a `config/brakeman.ignore` baseline, then drop continue-on-error.
+      - name: Brakeman (Rails static analysis)
+        continue-on-error: true
+        run: bundle exec brakeman --no-pager --quiet
+
+      - name: Importmap audit (JS dependency advisories)
+        run: bin/importmap audit
+
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: build
 
     services:
       postgres:
@@ -26,34 +114,42 @@ jobs:
           --health-retries 5
 
     env:
-      RAILS_ENV: test
-      DATABASE_HOST: localhost
-      DATABASE_USERNAME: postgres
-      DATABASE_PASSWORD: password
       RAILS_MAX_THREADS: 8
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3.6 # Adjust to your Ruby version
-          bundler-cache: true # Caches gems automatically
+          ruby-version: 3.3.6
+          bundler-cache: true
 
-      - name: Install dependencies
-        run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
+      - name: Download compiled assets
+        uses: actions/download-artifact@v8
+        with:
+          name: compiled-assets
+          path: public/assets
 
-      - name: Set up database
-        run: |
-          bundle exec rails db:create
-          bundle exec rails db:schema:load
+      - name: Verify Zeitwerk autoloading
+        run: bundle exec rails zeitwerk:check
 
-      - name: Run RuboCop
-        run: bundle exec rubocop
+      - name: Prepare database
+        run: bundle exec rails db:test:prepare
 
       - name: Run RSpec
         run: bundle exec rspec
+
+      - name: Upload test artifacts
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: test-results
+          path: |
+            coverage
+            log/test.log
+            tmp/capybara
+            tmp/screenshots
+          if-no-files-found: ignore
+          retention-days: 7
