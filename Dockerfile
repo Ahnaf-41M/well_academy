@@ -1,5 +1,5 @@
-ARG RUBY_VERSION=3.3.6
-FROM ruby:${RUBY_VERSION}-slim
+ARG RUBY_VERSION=3.4.10
+FROM ruby:${RUBY_VERSION}-slim@sha256:9d50d98e61ccbe4f1ef436349911e09b53c42a00364bcd3bda6ac107abc29528
 
 RUN apt-get update -qq && \
     apt-get install -y \
