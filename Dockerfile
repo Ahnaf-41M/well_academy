@@ -1,5 +1,8 @@
-ARG RUBY_VERSION=3.4.10
-FROM ruby:${RUBY_VERSION}-slim@sha256:9d50d98e61ccbe4f1ef436349911e09b53c42a00364bcd3bda6ac107abc29528
+ARG RUBY_VERSION=4.0.6
+# Digest pins ruby:4.0.6-slim, which is Debian trixie — same distro the 3.4.10
+# pin resolved to. `bundle install` below reruns whenever COPY . . changes
+# (Gemfile.lock included), so no Ruby-version cache key is needed here.
+FROM ruby:${RUBY_VERSION}-slim@sha256:58479f164d5947f852da27a4436c89bb986a811f959c40552bc7f6ccaabcc9c9
 
 RUN apt-get update -qq && \
     apt-get install -y \
