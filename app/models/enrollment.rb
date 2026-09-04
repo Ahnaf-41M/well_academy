@@ -3,7 +3,7 @@ class Enrollment < ApplicationRecord
   belongs_to :course
 
   STATUS = { not_started: 1, in_progress: 2, completed: 3 }.freeze
-  enum completion_status: STATUS
+  enum :completion_status, STATUS
 
   validates :enrolled_at, :completion_status, presence: true
   validates :progress, numericality: { greater_than_or_equal_to: 0.0, less_than_or_equal_to: 1.0 }

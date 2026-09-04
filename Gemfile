@@ -14,7 +14,11 @@ gem "ostruct"
 gem "pg", "~> 1.1"
 gem "pry"
 gem "puma", ">= 5.0"
-gem "rails", "~> 7.2.1"
+# Floor pinned at 8.0.5.1: CVE-2026-66066 (CVSS 9.5, arbitrary file read / RCE
+# in Active Storage variant processing). Also carries the Mar 2026 batch
+# (CVE-2026-33658 Active Storage Range DoS et al.) and CVE-2025-24293 /
+# CVE-2025-55193 from 8.0.2.1.
+gem "rails", "~> 8.0.0", ">= 8.0.5.1"
 gem "rufus-scheduler"
 gem "sidekiq"
 gem "sidekiq-cron" # Optional for scheduling jobs
@@ -33,7 +37,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "letter_opener"
   gem "letter_opener_web"
-  gem "rspec-rails", "~> 6.0"
+  gem "rspec-rails", "~> 8.0"
   gem "rubocop-rails-omakase", require: false
 end
 

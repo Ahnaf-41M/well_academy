@@ -3,10 +3,10 @@ class Payment < ApplicationRecord
   belongs_to :course
 
   PAYMENT_TYPES = { bkash: 0, brac_bank: 1 }.freeze
-  enum payment_type: PAYMENT_TYPES
+  enum :payment_type, PAYMENT_TYPES
 
   STATUS_TYPES = { unpaid: 0, paid: 1 }.freeze
-  enum status: STATUS_TYPES
+  enum :status, STATUS_TYPES
 
   validates :course_price, presence: true, numericality: { greater_than_or_equal_to: 0 }
 end
